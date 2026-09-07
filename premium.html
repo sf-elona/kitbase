@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Premium Pack — Kitbase</title>
+<meta name="description" content="One pack with every premium template and Figma file from Kitbase, plus future releases.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .price-card {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .price-card .amount { font-family: var(--font); font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; }
+  .price-card .amount span { font-size: 1rem; color: var(--text-faint); font-weight: 500; }
+  .checklist { list-style: none; margin: 1.6rem 0; padding: 0; text-align: left; }
+  .checklist li { padding: .5rem 0 .5rem 1.7rem; position: relative; color: var(--text-soft); font-size: .95rem; }
+  .checklist li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="premium.html" aria-current="page">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap" style="text-align:center">
+      <p class="eyebrow">Support the project</p>
+      <h1>The Premium Pack</h1>
+      <p style="margin-inline:auto">Every paid template, every layered Figma file, and every future release — for one price. Buying it keeps the free library growing.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="price-card">
+        <p class="eyebrow" style="color:var(--accent)">Lifetime access</p>
+        <div class="amount">$39 <span>one time</span></div>
+        <ul class="checklist">
+          <li>All 8 current premium templates &amp; kits</li>
+          <li>Layered Figma source files with styles &amp; variables</li>
+          <li>Coded HTML/CSS build where available</li>
+          <li>Commercial license for unlimited projects</li>
+          <li>Every future premium release, free</li>
+          <li>Email support from the designer</li>
+        </ul>
+        <a class="btn btn-primary" href="#" style="width:100%;justify-content:center">Get the Premium Pack</a>
+        <p class="notice" style="margin-top:1rem">Checkout is a placeholder. This button will point to a Gumroad or Lemon Squeezy product.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Fair pricing</h3>
+          <p>One payment, no subscription. Students and non-profits — email for a code.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Real files</h3>
+          <p>Organised layers, auto-layout, documented tokens. Built to be edited, not admired.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>14-day refund</h3>
+          <p>If it doesn't fit your workflow, ask for your money back. No hard feelings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head center">
+        <h2>Questions</h2>
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <div class="card">
+          <h3>Can I use these for client work?</h3>
+          <p>Yes. The commercial license covers unlimited personal and client projects. You just can't resell the files as-is.</p>
+        </div>
+        <div class="card">
+          <h3>What software do I need?</h3>
+          <p>A free Figma account opens every design file. HTML builds work in any browser and editor.</p>
+        </div>
+        <div class="card">
+          <h3>How do updates work?</h3>
+          <p>New premium releases are added to the same download. You'll get an email when something lands.</p>
+        </div>
+        <div class="card">
+          <h3>Do you take custom requests?</h3>
+          <p>Sometimes. <a href="contact.html" style="color:var(--accent)">Send a note</a> with what you need and a rough timeline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

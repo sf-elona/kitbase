@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog — Kitbase</title>
+<meta name="description" content="Short, practical design notes on UI, UX process and building interfaces.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html" aria-current="page">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Design notes</p>
+      <h1>Blog</h1>
+      <p>Short posts about the decisions behind the kits — process, trade-offs and the small details that make an interface feel finished.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="posts">
+        <article class="post">
+          <time datetime="2026-08-20">Aug 2026</time>
+          <div>
+            <h3><a href="#">Designing a booking flow people actually finish</a></h3>
+            <p>Five decisions from the HealthSync project — a single-column form, a visible progress step, smart defaults on the calendar, an editable summary, and a confirmation that sets expectations. Together they cut the drop-off we saw in testing.</p>
+          </div>
+        </article>
+        <article class="post">
+          <time datetime="2026-07-02">Jul 2026</time>
+          <div>
+            <h3><a href="#">A spacing scale you can defend in a design review</a></h3>
+            <p>Eyeballing margins falls apart the moment someone asks "why 13 pixels?". A 4-point base with a fixed set of steps (4, 8, 12, 16, 24, 32, 48, 64) gives you an answer every time — and a token file you can hand to engineering.</p>
+          </div>
+        </article>
+        <article class="post">
+          <time datetime="2026-05-14">May 2026</time>
+          <div>
+            <h3><a href="#">Motion in luxury brand sites without killing performance</a></h3>
+            <p>Notes from the Vellora fine-dining concept: a muted, short-loop video hero, transforms instead of layout animation, <code>prefers-reduced-motion</code> respected, and a poster image so the first paint is never blank.</p>
+          </div>
+        </article>
+        <article class="post">
+          <time datetime="2026-03-30">Mar 2026</time>
+          <div>
+            <h3><a href="#">Light and dark from one set of tokens</a></h3>
+            <p>Name colors by role, not by value. <code>--surface</code>, <code>--text-soft</code>, <code>--border</code> — then you only redefine the values once per theme and every component follows.</p>
+          </div>
+        </article>
+        <article class="post">
+          <time datetime="2026-02-11">Feb 2026</time>
+          <div>
+            <h3><a href="#">The empty state is a feature, not an afterthought</a></h3>
+            <p>A dashboard with no data yet is the first thing many users see. It should explain what goes here, show one clear action, and never look broken.</p>
+          </div>
+        </article>
+      </div>
+      <p class="notice">Individual post pages are coming. For now these summaries capture the gist.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta-band">
+        <p class="eyebrow" style="color:var(--accent)">Newsletter</p>
+        <h2>New post, new kit, once a month</h2>
+        <form class="subscribe" data-demo style="max-width:420px;margin:1.4rem auto 0">
+          <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address">
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
