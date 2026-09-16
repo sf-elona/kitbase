@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every Beat — Cardio Video Hero Template · Kitbase</title>
+<meta name="description" content="A full-bleed video hero template for health and biotech products — a floating nav dock, a hero headline, a subheader and a glowing CTA over a looping anatomical clip. Premium HTML template by Kitbase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Every Beat hero — scoped, plain CSS, no build step ---------- */
+  .lc-hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #07090d;
+    color: #eef1f5;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-video {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 50% 44%;
+  }
+
+  /* the video is the asset; the scrim keeps the copy legible and pulls the
+     palette toward clinical navy with one warm cardiac-red accent */
+  .lc-scrim {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(5,6,10,.8) 0%, rgba(5,6,10,.15) 32%, rgba(5,6,10,.22) 58%, rgba(5,6,10,.9) 100%),
+      radial-gradient(55% 46% at 50% 100%, rgba(0,0,0,.6), transparent 70%),
+      radial-gradient(42% 38% at 80% 10%, rgba(255, 60, 70, .18), transparent 70%),
+      radial-gradient(34% 30% at 12% 78%, rgba(60, 110, 255, .12), transparent 72%);
+  }
+
+  .lc-grain {
+    position: absolute; inset: 0; pointer-events: none; z-index: 4; opacity: .07; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .lc-dock {
+    position: relative; z-index: 3; margin: 22px auto 0; display: inline-flex; align-self: center; gap: 6px; padding: 6px;
+    border-radius: 999px; background: rgba(10, 12, 16, .55); border: 1px solid rgba(255, 255, 255, .13);
+    backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .08);
+  }
+  .lc-dock button { width: 38px; height: 38px; border-radius: 999px; border: none; display: grid; place-items: center; background: transparent; color: #d8cdd0; cursor: pointer; transition: background .16s ease, color .16s ease; }
+  .lc-dock button.active { background: #eef1f5; color: #12151a; }
+  .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .08); }
+  .lc-dock svg { width: 16px; height: 16px; }
+
+  .lc-body { position: relative; z-index: 2; flex: 1; display: flex; align-items: center; padding: 6vw clamp(28px, 6vw, 100px) 12vw; }
+  .lc-eyebrow {
+    font-family: var(--font); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 600;
+    color: #ff6b6b; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: .5rem;
+  }
+  .lc-eyebrow .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: #ff6b6b; box-shadow: 0 0 0 0 rgba(255,107,107,.6); animation: lc-pulse-ring 1.4s cubic-bezier(.3,.6,.4,1) infinite; }
+  @keyframes lc-pulse-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(255,107,107,.55); }
+    70%  { box-shadow: 0 0 0 8px rgba(255,107,107,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
+  }
+  .lc-hero h1 { font-family: var(--font); font-weight: 300; font-size: clamp(2.3rem, 5.8vw, 4.6rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 1.1rem; color: #f5f6f8; max-width: 15ch; text-shadow: 0 4px 30px rgba(0,0,0,.55); }
+  .lc-hero h1 em { font-style: normal; color: #ff8080; }
+  .lc-hero p.lead { font-family: var(--font-body); font-weight: 300; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(238, 241, 245, .82); max-width: 44ch; margin: 0 0 2rem; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+
+  /* the CTA — same clean-at-rest, glow-on-hover system as the rest of the
+     Kitbase hero family, tinted toward the cardiac red for this theme */
+  .lc-cta {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: 1rem 1.7rem; border-radius: 999px;
+    background: rgba(238, 241, 245, .1); border: 1px solid rgba(238, 241, 245, .35);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .12);
+    color: #f5f6f8; font-family: var(--font); font-size: .95rem; font-weight: 500;
+    transition: background .22s ease, border-color .22s ease, transform .2s ease, box-shadow .25s ease;
+  }
+  .lc-cta::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%);
+    opacity: .3; transition: opacity .22s ease;
+  }
+  .lc-cta:hover::after { opacity: .5; }
+  .lc-cta:hover {
+    background: rgba(238, 241, 245, .18);
+    border-color: rgba(255, 150, 150, .5);
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 34px -14px rgba(0, 0, 0, .55),
+      0 0 24px 2px rgba(255, 90, 90, .32),
+      inset 0 1px 0 rgba(255, 255, 255, .2);
+  }
+  .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
+  .lc-cta:hover svg { transform: translateX(3px); }
+
+  .lc-stats { position: relative; z-index: 2; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 clamp(28px, 6vw, 100px) 3.4vw; font-family: var(--font); }
+  .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #f5f6f8; }
+  .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(238, 241, 245, .6); }
+
+  .lc-side { position: absolute; right: 22px; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; font-family: var(--font); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(238, 241, 245, .5); z-index: 2; }
+
+  .lc-pro { position: absolute; top: 16px; left: 16px; z-index: 3; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px; background: rgba(238, 241, 245, .12); border: 1px solid rgba(238, 241, 245, .28); backdrop-filter: blur(8px); font-family: var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .1em; color: #ff9d9d; }
+
+  .lc-unmute {
+    position: absolute; top: 16px; right: 16px; z-index: 3;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .4rem .7rem .4rem .55rem; border-radius: 999px; border: 1px solid rgba(238, 241, 245, .28);
+    background: rgba(10, 12, 16, .5); backdrop-filter: blur(8px);
+    color: #eef1f5; font-family: var(--font); font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+    cursor: pointer; transition: background .16s ease;
+  }
+  .lc-unmute:hover { background: rgba(10, 12, 16, .7); }
+  .lc-unmute svg { width: 14px; height: 14px; }
+
+  @media (max-width: 720px) {
+    .lc-side { display: none; }
+    .lc-body { padding: 26vw clamp(20px, 6vw, 48px) 30vw; align-items: flex-end; }
+    .lc-video { object-position: 58% 42%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium</p>
+      <h1>Every Beat — Cardio Video Hero</h1>
+      <p>A second video hero, built for health and biotech products: a rotating anatomical heart behind a scrim tuned for legible text, a floating nav dock, a pulse-accented eyebrow and the same glowing CTA as the rest of the family.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="lc-hero" id="lcHero">
+        <span class="lc-pro">★ PREMIUM</span>
+        <button class="lc-unmute" id="lcUnmute" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9v6h4l5 5V4L8 9H4Z"/><path d="M16 8.5a5 5 0 0 1 0 7" opacity=".5"/></svg>
+          <span id="lcUnmuteLabel">Unmute</span>
+        </button>
+
+        <video class="lc-video" autoplay muted loop playsinline preload="metadata">
+          <source src="assets/video/anatomical-heart-hero.mp4" type="video/mp4">
+        </video>
+        <div class="lc-scrim" aria-hidden="true"></div>
+        <div class="lc-grain"></div>
+
+        <nav class="lc-dock" aria-label="Scene controls">
+          <button class="active" aria-label="Overview" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.5 8.5c0 4.5-8.5 10-8.5 10s-8.5-5.5-8.5-10a4.5 4.5 0 0 1 8.5-2 4.5 4.5 0 0 1 8.5 2Z"/></svg>
+          </button>
+          <button aria-label="Pulse" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12h4l2-7 4 14 2-9 2 2h6"/></svg>
+          </button>
+          <button aria-label="Collapse controls" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 15 6-6 6 6"/></svg>
+          </button>
+        </nav>
+
+        <div class="lc-body">
+          <div>
+            <p class="lc-eyebrow"><span class="pulse-dot" aria-hidden="true"></span>Field notes · cardiac research</p>
+            <h1>Engineered for<br>every <em>heartbeat</em>.</h1>
+            <p class="lead">A video hero built for health and biotech products — precision, care and repetition, rendered as motion instead of a static diagram.</p>
+            <a class="lc-cta" href="#" data-demo>
+              Explore the work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="lc-stats">
+          <div><span>60–100</span><small>RESTING BPM</small></div>
+          <div><span>4</span><small>CHAMBERS MAPPED</small></div>
+          <div><span>24/7</span><small>MONITORING</small></div>
+        </div>
+
+        <div class="lc-side">Scroll to discover</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Bring your own clip</h3>
+          <p>Same scrim-and-dock system as Full Throttle, re-toned for a clinical palette — swap the single <code>&lt;source&gt;</code> for any looping footage.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A living eyebrow</h3>
+          <p>The small pulse dot beside "Field notes" beats on a CSS ring animation — a detail that fits a health-tech product without needing a chart.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>One button system</h3>
+          <p>The same glass CTA as the rest of the Kitbase hero family, just tinted toward cardiac red on hover instead of ember orange.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('lcUnmute');
+    var label = document.getElementById('lcUnmuteLabel');
+    var video = document.querySelector('.lc-video');
+    if (!btn || !video) return;
+    btn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      var muted = video.muted;
+      btn.setAttribute('aria-pressed', String(!muted));
+      label.textContent = muted ? 'Unmute' : 'Mute';
+    });
+  })();
+</script>
+</body>
+</html>
