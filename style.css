@@ -354,7 +354,34 @@ img, svg { max-width: 100%; display: block; }
 /* soft inner vignette to keep edges grounded */
 .thumb-art { box-shadow: inset 0 -18px 30px -14px rgba(0, 0, 0, .55), inset 0 14px 26px -18px rgba(0, 0, 0, .4); }
 
-.thumb-art .thumb-icon {
+/* ---------- video thumbnails — the real clip, playing, not a gradient
+   stand-in. Same badge/label/hover language as .thumb-art so the two card
+   styles sit together in one grid without looking like different systems. */
+.thumb-video {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  isolation: isolate;
+  background: #0a0a0c;
+  box-shadow: inset 0 -18px 30px -14px rgba(0, 0, 0, .55), inset 0 14px 26px -18px rgba(0, 0, 0, .35);
+}
+.thumb-video video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.card-art:hover .thumb-video video { transform: scale(1.05); }
+/* a light bottom scrim keeps the label legible over any footage */
+.thumb-video::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 44%, rgba(0, 0, 0, .6) 100%);
+}
+.thumb-video .thumb-label { position: absolute; left: .7rem; bottom: .7rem; }
+
+.thumb-art .thumb-icon, .thumb-video .thumb-icon {
   position: absolute;
   top: .7rem; right: .7rem;
   z-index: 2;
@@ -370,10 +397,10 @@ img, svg { max-width: 100%; display: block; }
   color: #fff;
   transition: transform .35s cubic-bezier(.2,.8,.2,1), background .3s ease;
 }
-.thumb-art .thumb-icon svg { width: 17px; height: 17px; }
+.thumb-art .thumb-icon svg, .thumb-video .thumb-icon svg { width: 17px; height: 17px; }
 .card-art:hover .thumb-icon { transform: translateY(-2px) scale(1.06); background: rgba(20, 18, 15, .5); }
 
-.thumb-art .thumb-label {
+.thumb-art .thumb-label, .thumb-video .thumb-label {
   position: relative;
   z-index: 2;
   display: inline-flex;
@@ -392,7 +419,7 @@ img, svg { max-width: 100%; display: block; }
   text-transform: uppercase;
   color: #fff;
 }
-.thumb-art .thumb-label::before {
+.thumb-art .thumb-label::before, .thumb-video .thumb-label::before {
   content: "";
   width: 6px; height: 6px;
   border-radius: 50%;
