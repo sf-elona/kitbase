@@ -60,35 +60,46 @@
     font-family: 'Cormorant Garamond', var(--font);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: .05em;
+    letter-spacing: .04em;
     font-size: clamp(1.7rem, 3.6vw, 3rem);
-    line-height: 1.28;
+    line-height: 1.14;
     color: #fbfdff;
     text-shadow: 0 4px 26px rgba(10, 25, 45, .35);
     max-width: 18ch;
     margin: 0 0 2.4rem;
   }
+  .lc-headline span { display: block; }
 
   /* the CTA — a white label pill with a tonal circular arrow button
      overlapping its trailing edge, matching the reference composition */
-  .lc-cta-wrap { position: relative; display: inline-flex; align-items: center; }
+  /* the wrap carries extra right margin equal to the circle's overflow, so
+     the two-part button never runs into the hero's own clipped edge on
+     narrow screens */
+  .lc-cta-wrap { position: relative; display: inline-flex; align-items: center; margin-right: 30px; }
   .lc-cta-pill {
     display: inline-flex; align-items: center;
     height: 62px;
-    padding: 0 40px 0 30px;
+    padding: 0 46px 0 30px;
     border-radius: 999px;
-    background: #ffffff;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, .38);
+    border: 1px solid rgba(255, 255, 255, .55);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
     color: #16243a;
     font-family: var(--font);
     font-weight: 500;
     font-size: 1.02rem;
-    box-shadow: 0 16px 34px -12px rgba(10, 25, 45, .45);
-    transition: box-shadow .22s ease, transform .22s ease;
+    box-shadow: 0 16px 34px -12px rgba(10, 25, 45, .45), inset 0 1px 0 rgba(255, 255, 255, .7);
+    transition: box-shadow .22s ease, transform .22s ease, background .22s ease;
   }
   .lc-cta-circle {
     position: absolute; right: -6px; top: 50%; transform: translateY(-50%);
     width: 56px; height: 56px; border-radius: 50%;
-    background: linear-gradient(155deg, #cfe0f5, #9fb9e0);
+    background: linear-gradient(155deg, rgba(216, 230, 248, .8), rgba(159, 185, 224, .75));
+    border: 1px solid rgba(255, 255, 255, .6);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
     color: #16243a;
     display: grid; place-items: center;
     box-shadow: 0 10px 22px -6px rgba(10, 25, 45, .4), inset 0 1px 0 rgba(255, 255, 255, .6);
@@ -157,6 +168,11 @@
     .lc-card { position: static; margin: 1.6rem clamp(20px, 6vw, 48px) 0; width: auto; }
     .lc-body { padding: 30vw clamp(20px, 6vw, 48px) 0; flex-direction: column; align-items: flex-start; }
     .lc-video { object-position: 72% 50%; }
+    .lc-headline { font-size: clamp(1.5rem, 8vw, 2.3rem); line-height: 1.16; letter-spacing: .02em; margin-bottom: 1.8rem; }
+  }
+  @media (max-width: 380px) {
+    .lc-headline { font-size: clamp(1.3rem, 8.4vw, 1.9rem); }
+    .lc-cta-pill { padding: 0 40px 0 24px; font-size: .95rem; }
   }
 </style>
 </head>
@@ -218,7 +234,7 @@
 
         <div class="lc-body">
           <div>
-            <h1 class="lc-headline">Drift through<br>deep waters,<br>suspended in silence.</h1>
+            <h1 class="lc-headline"><span>Drift through</span><span>deep waters,</span><span>in silence.</span></h1>
             <button class="lc-grid-btn" type="button" aria-label="Open menu">
               <span class="lc-grid-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
             </button>
