@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Living Canopy — Nature Hero Template · Kitbase</title>
+<meta name="description" content="A CSS-only animated nature hero template — moss gradients, drifting pollen and a floating pill nav. Free HTML template by Kitbase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Living Canopy hero — scoped, plain CSS, no build step ---------- */
+  .lc-hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(120% 100% at 18% 8%, #24382a 0%, #142016 46%, #0b120c 100%);
+    color: #eef2e9;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(38% 46% at 78% 18%, rgba(150, 214, 128, .28), transparent 70%),
+      radial-gradient(30% 34% at 12% 78%, rgba(94, 168, 110, .22), transparent 72%),
+      radial-gradient(50% 40% at 50% 105%, rgba(45, 90, 58, .55), transparent 75%);
+    filter: blur(2px);
+  }
+
+  /* bright glossy light source, like sun breaking through canopy */
+  .lc-hotspot {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background:
+      radial-gradient(18% 26% at 74% 14%, rgba(255, 255, 255, .5), transparent 60%),
+      radial-gradient(42% 46% at 82% 10%, rgba(191, 240, 170, .38), transparent 68%);
+    mix-blend-mode: screen;
+  }
+
+  /* fine grain so the gradients don't look flat/banded */
+  .lc-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    opacity: .1;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .lc-parallax { position: absolute; inset: 0; transition: transform .3s ease-out; }
+
+  /* overhanging branch, echoes the reference's foliage frame */
+  .lc-branch {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    width: 100%;
+    height: clamp(140px, 24vw, 260px);
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .4));
+  }
+  .lc-branch svg { width: 100%; height: 100%; display: block; }
+  .lc-branch .sway { animation: lc-branch-sway 8s ease-in-out infinite; transform-origin: 50% 0%; }
+  .lc-branch .sway:nth-child(even) { animation-duration: 9.5s; animation-delay: -3s; }
+  @keyframes lc-branch-sway {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    50% { transform: rotate(.7deg) translateY(2px); }
+  }
+
+  /* soft blurred moss blobs drifting slowly */
+  .lc-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .55;
+    animation: lc-drift 22s ease-in-out infinite;
+  }
+  .lc-blob.b1 { width: 380px; height: 380px; top: -80px; right: 6%; background: radial-gradient(circle, #7fbf7a, transparent 65%); animation-duration: 26s; }
+  .lc-blob.b2 { width: 300px; height: 300px; bottom: -60px; left: 4%; background: radial-gradient(circle, #4f8f5c, transparent 65%); animation-duration: 30s; animation-delay: -6s; }
+  .lc-blob.b3 { width: 220px; height: 220px; top: 40%; left: 40%; background: radial-gradient(circle, #a9d98f, transparent 65%); opacity: .3; animation-duration: 34s; animation-delay: -14s; }
+  @keyframes lc-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(3%, -4%) scale(1.06); }
+  }
+
+  /* a single drifting leaf silhouette, echoes the reference's landing butterfly */
+  .lc-leaf {
+    position: absolute;
+    top: 22%;
+    left: -6%;
+    width: 34px;
+    height: 34px;
+    color: rgba(214, 235, 190, .55);
+    opacity: 0;
+    animation: lc-leaf-drift 16s ease-in-out infinite;
+    animation-delay: 2s;
+    z-index: 2;
+  }
+  .lc-leaf svg { width: 100%; height: 100%; filter: drop-shadow(0 0 6px rgba(214, 235, 190, .35)); }
+  @keyframes lc-leaf-drift {
+    0%   { transform: translate(0, 0) rotate(-10deg); opacity: 0; }
+    8%   { opacity: .9; }
+    50%  { transform: translate(58vw, -8vh) rotate(18deg); opacity: .75; }
+    92%  { opacity: 0; }
+    100% { transform: translate(74vw, -4vh) rotate(24deg); opacity: 0; }
+  }
+
+  /* drifting pollen / particles */
+  .lc-pollen { position: absolute; inset: 0; pointer-events: none; }
+  .lc-pollen span {
+    position: absolute;
+    bottom: -10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(214, 235, 190, .85);
+    box-shadow: 0 0 6px rgba(214, 235, 190, .6);
+    animation: lc-rise linear infinite;
+  }
+  @keyframes lc-rise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: .9; }
+    90%  { opacity: .5; }
+    100% { transform: translateY(-110vh) translateX(var(--drift, 40px)); opacity: 0; }
+  }
+
+  /* floating pill dock nav, echoes the reference's control cluster */
+  .lc-dock {
+    position: relative;
+    z-index: 3;
+    margin: 22px auto 0;
+    display: inline-flex;
+    align-self: center;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(20, 32, 22, .5);
+    border: 1px solid rgba(255, 255, 255, .14);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .08);
+  }
+  .lc-dock button {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    border: none;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    color: #cfe3c4;
+    cursor: pointer;
+    transition: background .16s ease, color .16s ease;
+  }
+  .lc-dock button.active { background: #eef2e9; color: #16220f; }
+  .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .08); }
+  .lc-dock svg { width: 16px; height: 16px; }
+
+  .lc-body {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 6vw 8vw 10vw;
+  }
+  .lc-eyebrow {
+    font-family: var(--font);
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-size: .72rem;
+    font-weight: 600;
+    color: #a9d98f;
+    margin-bottom: 1rem;
+  }
+  .lc-hero h1 {
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.1rem;
+    color: #f4f7ee;
+    max-width: 14ch;
+  }
+  .lc-hero p.lead {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: rgba(238, 242, 233, .78);
+    max-width: 44ch;
+    margin: 0 0 2rem;
+  }
+  .lc-cta {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: 1rem 1.7rem;
+    border-radius: 999px;
+    background: rgba(238, 242, 233, .1);
+    border: 1px solid rgba(238, 242, 233, .38);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .12);
+    color: #f4f7ee;
+    font-family: var(--font);
+    font-size: .95rem;
+    font-weight: 500;
+    transition: background .22s ease, border-color .22s ease, transform .2s ease, box-shadow .25s ease;
+  }
+  /* a plain glass pill at rest — the glow only exists in the :hover rule below */
+  .lc-cta::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%);
+    opacity: .3; transition: opacity .22s ease;
+  }
+  .lc-cta:hover::after { opacity: .5; }
+  .lc-cta:hover {
+    background: rgba(238, 242, 233, .2);
+    border-color: rgba(255, 205, 160, .55);
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 34px -14px rgba(0, 0, 0, .5),
+      0 0 24px 2px rgba(255, 140, 60, .3),
+      inset 0 1px 0 rgba(255, 255, 255, .2);
+  }
+  .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
+  .lc-cta:hover svg { transform: translateX(3px); }
+
+  .lc-stats {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: clamp(1.6rem, 5vw, 4rem);
+    flex-wrap: wrap;
+    padding: 0 8vw 3.4vw;
+    font-family: var(--font);
+  }
+  .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #f4f7ee; }
+  .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(238, 242, 233, .55); }
+
+  .lc-side {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-family: var(--font);
+    font-size: .72rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(238, 242, 233, .45);
+    z-index: 2;
+  }
+
+  @media (max-width: 720px) {
+    .lc-side { display: none; }
+    .lc-body { padding: 26vw 7vw 16vw; align-items: flex-end; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · New</p>
+      <h1>Living Canopy — Nature Hero</h1>
+      <p>A CSS-only animated hero inspired by moss-and-forest landing pages: drifting pollen, soft moss-glow blobs and a floating pill dock — no Three.js, no build step, just HTML and CSS so it drops straight into any Kitbase page.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="lc-hero" id="lcHero">
+        <div class="lc-glow"></div>
+        <div class="lc-hotspot"></div>
+        <div class="lc-branch" aria-hidden="true">
+          <svg viewBox="0 0 1200 240" preserveAspectRatio="none">
+            <path d="M-40,10 C 160,-20 220,90 380,70 C 540,50 560,140 740,110 C 900,82 940,10 1240,30" fill="none" stroke="#2c2013" stroke-width="7" stroke-linecap="round"/>
+            <path d="M300,60 C 320,20 300,-10 260,-30" fill="none" stroke="#2c2013" stroke-width="4" stroke-linecap="round"/>
+            <path d="M660,105 C 690,140 730,150 780,140" fill="none" stroke="#2c2013" stroke-width="4" stroke-linecap="round"/>
+            <path d="M950,25 C 980,-10 1010,-16 1050,-4" fill="none" stroke="#2c2013" stroke-width="4" stroke-linecap="round"/>
+
+            <g class="sway" style="transform-origin:150px 0">
+              <ellipse cx="140" cy="18" rx="20" ry="9" fill="#4f8f5c" transform="rotate(-20 140 18)"/>
+              <ellipse cx="118" cy="40" rx="17" ry="8" fill="#7fbf7a" transform="rotate(10 118 40)"/>
+              <ellipse cx="165" cy="45" rx="16" ry="7" fill="#5aa464" transform="rotate(35 165 45)"/>
+              <circle cx="128" cy="12" r="5" fill="#eef2e9" opacity=".85"/>
+            </g>
+            <g class="sway" style="transform-origin:280px 0">
+              <ellipse cx="270" cy="-5" rx="18" ry="8" fill="#7fbf7a" transform="rotate(-30 270 -5)"/>
+              <ellipse cx="250" cy="15" rx="15" ry="7" fill="#4f8f5c" transform="rotate(15 250 15)"/>
+              <ellipse cx="295" cy="18" rx="15" ry="7" fill="#a9d98f" transform="rotate(48 295 18)"/>
+            </g>
+            <g class="sway" style="transform-origin:460px 0">
+              <ellipse cx="450" cy="55" rx="19" ry="9" fill="#5aa464" transform="rotate(-16 450 55)"/>
+              <ellipse cx="425" cy="72" rx="15" ry="7" fill="#7fbf7a" transform="rotate(20 425 72)"/>
+              <ellipse cx="478" cy="78" rx="14" ry="6" fill="#4f8f5c" transform="rotate(50 478 78)"/>
+              <circle cx="440" cy="48" r="4.5" fill="#eef2e9" opacity=".8"/>
+            </g>
+            <g class="sway" style="transform-origin:700px 0">
+              <ellipse cx="700" cy="95" rx="18" ry="8" fill="#4f8f5c" transform="rotate(-18 700 95)"/>
+              <ellipse cx="675" cy="112" rx="15" ry="7" fill="#a9d98f" transform="rotate(12 675 112)"/>
+              <ellipse cx="725" cy="118" rx="15" ry="7" fill="#5aa464" transform="rotate(45 725 118)"/>
+            </g>
+            <g class="sway" style="transform-origin:900px 0">
+              <ellipse cx="895" cy="15" rx="19" ry="9" fill="#7fbf7a" transform="rotate(-22 895 15)"/>
+              <ellipse cx="870" cy="34" rx="15" ry="7" fill="#4f8f5c" transform="rotate(14 870 34)"/>
+              <ellipse cx="920" cy="38" rx="15" ry="7" fill="#5aa464" transform="rotate(46 920 38)"/>
+              <circle cx="908" cy="6" r="5" fill="#eef2e9" opacity=".85"/>
+            </g>
+            <g class="sway" style="transform-origin:1080px 0">
+              <ellipse cx="1075" cy="35" rx="17" ry="8" fill="#5aa464" transform="rotate(-18 1075 35)"/>
+              <ellipse cx="1050" cy="52" rx="14" ry="6" fill="#7fbf7a" transform="rotate(16 1050 52)"/>
+              <ellipse cx="1098" cy="56" rx="14" ry="6" fill="#4f8f5c" transform="rotate(48 1098 56)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="lc-parallax" id="lcParallax">
+          <div class="lc-blob b1"></div>
+          <div class="lc-blob b2"></div>
+          <div class="lc-blob b3"></div>
+          <div class="lc-leaf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 20c8 0 14-6 14-14 0 0-9 0-13 5-3 3.5-2 7-2 7Z"/><path d="M4 20 15 9"/></svg>
+          </div>
+        </div>
+        <div class="lc-pollen" id="lcPollen"></div>
+        <div class="lc-grain"></div>
+
+        <nav class="lc-dock" aria-label="Scene controls">
+          <button class="active" aria-label="Canopy view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 2 5 5 5 8.5A5 5 0 0 1 7 11.5C7 8 9 5 12 3Z"/><path d="M12 21v-7"/></svg>
+          </button>
+          <button aria-label="Leaf view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20c8 0 14-6 14-14 0 0-9 0-13 5-3 3.5-2 7-2 7Z"/><path d="M4 20 15 9"/></svg>
+          </button>
+          <button aria-label="Collapse controls" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 15 6-6 6 6"/></svg>
+          </button>
+        </nav>
+
+        <div class="lc-body">
+          <div>
+            <p class="lc-eyebrow">Field notes · restoration</p>
+            <h1>Step into the<br>living canopy.</h1>
+            <p class="lead">We restore wild places through patient design, native planting, and a deeper kind of stewardship — one drifting seed at a time.</p>
+            <a class="lc-cta" href="#" data-demo>
+              Explore the work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="lc-stats">
+          <div><span>128k m²</span><small>CANOPY RESTORED</small></div>
+          <div><span>64</span><small>NATIVE SPECIES</small></div>
+          <div><span>19</span><small>ACTIVE SITES</small></div>
+        </div>
+
+        <div class="lc-side">Scroll to discover</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Pure CSS motion</h3>
+          <p>Blob drift and rising pollen are keyframe animations — no canvas, no WebGL, no extra dependency.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Reuses Kitbase tokens</h3>
+          <p>Typography and the pill/button shapes pull from the shared <code>style.css</code> tokens, only the hero palette shifts to moss green.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Drop-in section</h3>
+          <p>Copy the <code>.lc-hero</code> block into any page — <a href="index.html" style="color:var(--accent)">home</a>, a case study, or a new template.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  (function () {
+    var field = document.getElementById('lcPollen');
+    if (!field) return;
+    var count = window.innerWidth < 720 ? 16 : 30;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('span');
+      var left = Math.random() * 100;
+      var duration = 10 + Math.random() * 12;
+      var delay = Math.random() * -20;
+      var drift = (Math.random() * 80 - 40) + 'px';
+      var size = (2 + Math.random() * 3).toFixed(1) + 'px';
+      p.style.left = left + '%';
+      p.style.width = size;
+      p.style.height = size;
+      p.style.setProperty('--drift', drift);
+      p.style.animationDuration = duration + 's';
+      p.style.animationDelay = delay + 's';
+      field.appendChild(p);
+    }
+  })();
+
+  (function () {
+    var hero = document.getElementById('lcHero');
+    var layer = document.getElementById('lcParallax');
+    if (!hero || !layer || window.matchMedia('(pointer: coarse)').matches) return;
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      layer.style.transform = 'translate(' + (x * -18) + 'px,' + (y * -14) + 'px)';
+    });
+    hero.addEventListener('mouseleave', function () {
+      layer.style.transform = 'translate(0, 0)';
+    });
+  })();
+</script>
+</body>
+</html>

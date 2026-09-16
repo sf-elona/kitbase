@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidal Deep — Ocean Hero Template · Kitbase</title>
+<meta name="description" content="A CSS-only animated underwater hero template — god rays, drifting fish and swaying kelp. Premium HTML template by Kitbase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Tidal Deep hero — scoped, plain CSS, no build step ---------- */
+  .lc-hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(180deg, #bfe9ee 0%, #4fb3cf 8%, #1f87ae 24%, #146c93 42%, #0d5178 62%, #093e5e 82%, #082e46 100%);
+    color: #e9f6f6;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(70% 46% at 50% 0%, rgba(220, 250, 250, .55), transparent 72%),
+      radial-gradient(40% 34% at 12% 68%, rgba(60, 170, 190, .22), transparent 72%),
+      radial-gradient(60% 45% at 50% 108%, rgba(4, 18, 26, .55), transparent 75%);
+  }
+
+  /* the sunlit surface skin — a bright, slightly rippled band at the very top */
+  .lc-surface {
+    position: absolute; inset: -4% 0 auto; height: 10%; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(210,245,248,.35) 60%, transparent);
+    filter: blur(1px);
+  }
+
+  .lc-hotspot {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(30% 34% at 50% 2%, rgba(255, 255, 255, .55), transparent 64%);
+    mix-blend-mode: screen;
+  }
+
+  /* god rays — bright light shafts filtering from the surface */
+  .lc-rays { position: absolute; inset: -10% 0 0; z-index: 1; pointer-events: none; mix-blend-mode: screen; opacity: .8; }
+  .lc-rays span {
+    position: absolute; top: -6%; width: 13%; height: 140%;
+    background: linear-gradient(180deg, rgba(235, 255, 253, .55), rgba(210, 250, 245, .12) 55%, transparent 82%);
+    transform-origin: 50% 0%;
+    animation: lc-ray-sway 9s ease-in-out infinite;
+    filter: blur(3px);
+  }
+  .lc-rays span:nth-child(1) { left: 8%;  transform: rotate(9deg);  animation-duration: 10s; }
+  .lc-rays span:nth-child(2) { left: 26%; transform: rotate(4deg);  animation-duration: 12s; animation-delay: -3s; opacity: .7; }
+  .lc-rays span:nth-child(3) { left: 47%; transform: rotate(-3deg); animation-duration: 9s;  animation-delay: -5s; }
+  .lc-rays span:nth-child(4) { left: 68%; transform: rotate(8deg);  animation-duration: 13s; animation-delay: -2s; opacity: .6; }
+  .lc-rays span:nth-child(5) { left: 85%; transform: rotate(-6deg); animation-duration: 11s; animation-delay: -7s; }
+  @keyframes lc-ray-sway {
+    0%, 100% { transform: rotate(var(--r, 6deg)); }
+    50% { transform: rotate(calc(var(--r, 6deg) * -1)); }
+  }
+
+  /* dappled light on the seabed, the way sun looks once it's passed through
+     a moving surface — two tiled patterns drifting at slightly different
+     speeds so the moiré never repeats cleanly */
+  .lc-caustics {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 46%; z-index: 1; pointer-events: none;
+    opacity: .22; mix-blend-mode: screen;
+    background-image:
+      repeating-radial-gradient(ellipse 90px 34px at 0 0, rgba(220,255,250,.8), transparent 60%),
+      repeating-radial-gradient(ellipse 70px 26px at 40px 60px, rgba(220,255,250,.6), transparent 55%);
+    background-size: 220px 140px, 220px 140px;
+    animation: lc-caustic-drift 14s linear infinite;
+  }
+  @keyframes lc-caustic-drift {
+    0%   { background-position: 0 0, 0 0; }
+    100% { background-position: 220px 60px, -180px 90px; }
+  }
+
+  .lc-grain {
+    position: absolute; inset: 0; pointer-events: none; z-index: 4; opacity: .09; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .lc-parallax { position: absolute; inset: 0; transition: transform .3s ease-out; }
+
+  .lc-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .5; animation: lc-drift 22s ease-in-out infinite; }
+  .lc-blob.b1 { width: 380px; height: 380px; top: -80px; right: 6%;  background: radial-gradient(circle, #4fd6d6, transparent 65%); animation-duration: 26s; }
+  .lc-blob.b2 { width: 300px; height: 300px; bottom: -60px; left: 4%; background: radial-gradient(circle, #1f7a8c, transparent 65%); animation-duration: 30s; animation-delay: -6s; }
+  .lc-blob.b3 { width: 220px; height: 220px; top: 40%; left: 40%; background: radial-gradient(circle, #9fe8e0, transparent 65%); opacity: .28; animation-duration: 34s; animation-delay: -14s; }
+  @keyframes lc-drift { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(3%, -4%) scale(1.06); } }
+
+  /* fish — a body ellipse + a wiggling tail */
+  .lc-fish { position: absolute; z-index: 2; filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .35)); }
+  .lc-fish svg { display: block; }
+  .lc-fish .tail { transform-box: fill-box; transform-origin: 100% 50%; animation: lc-tail-wag .6s ease-in-out infinite; }
+  @keyframes lc-tail-wag { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(14deg); } }
+  .lc-fish.f1 { top: 22%; left: -8%; width: 60px; color: #ffb020; animation: lc-swim-right 17s linear infinite; }
+  .lc-fish.f2 { top: 46%; right: -8%; width: 44px; color: #2fb8c9; opacity: .92; animation: lc-swim-left 21s linear infinite; animation-delay: -6s; }
+  .lc-fish.f3 { top: 63%; left: -6%; width: 32px; color: #ff5a6b; opacity: .8; animation: lc-swim-right 25s linear infinite; animation-delay: -11s; }
+  .lc-fish.f4 { top: 12%; right: -6%; width: 24px; color: #ffd23f; opacity: .5; animation: lc-swim-left 29s linear infinite; animation-delay: -4s; }
+  .lc-fish.f5 { top: 34%; left: -7%; width: 40px; color: #a06bff; opacity: .78; animation: lc-swim-right 20s linear infinite; animation-delay: -14s; }
+  .lc-fish.f6 { top: 55%; right: -7%; width: 52px; color: #ffd23f; animation: lc-swim-left 19s linear infinite; animation-delay: -8s; }
+  .lc-fish.f7 { top: 70%; right: -6%; width: 22px; color: #d8f4ff; opacity: .55; animation: lc-swim-left 27s linear infinite; animation-delay: -2s; }
+  @keyframes lc-swim-right {
+    0%   { transform: translateX(0) translateY(0); }
+    25%  { transform: translateX(30vw) translateY(-14px); }
+    50%  { transform: translateX(62vw) translateY(6px); }
+    75%  { transform: translateX(92vw) translateY(-10px); }
+    100% { transform: translateX(124vw) translateY(0); }
+  }
+  @keyframes lc-swim-left {
+    0%   { transform: translateX(0) scaleX(-1) translateY(0); }
+    25%  { transform: translateX(-30vw) scaleX(-1) translateY(12px); }
+    50%  { transform: translateX(-62vw) scaleX(-1) translateY(-8px); }
+    75%  { transform: translateX(-92vw) scaleX(-1) translateY(10px); }
+    100% { transform: translateX(-124vw) scaleX(-1) translateY(0); }
+  }
+
+  /* rising bubbles */
+  .lc-pollen { position: absolute; inset: 0; pointer-events: none; }
+  .lc-pollen span {
+    position: absolute; bottom: -10px; border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.85), rgba(200,240,240,.25) 60%, transparent 75%);
+    box-shadow: 0 0 6px rgba(200, 240, 240, .35);
+    animation: lc-rise linear infinite;
+  }
+  @keyframes lc-rise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: .9; }
+    90%  { opacity: .55; }
+    100% { transform: translateY(-110vh) translateX(var(--drift, 40px)); opacity: 0; }
+  }
+
+  /* seaweed / kelp silhouette along the bottom */
+  .lc-kelp { position: absolute; left: 0; right: 0; bottom: -4px; height: clamp(140px, 24vw, 260px); z-index: 2; pointer-events: none; }
+  .lc-kelp svg { width: 100%; height: 100%; display: block; }
+  /* each blade bends from its own root, not the whole cluster, so the tips
+     drift independently instead of the group swinging like a rigid sign */
+  .lc-kelp .blade { animation: lc-kelp-sway 5.5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+  .lc-kelp .blade:nth-child(2n) { animation-duration: 6.8s; animation-delay: -1.8s; }
+  .lc-kelp .blade:nth-child(3n) { animation-duration: 7.6s; animation-delay: -3.4s; }
+  .lc-kelp .blade:nth-child(4n) { animation-duration: 6.1s; animation-delay: -.9s; }
+  @keyframes lc-kelp-sway {
+    0%, 100% { transform: rotate(-3.5deg) skewX(-2deg); }
+    50%      { transform: rotate(4deg) skewX(2deg); }
+  }
+
+  .lc-dock {
+    position: relative; z-index: 3; margin: 22px auto 0; display: inline-flex; align-self: center; gap: 6px; padding: 6px;
+    border-radius: 999px; background: rgba(10, 34, 42, .5); border: 1px solid rgba(255, 255, 255, .14);
+    backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .08);
+  }
+  .lc-dock button {
+    width: 38px; height: 38px; border-radius: 999px; border: none; display: grid; place-items: center;
+    background: transparent; color: #b6e6e6; cursor: pointer; transition: background .16s ease, color .16s ease;
+  }
+  .lc-dock button.active { background: #e9f6f6; color: #0a2a3a; }
+  .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .08); }
+  .lc-dock svg { width: 16px; height: 16px; }
+
+  .lc-body { position: relative; z-index: 2; flex: 1; display: flex; align-items: center; padding: 6vw 8vw 10vw; }
+  .lc-eyebrow { font-family: var(--font); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 600; color: #8fe0d8; margin-bottom: 1rem; }
+  .lc-hero h1 { font-family: var(--font); font-weight: 300; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 1.1rem; color: #eefaf9; max-width: 14ch; }
+  .lc-hero p.lead { font-family: var(--font-body); font-weight: 300; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(233, 246, 246, .78); max-width: 44ch; margin: 0 0 2rem; }
+
+  /* shimmer CTA — a light sweep loops across the frosted pill, echoing the
+     "liquid metal" glint without any WebGL: one moving gradient, masked to
+     the button's own shape. */
+  .lc-cta {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: 1rem 1.7rem; border-radius: 999px;
+    background: rgba(233, 246, 246, .1); border: 1px solid rgba(233, 246, 246, .38);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .12);
+    color: #eefaf9; font-family: var(--font); font-size: .95rem; font-weight: 500;
+    transition: background .22s ease, border-color .22s ease, transform .2s ease, box-shadow .25s ease;
+  }
+  .lc-cta::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%);
+    opacity: .3; transition: opacity .22s ease;
+  }
+  .lc-cta:hover::after { opacity: .5; }
+  .lc-cta:hover {
+    background: rgba(233, 246, 246, .2);
+    border-color: rgba(255, 205, 160, .55);
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 34px -14px rgba(0, 0, 0, .5),
+      0 0 24px 2px rgba(255, 140, 60, .3),
+      inset 0 1px 0 rgba(255, 255, 255, .2);
+  }
+  .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
+  .lc-cta:hover svg { transform: translateX(3px); }
+
+  .lc-stats { position: relative; z-index: 2; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 8vw 3.4vw; font-family: var(--font); }
+  .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #eefaf9; }
+  .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(233, 246, 246, .55); }
+
+  .lc-side { position: absolute; right: 22px; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; font-family: var(--font); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(233, 246, 246, .45); z-index: 2; }
+
+  .lc-pro { position: absolute; top: 16px; left: 16px; z-index: 3; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px; background: rgba(233, 246, 246, .12); border: 1px solid rgba(233, 246, 246, .3); backdrop-filter: blur(8px); font-family: var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .1em; color: #9fe8e0; }
+
+  @media (max-width: 720px) { .lc-side { display: none; } .lc-body { padding: 26vw 7vw 16vw; align-items: flex-end; } .lc-fish { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium</p>
+      <h1>Tidal Deep — Ocean Hero</h1>
+      <p>A different scene from the same CSS-only engine as the Living Canopy family: sunlit god-rays, fish swimming past at three depths, swaying kelp along the seabed, and a shimmering glass CTA — no video, no WebGL.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="lc-hero" id="lcHero">
+        <span class="lc-pro">★ PREMIUM</span>
+        <div class="lc-glow"></div>
+        <div class="lc-surface" aria-hidden="true"></div>
+        <div class="lc-hotspot"></div>
+        <div class="lc-rays" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="lc-kelp" aria-hidden="true">
+          <svg viewBox="0 0 1200 260" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="kelpA" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#061a17"/>
+                <stop offset="45%" stop-color="#0f4038"/>
+                <stop offset="100%" stop-color="#2f8f78"/>
+              </linearGradient>
+              <linearGradient id="kelpB" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#05130f"/>
+                <stop offset="50%" stop-color="#0a3a2e"/>
+                <stop offset="100%" stop-color="#3fae86"/>
+              </linearGradient>
+              <radialGradient id="rockA" cx="35%" cy="20%" r="80%">
+                <stop offset="0%" stop-color="#1a2e33"/>
+                <stop offset="100%" stop-color="#040c0e"/>
+              </radialGradient>
+              <radialGradient id="coralPink" cx="38%" cy="28%" r="75%">
+                <stop offset="0%" stop-color="#ff9fb2"/>
+                <stop offset="60%" stop-color="#e85f82"/>
+                <stop offset="100%" stop-color="#8f2f52"/>
+              </radialGradient>
+              <radialGradient id="coralPurple" cx="38%" cy="28%" r="75%">
+                <stop offset="0%" stop-color="#d3aaff"/>
+                <stop offset="60%" stop-color="#9a5fe0"/>
+                <stop offset="100%" stop-color="#4f2286"/>
+              </radialGradient>
+              <linearGradient id="coralOrange" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#c1502a"/>
+                <stop offset="100%" stop-color="#ffb27a"/>
+              </linearGradient>
+              <linearGradient id="coralYellow" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#7a9a2c"/>
+                <stop offset="100%" stop-color="#e8ff9e"/>
+              </linearGradient>
+              <radialGradient id="anemoneCore" cx="45%" cy="35%" r="70%">
+                <stop offset="0%" stop-color="#ffd6e6"/>
+                <stop offset="100%" stop-color="#c23f7a"/>
+              </radialGradient>
+            </defs>
+
+            <!-- seabed with a little relief, not a flat band -->
+            <path d="M0 232 C 140 214 260 240 420 226 C 620 210 800 236 1000 220 C 1100 212 1160 224 1200 214 L1200 260 L0 260 Z" fill="#04100e"/>
+            <path d="M0 232 C 140 214 260 240 420 226 C 620 210 800 236 1000 220 C 1100 212 1160 224 1200 214" fill="none" stroke="#0a2420" stroke-width="3" opacity=".6"/>
+
+            <!-- rock / reef mounds anchoring each kelp bed -->
+            <ellipse cx="70"   cy="238" rx="80" ry="26" fill="url(#rockA)"/>
+            <ellipse cx="150"  cy="244" rx="60" ry="20" fill="url(#rockA)" opacity=".9"/>
+            <ellipse cx="1040" cy="240" rx="70" ry="24" fill="url(#rockA)"/>
+            <ellipse cx="1140" cy="246" rx="55" ry="18" fill="url(#rockA)" opacity=".9"/>
+
+            <!-- kelp: tapered ribbon blades, each with its own gentle S-curve
+                 and its own sway timing, gradient-shaded dark-at-root to
+                 lit-teal at the tip -->
+            <g class="blade" style="transform-origin:44px 234px">
+              <path d="M30 234 C 22 190 42 172 26 132 C 14 100 34 78 22 40 C 16 20 30 8 28 -6 L38 -6 C 40 8 26 20 34 40 C 46 78 26 100 38 132 C 54 172 34 190 42 234 Z" fill="url(#kelpA)"/>
+            </g>
+            <g class="blade" style="transform-origin:78px 240px">
+              <path d="M64 240 C 54 196 76 176 58 138 C 44 104 66 82 52 46 C 45 24 60 10 57 -14 L69 -14 C 68 10 52 24 60 46 C 76 82 54 104 68 138 C 88 176 64 196 76 240 Z" fill="url(#kelpB)"/>
+            </g>
+            <g class="blade" style="transform-origin:118px 236px">
+              <path d="M106 236 C 98 198 116 180 102 146 C 90 116 108 96 96 64 C 90 46 102 34 100 14 L110 14 C 112 34 98 46 106 64 C 120 96 100 116 112 146 C 128 180 108 198 118 236 Z" fill="url(#kelpA)" opacity=".92"/>
+            </g>
+            <g class="blade" style="transform-origin:186px 244px">
+              <path d="M170 244 C 158 202 182 182 162 142 C 146 108 170 84 154 46 C 146 22 164 6 160 -20 L174 -20 C 172 6 152 22 162 46 C 180 84 154 108 172 142 C 194 182 168 202 182 244 Z" fill="url(#kelpB)" opacity=".85"/>
+            </g>
+
+            <g class="blade" style="transform-origin:1024px 240px">
+              <path d="M1010 240 C 1002 196 1024 176 1006 138 C 992 104 1014 82 1000 46 C 993 24 1008 10 1005 -14 L1017 -14 C 1016 10 1000 24 1008 46 C 1024 82 1002 104 1016 138 C 1036 176 1012 196 1024 240 Z" fill="url(#kelpB)"/>
+            </g>
+            <g class="blade" style="transform-origin:1064px 236px">
+              <path d="M1052 236 C 1044 198 1062 180 1048 146 C 1036 116 1054 96 1042 64 C 1036 46 1048 34 1046 14 L1056 14 C 1058 34 1044 46 1052 64 C 1066 96 1046 116 1058 146 C 1074 180 1054 198 1064 236 Z" fill="url(#kelpA)" opacity=".92"/>
+            </g>
+            <g class="blade" style="transform-origin:1122px 244px">
+              <path d="M1106 244 C 1094 202 1118 182 1098 142 C 1082 108 1106 84 1090 46 C 1082 22 1100 6 1096 -20 L1110 -20 C 1108 6 1088 22 1098 46 C 1116 84 1090 108 1108 142 C 1130 182 1104 202 1118 244 Z" fill="url(#kelpB)" opacity=".85"/>
+            </g>
+            <g class="blade" style="transform-origin:1166px 240px">
+              <path d="M1152 240 C 1144 196 1166 176 1148 138 C 1134 104 1156 82 1142 46 C 1135 24 1150 10 1147 -14 L1159 -14 C 1158 10 1142 24 1150 46 C 1166 82 1144 104 1158 138 C 1178 176 1154 196 1166 240 Z" fill="url(#kelpA)" opacity=".9"/>
+            </g>
+
+            <!-- colorful reef life: dome/brain coral, finger coral, a fan
+                 and an anemone — scattered among the rocks, unanimated so
+                 the eye reads them as solid growth rather than more kelp -->
+            <g>
+              <!-- brain/dome coral cluster, left -->
+              <circle cx="222" cy="250" r="15" fill="url(#coralPink)"/>
+              <circle cx="238" cy="256" r="11" fill="url(#coralPink)"/>
+              <circle cx="208" cy="256" r="10" fill="url(#coralPink)"/>
+              <circle cx="228" cy="240" r="9"  fill="url(#coralPink)"/>
+
+              <!-- finger/tube coral, left -->
+              <g>
+                <rect x="94"  y="222" width="7" height="30" rx="3.5" fill="url(#coralYellow)"/>
+                <rect x="104" y="212" width="7" height="40" rx="3.5" fill="url(#coralYellow)"/>
+                <rect x="114" y="226" width="7" height="26" rx="3.5" fill="url(#coralYellow)"/>
+                <rect x="86"  y="230" width="6" height="22" rx="3"   fill="url(#coralYellow)" opacity=".9"/>
+              </g>
+
+              <!-- fan coral, left, filled lace wedge -->
+              <path d="M262 250 C 256 224 264 204 284 194 C 296 208 298 228 290 250
+                       C 284 236 278 232 274 236 C 270 240 268 246 262 250 Z" fill="url(#coralOrange)" opacity=".92"/>
+              <path d="M262 250 C 268 232 278 224 284 194" fill="none" stroke="#ffd9b0" stroke-width="1" opacity=".5"/>
+              <path d="M290 250 C 288 228 292 210 284 194" fill="none" stroke="#ffd9b0" stroke-width="1" opacity=".5"/>
+
+              <!-- brain/dome coral cluster, right -->
+              <circle cx="988" cy="252" r="16" fill="url(#coralPurple)"/>
+              <circle cx="1006" cy="258" r="11" fill="url(#coralPurple)"/>
+              <circle cx="972"  cy="258" r="10" fill="url(#coralPurple)"/>
+              <circle cx="994"  cy="240" r="9"  fill="url(#coralPurple)"/>
+
+              <!-- finger/tube coral, right -->
+              <g>
+                <rect x="1082" y="220" width="7" height="32" rx="3.5" fill="url(#coralYellow)"/>
+                <rect x="1092" y="208" width="7" height="44" rx="3.5" fill="url(#coralYellow)"/>
+                <rect x="1102" y="224" width="7" height="28" rx="3.5" fill="url(#coralYellow)"/>
+              </g>
+
+              <!-- anemone, right: a soft base with wavy tentacles -->
+              <ellipse cx="1150" cy="252" rx="20" ry="8" fill="url(#anemoneCore)" opacity=".9"/>
+              <g fill="none" stroke="#ff8fb8" stroke-width="2.6" stroke-linecap="round" opacity=".85">
+                <path d="M1134 250 C 1130 230 1136 214 1128 196"/>
+                <path d="M1142 250 C 1140 226 1148 212 1144 192"/>
+                <path d="M1150 250 C 1150 224 1150 208 1150 188"/>
+                <path d="M1158 250 C 1160 226 1152 212 1156 192"/>
+                <path d="M1166 250 C 1170 230 1164 214 1172 196"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="lc-parallax" id="lcParallax">
+          <div class="lc-blob b1"></div>
+          <div class="lc-blob b2"></div>
+          <div class="lc-blob b3"></div>
+          <div class="lc-fish f1"><svg viewBox="0 0 64 30">
+            <g class="tail"><path d="M20 15 C10 4 -4 2 -10 15 C-4 10 8 13 20 15 C8 17 -4 20 -10 15 C-4 28 10 26 20 15 Z" fill="currentColor" opacity=".8"/></g>
+            <path d="M20 15 C20 6 34 3 46 5 C56 7 60 12 60 15 C60 18 56 23 46 25 C34 27 20 24 20 15 Z" fill="currentColor"/>
+            <path d="M34 4 L40 -5 L46 5 Z" fill="currentColor" opacity=".85"/>
+            <path d="M37 21 L33 29 L45 22 Z" fill="currentColor" opacity=".7"/>
+            <circle cx="50" cy="12" r="1.6" fill="#0a1418"/>
+          </svg></div>
+          <div class="lc-fish f2"><svg viewBox="0 0 64 30">
+            <g class="tail"><path d="M20 15 C10 4 -4 2 -10 15 C-4 10 8 13 20 15 C8 17 -4 20 -10 15 C-4 28 10 26 20 15 Z" fill="currentColor" opacity=".8"/></g>
+            <path d="M20 15 C20 6 34 3 46 5 C56 7 60 12 60 15 C60 18 56 23 46 25 C34 27 20 24 20 15 Z" fill="currentColor"/>
+            <path d="M34 4 L40 -5 L46 5 Z" fill="currentColor" opacity=".85"/>
+            <path d="M37 21 L33 29 L45 22 Z" fill="currentColor" opacity=".7"/>
+            <circle cx="50" cy="12" r="1.6" fill="#0a1418"/>
+          </svg></div>
+          <div class="lc-fish f3"><svg viewBox="0 0 64 30">
+            <g class="tail"><path d="M20 15 C10 4 -4 2 -10 15 C-4 10 8 13 20 15 C8 17 -4 20 -10 15 C-4 28 10 26 20 15 Z" fill="currentColor" opacity=".8"/></g>
+            <path d="M20 15 C20 6 34 3 46 5 C56 7 60 12 60 15 C60 18 56 23 46 25 C34 27 20 24 20 15 Z" fill="currentColor"/>
+            <path d="M34 4 L40 -5 L46 5 Z" fill="currentColor" opacity=".85"/>
+            <path d="M37 21 L33 29 L45 22 Z" fill="currentColor" opacity=".7"/>
+            <circle cx="50" cy="12" r="1.6" fill="#0a1418"/>
+          </svg></div>
+          <div class="lc-fish f4"><svg viewBox="0 0 64 30">
+            <g class="tail"><path d="M20 15 C10 4 -4 2 -10 15 C-4 10 8 13 20 15 C8 17 -4 20 -10 15 C-4 28 10 26 20 15 Z" fill="currentColor" opacity=".8"/></g>
+            <path d="M20 15 C20 6 34 3 46 5 C56 7 60 12 60 15 C60 18 56 23 46 25 C34 27 20 24 20 15 Z" fill="currentColor"/>
+            <path d="M34 4 L40 -5 L46 5 Z" fill="currentColor" opacity=".85"/>
+            <path d="M37 21 L33 29 L45 22 Z" fill="currentColor" opacity=".7"/>
+            <circle cx="50" cy="12" r="1.6" fill="#0a1418"/>
+          </svg></div>
+          <div class="lc-fish f5"><svg viewBox="0 0 64 30">
+            <g class="tail"><path d="M20 15 C10 4 -4 2 -10 15 C-4 10 8 13 20 15 C8 17 -4 20 -10 15 C-4 28 10 26 20 15 Z" fill="currentColor" opacity=".8"/></g>
+            <path d="M20 15 C20 6 34 3 46 5 C56 7 60 12 60 15 C60 18 56 23 46 25 C34 27 20 24 20 15 Z" fill="currentColor"/>
+            <path d="M34 4 L40 -5 L46 5 Z" fill="currentColor" opacity=".85"/>
+            <path d="M37 21 L33 29 L45 22 Z" fill="currentColor" opacity=".7"/>
+            <circle cx="50" cy="12" r="1.6" fill="#0a1418"/>
+          </svg></div>
+          <!-- butterflyfish: same silhouette, plus a dark eye-band and tail-band
+               so it reads as patterned rather than flat-colored -->
+          <div class="lc-fish f6"><svg viewBox="0 0 64 30">
+            <g class="tail"><path d="M20 15 C10 4 -4 2 -10 15 C-4 10 8 13 20 15 C8 17 -4 20 -10 15 C-4 28 10 26 20 15 Z" fill="currentColor" opacity=".8"/></g>
+            <path d="M20 15 C20 6 34 3 46 5 C56 7 60 12 60 15 C60 18 56 23 46 25 C34 27 20 24 20 15 Z" fill="currentColor"/>
+            <path d="M34 4 L40 -5 L46 5 Z" fill="currentColor" opacity=".85"/>
+            <path d="M37 21 L33 29 L45 22 Z" fill="currentColor" opacity=".7"/>
+            <path d="M43 4 C41 9 41 21 43 26 C47 21 47 9 43 4 Z" fill="#181418" opacity=".82"/>
+            <path d="M52 6 C50 10 50 20 52 24 C55 20 55 10 52 6 Z" fill="#181418" opacity=".55"/>
+            <circle cx="50" cy="12" r="1.6" fill="#181418"/>
+          </svg></div>
+          <div class="lc-fish f7"><svg viewBox="0 0 64 30">
+            <g class="tail"><path d="M20 15 C10 4 -4 2 -10 15 C-4 10 8 13 20 15 C8 17 -4 20 -10 15 C-4 28 10 26 20 15 Z" fill="currentColor" opacity=".8"/></g>
+            <path d="M20 15 C20 6 34 3 46 5 C56 7 60 12 60 15 C60 18 56 23 46 25 C34 27 20 24 20 15 Z" fill="currentColor"/>
+            <path d="M34 4 L40 -5 L46 5 Z" fill="currentColor" opacity=".85"/>
+            <path d="M37 21 L33 29 L45 22 Z" fill="currentColor" opacity=".7"/>
+            <circle cx="50" cy="12" r="1.6" fill="#0a1418"/>
+          </svg></div>
+        </div>
+        <div class="lc-caustics" aria-hidden="true"></div>
+        <div class="lc-pollen" id="lcPollen"></div>
+        <div class="lc-grain"></div>
+
+        <nav class="lc-dock" aria-label="Scene controls">
+          <button class="active" aria-label="Reef view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 15c2-5 5-8 9-8s7 3 9 8"/><path d="M3 19c2-4 5-6 9-6s7 2 9 6"/></svg>
+          </button>
+          <button aria-label="Current view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8c2 2 4 2 6 0s4-2 6 0 4 2 6 0M2 14c2 2 4 2 6 0s4-2 6 0 4 2 6 0"/></svg>
+          </button>
+          <button aria-label="Collapse controls" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 15 6-6 6 6"/></svg>
+          </button>
+        </nav>
+
+        <div class="lc-body">
+          <div>
+            <p class="lc-eyebrow">Field notes · reef watch</p>
+            <h1>Step into the<br>tidal deep.</h1>
+            <p class="lead">We chart the reef the way it actually moves — light, current, and the fish that keep coming back to the same coral every season.</p>
+            <a class="lc-cta" href="#" data-demo>
+              Explore the work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="lc-stats">
+          <div><span>340 ha</span><small>REEF MAPPED</small></div>
+          <div><span>58</span><small>SPECIES TRACKED</small></div>
+          <div><span>14</span><small>DIVE SITES</small></div>
+        </div>
+
+        <div class="lc-side">Scroll to discover</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A different scene</h3>
+          <p>Same building blocks as the forest heroes — glow blobs, drifting particles, a foreground silhouette — restyled underwater instead of repainted.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Fish, not blobs</h3>
+          <p>Four fish swim past at different depths and speeds, each with its own wiggling tail — pure CSS keyframes, no sprite sheet.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Shimmering CTA</h3>
+          <p>The button's glass catches a slow rotating highlight — a nod to a liquid-metal glint, done with one conic gradient instead of a shader.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  (function () {
+    var field = document.getElementById('lcPollen');
+    if (!field) return;
+    var count = window.innerWidth < 720 ? 18 : 34;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('span');
+      var left = Math.random() * 100;
+      var duration = 7 + Math.random() * 9;
+      var delay = Math.random() * -16;
+      var drift = (Math.random() * 60 - 30) + 'px';
+      var size = (3 + Math.random() * 5).toFixed(1) + 'px';
+      p.style.left = left + '%';
+      p.style.width = size;
+      p.style.height = size;
+      p.style.setProperty('--drift', drift);
+      p.style.animationDuration = duration + 's';
+      p.style.animationDelay = delay + 's';
+      field.appendChild(p);
+    }
+  })();
+
+  (function () {
+    var hero = document.getElementById('lcHero');
+    var layer = document.getElementById('lcParallax');
+    if (!hero || !layer || window.matchMedia('(pointer: coarse)').matches) return;
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      layer.style.transform = 'translate(' + (x * -14) + 'px,' + (y * -10) + 'px)';
+    });
+    hero.addEventListener('mouseleave', function () { layer.style.transform = 'translate(0, 0)'; });
+  })();
+</script>
+</body>
+</html>

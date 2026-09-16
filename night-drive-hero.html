@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Run — Motion Hero Template · Kitbase</title>
+<meta name="description" content="A CSS-only animated night-drive hero template — a car crossing a glowing skyline with motion-streak headlights. Premium HTML template by Kitbase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Night Run hero — scoped, plain CSS, no build step ---------- */
+  .lc-hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(180deg, #171225 0%, #140f22 40%, #0c0a16 74%, #07060d 100%);
+    color: #f1eefc;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(46% 40% at 78% 10%, rgba(255, 150, 90, .22), transparent 70%),
+      radial-gradient(34% 30% at 14% 66%, rgba(120, 90, 255, .24), transparent 72%),
+      radial-gradient(60% 45% at 50% 108%, rgba(20, 10, 30, .7), transparent 75%);
+  }
+
+  .lc-hotspot {
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(22% 28% at 76% 8%, rgba(255, 255, 255, .40), transparent 62%);
+    mix-blend-mode: screen;
+  }
+
+  .lc-grain {
+    position: absolute; inset: 0; pointer-events: none; z-index: 4; opacity: .1; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .lc-parallax { position: absolute; inset: 0; transition: transform .3s ease-out; }
+
+  /* distant skyline silhouette */
+  .lc-skyline { position: absolute; left: 0; right: 0; bottom: 22%; height: 30vh; z-index: 1; pointer-events: none; opacity: .8; }
+  .lc-skyline svg { width: 100%; height: 100%; display: block; }
+  .lc-skyline .win { animation: lc-twinkle 4s ease-in-out infinite; }
+  .lc-skyline .win:nth-child(3n) { animation-delay: -1.3s; }
+  .lc-skyline .win:nth-child(4n) { animation-delay: -2.6s; }
+  @keyframes lc-twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .9; } }
+
+  .lc-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .5; animation: lc-drift 22s ease-in-out infinite; }
+  .lc-blob.b1 { width: 380px; height: 380px; top: -80px; right: 6%;  background: radial-gradient(circle, #ff9a5a, transparent 65%); animation-duration: 26s; }
+  .lc-blob.b2 { width: 300px; height: 300px; bottom: -60px; left: 4%; background: radial-gradient(circle, #7a5aff, transparent 65%); animation-duration: 30s; animation-delay: -6s; }
+  .lc-blob.b3 { width: 220px; height: 220px; top: 40%; left: 40%; background: radial-gradient(circle, #ffd39a, transparent 65%); opacity: .26; animation-duration: 34s; animation-delay: -14s; }
+  @keyframes lc-drift { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(3%, -4%) scale(1.06); } }
+
+  /* bokeh — soft out-of-focus city lights drifting past */
+  .lc-pollen { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .lc-pollen span {
+    position: absolute; top: 10%; border-radius: 50%; filter: blur(1px);
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), rgba(255,200,140,.25) 55%, transparent 72%);
+    animation: lc-drift-side linear infinite;
+  }
+  @keyframes lc-drift-side {
+    0%   { transform: translateX(0); opacity: 0; }
+    10%  { opacity: .8; }
+    90%  { opacity: .5; }
+    100% { transform: translateX(var(--drift, -60vw)); opacity: 0; }
+  }
+
+  /* the road, in perspective, with a dashed centre line that streams toward camera */
+  .lc-road { position: absolute; left: 0; right: 0; bottom: -6px; height: 26vh; z-index: 2; pointer-events: none; overflow: hidden; }
+  .lc-road .surface { position: absolute; inset: 0; background: linear-gradient(180deg, #1a1622, #050408); clip-path: polygon(38% 0, 62% 0, 100% 100%, 0% 100%); }
+  .lc-road .dashes {
+    position: absolute; left: 50%; bottom: 0; width: 5%; height: 100%; transform: translateX(-50%);
+    clip-path: polygon(38% 0, 62% 0, 100% 100%, 0% 100%);
+    background: repeating-linear-gradient(180deg, rgba(255, 214, 150, .85) 0 6%, transparent 6% 16%);
+    background-size: 100% 220%;
+    animation: lc-road-stream .7s linear infinite;
+  }
+  @keyframes lc-road-stream { from { background-position: 0 0; } to { background-position: 0 220%; } }
+
+  /* the car: a side-profile silhouette with glowing lamps, crossing the frame,
+     leaving a soft motion-streak behind it */
+  .lc-car { position: absolute; bottom: 15%; left: -20%; width: clamp(140px, 18vw, 240px); z-index: 3; animation: lc-drive 9s linear infinite; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .5)); }
+  .lc-car svg { width: 100%; height: auto; display: block; }
+  .lc-car .headlamp { animation: lc-lamp-pulse 1.6s ease-in-out infinite; }
+  @keyframes lc-lamp-pulse { 0%, 100% { opacity: .85; } 50% { opacity: 1; } }
+  @keyframes lc-drive { 0% { transform: translateX(0); } 100% { transform: translateX(150vw); } }
+
+  .lc-streak { position: absolute; bottom: 17%; left: -25%; width: 46%; height: 3px; z-index: 2; border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255, 200, 140, .55) 60%, rgba(255, 230, 190, .8));
+    animation: lc-drive 9s linear infinite; filter: blur(1px);
+  }
+
+  .lc-dock {
+    position: relative; z-index: 5; margin: 22px auto 0; display: inline-flex; align-self: center; gap: 6px; padding: 6px;
+    border-radius: 999px; background: rgba(22, 16, 32, .5); border: 1px solid rgba(255, 255, 255, .14);
+    backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .08);
+  }
+  .lc-dock button { width: 38px; height: 38px; border-radius: 999px; border: none; display: grid; place-items: center; background: transparent; color: #d8cdf2; cursor: pointer; transition: background .16s ease, color .16s ease; }
+  .lc-dock button.active { background: #f1eefc; color: #201638; }
+  .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .08); }
+  .lc-dock svg { width: 16px; height: 16px; }
+
+  .lc-body { position: relative; z-index: 4; flex: 1; display: flex; align-items: center; padding: 6vw 8vw 10vw; }
+  .lc-eyebrow { font-family: var(--font); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 600; color: #ffb385; margin-bottom: 1rem; }
+  .lc-hero h1 { font-family: var(--font); font-weight: 300; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 1.1rem; color: #f6f3ff; max-width: 14ch; }
+  .lc-hero p.lead { font-family: var(--font-body); font-weight: 300; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(241, 238, 252, .78); max-width: 44ch; margin: 0 0 2rem; }
+
+  .lc-cta {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: 1rem 1.7rem; border-radius: 999px;
+    background: rgba(241, 238, 252, .1); border: 1px solid rgba(241, 238, 252, .38);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .12);
+    color: #f6f3ff; font-family: var(--font); font-size: .95rem; font-weight: 500;
+    transition: background .22s ease, border-color .22s ease, transform .2s ease, box-shadow .25s ease;
+  }
+  .lc-cta::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%);
+    opacity: .3; transition: opacity .22s ease;
+  }
+  .lc-cta:hover::after { opacity: .5; }
+  .lc-cta:hover {
+    background: rgba(241, 238, 252, .2);
+    border-color: rgba(255, 205, 160, .55);
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 34px -14px rgba(0, 0, 0, .5),
+      0 0 24px 2px rgba(255, 140, 60, .3),
+      inset 0 1px 0 rgba(255, 255, 255, .2);
+  }
+  .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
+  .lc-cta:hover svg { transform: translateX(3px); }
+
+  .lc-stats { position: relative; z-index: 4; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 8vw 3.4vw; font-family: var(--font); }
+  .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #f6f3ff; }
+  .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(241, 238, 252, .55); }
+
+  .lc-side { position: absolute; right: 22px; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; font-family: var(--font); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(241, 238, 252, .45); z-index: 4; }
+
+  .lc-pro { position: absolute; top: 16px; left: 16px; z-index: 5; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px; background: rgba(241, 238, 252, .12); border: 1px solid rgba(241, 238, 252, .3); backdrop-filter: blur(8px); font-family: var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .1em; color: #ffcfa8; }
+
+  @media (max-width: 720px) { .lc-side { display: none; } .lc-body { padding: 26vw 7vw 16vw; align-items: flex-end; } .lc-car, .lc-streak { animation-duration: 7s; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium</p>
+      <h1>Night Run — Motion Hero</h1>
+      <p>A third scene on the same engine: a glowing skyline, a dashed road streaming toward the camera, and a car crossing the frame with pulsing lamps and a soft motion streak — again, no video file and no WebGL.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="lc-hero" id="lcHero">
+        <span class="lc-pro">★ PREMIUM</span>
+        <div class="lc-glow"></div>
+        <div class="lc-hotspot"></div>
+
+        <div class="lc-skyline" aria-hidden="true">
+          <svg viewBox="0 0 1200 240" preserveAspectRatio="none">
+            <g fill="#120e1e">
+              <rect x="20"  y="120" width="70" height="120"/>
+              <rect x="110" y="70"  width="50" height="170"/>
+              <rect x="180" y="150" width="60" height="90"/>
+              <rect x="260" y="40"  width="46" height="200"/>
+              <rect x="330" y="100" width="80" height="140"/>
+              <rect x="440" y="60"  width="54" height="180"/>
+              <rect x="520" y="130" width="70" height="110"/>
+              <rect x="610" y="20"  width="46" height="220"/>
+              <rect x="680" y="90"  width="64" height="150"/>
+              <rect x="770" y="140" width="60" height="100"/>
+              <rect x="850" y="50"  width="50" height="190"/>
+              <rect x="920" y="110" width="76" height="130"/>
+              <rect x="1020" y="70" width="54" height="170"/>
+              <rect x="1100" y="150" width="70" height="90"/>
+            </g>
+            <g fill="#ffd39a">
+              <rect class="win" x="30" y="135" width="6" height="8"/><rect class="win" x="45" y="150" width="6" height="8"/><rect class="win" x="60" y="165" width="6" height="8"/><rect class="win" x="75" y="140" width="6" height="8"/>
+              <rect class="win" x="120" y="90" width="6" height="8"/><rect class="win" x="135" y="110" width="6" height="8"/><rect class="win" x="150" y="130" width="6" height="8"/>
+              <rect class="win" x="270" y="60" width="6" height="8"/><rect class="win" x="285" y="80" width="6" height="8"/><rect class="win" x="270" y="100" width="6" height="8"/><rect class="win" x="285" y="120" width="6" height="8"/>
+              <rect class="win" x="450" y="80" width="6" height="8"/><rect class="win" x="465" y="100" width="6" height="8"/><rect class="win" x="450" y="120" width="6" height="8"/>
+              <rect class="win" x="620" y="40" width="6" height="8"/><rect class="win" x="635" y="60" width="6" height="8"/><rect class="win" x="620" y="80" width="6" height="8"/><rect class="win" x="635" y="100" width="6" height="8"/>
+              <rect class="win" x="690" y="110" width="6" height="8"/><rect class="win" x="705" y="130" width="6" height="8"/>
+              <rect class="win" x="860" y="70" width="6" height="8"/><rect class="win" x="875" y="90" width="6" height="8"/>
+              <rect class="win" x="930" y="130" width="6" height="8"/><rect class="win" x="945" y="150" width="6" height="8"/><rect class="win" x="960" y="130" width="6" height="8"/>
+              <rect class="win" x="1030" y="90" width="6" height="8"/><rect class="win" x="1045" y="110" width="6" height="8"/>
+              <rect class="win" x="1110" y="170" width="6" height="8"/><rect class="win" x="1125" y="190" width="6" height="8"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="lc-road" aria-hidden="true">
+          <div class="surface"></div>
+          <div class="dashes"></div>
+        </div>
+
+        <div class="lc-parallax" id="lcParallax">
+          <div class="lc-blob b1"></div>
+          <div class="lc-blob b2"></div>
+          <div class="lc-blob b3"></div>
+        </div>
+
+        <div class="lc-streak" aria-hidden="true"></div>
+        <div class="lc-car" aria-hidden="true">
+          <svg viewBox="0 0 200 90">
+            <path d="M8 68 C6 50 18 44 34 42 L52 24 C58 18 68 14 80 14 L128 14 C140 14 150 20 156 30 L170 44 C182 46 192 52 194 68 L194 74 L8 74 Z" fill="#241a38"/>
+            <path d="M62 40 L82 22 L128 22 L146 40 Z" fill="#3a2a58"/>
+            <circle cx="46" cy="74" r="14" fill="#0c0814"/>
+            <circle cx="46" cy="74" r="6" fill="#4a3a68"/>
+            <circle cx="156" cy="74" r="14" fill="#0c0814"/>
+            <circle cx="156" cy="74" r="6" fill="#4a3a68"/>
+            <ellipse class="headlamp" cx="190" cy="58" rx="7" ry="5" fill="#ffe6bf"/>
+            <ellipse cx="14" cy="60" rx="5" ry="4" fill="#ff5a4a"/>
+          </svg>
+        </div>
+
+        <div class="lc-pollen" id="lcPollen"></div>
+        <div class="lc-grain"></div>
+
+        <nav class="lc-dock" aria-label="Scene controls">
+          <button class="active" aria-label="City view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="9" width="6" height="12"/><rect x="14" y="4" width="6" height="17"/></svg>
+          </button>
+          <button aria-label="Route view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8 7.5c3 1 4 5 7 6"/></svg>
+          </button>
+          <button aria-label="Collapse controls" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 15 6-6 6 6"/></svg>
+          </button>
+        </nav>
+
+        <div class="lc-body">
+          <div>
+            <p class="lc-eyebrow">Field notes · night route</p>
+            <h1>Step into the<br>night run.</h1>
+            <p class="lead">We map how a city actually moves after dark — the routes that stay lit, the ones that empty out, and everything in between.</p>
+            <a class="lc-cta" href="#" data-demo>
+              Explore the work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="lc-stats">
+          <div><span>1.2k km</span><small>ROUTES MAPPED</small></div>
+          <div><span>36</span><small>CITIES CONNECTED</small></div>
+          <div><span>24/7</span><small>LIVE TRACKING</small></div>
+        </div>
+
+        <div class="lc-side">Scroll to discover</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A third scene</h3>
+          <p>Same glow blobs and particle field as the forest and reef heroes, restyled around a skyline and a road instead of a canopy.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A car in motion</h3>
+          <p>One SVG silhouette crosses the frame on a loop, with pulsing lamps and a soft motion streak — pure CSS, no video file.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Streaming road</h3>
+          <p>The centre line is a repeating gradient animated toward the camera, which is what sells the sense of speed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  (function () {
+    var field = document.getElementById('lcPollen');
+    if (!field) return;
+    var count = window.innerWidth < 720 ? 10 : 20;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('span');
+      var top = 6 + Math.random() * 55;
+      var duration = 6 + Math.random() * 8;
+      var delay = Math.random() * -12;
+      var drift = -(50 + Math.random() * 40) + 'vw';
+      var size = (4 + Math.random() * 10).toFixed(1) + 'px';
+      p.style.top = top + '%';
+      p.style.left = (60 + Math.random() * 50) + '%';
+      p.style.width = size;
+      p.style.height = size;
+      p.style.setProperty('--drift', drift);
+      p.style.animationDuration = duration + 's';
+      p.style.animationDelay = delay + 's';
+      field.appendChild(p);
+    }
+  })();
+
+  (function () {
+    var hero = document.getElementById('lcHero');
+    var layer = document.getElementById('lcParallax');
+    if (!hero || !layer || window.matchMedia('(pointer: coarse)').matches) return;
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      layer.style.transform = 'translate(' + (x * -14) + 'px,' + (y * -10) + 'px)';
+    });
+    hero.addEventListener('mouseleave', function () { layer.style.transform = 'translate(0, 0)'; });
+  })();
+</script>
+</body>
+</html>

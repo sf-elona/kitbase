@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maple Autumn — Nature Hero Template · Kitbase</title>
+<meta name="description" content="A CSS-only animated autumn hero template — a maple branch and falling amber leaves. Premium HTML template by Kitbase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Maple Autumn hero — scoped, plain CSS, no build step ---------- */
+  .lc-hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(120% 100% at 18% 8%, #4a2c18 0%, #2a160c 46%, #140a06 100%);
+    color: #fbeee0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(38% 46% at 78% 18%, rgba(255, 150, 90, .3), transparent 70%),
+      radial-gradient(30% 34% at 12% 78%, rgba(220, 90, 50, .24), transparent 72%),
+      radial-gradient(50% 40% at 50% 105%, rgba(120, 55, 30, .55), transparent 75%);
+    filter: blur(2px);
+  }
+
+  .lc-hotspot {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background:
+      radial-gradient(18% 26% at 74% 14%, rgba(255, 255, 255, .48), transparent 60%),
+      radial-gradient(42% 46% at 82% 10%, rgba(255, 190, 130, .4), transparent 68%);
+    mix-blend-mode: screen;
+  }
+
+  .lc-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    opacity: .1;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .lc-parallax { position: absolute; inset: 0; transition: transform .3s ease-out; }
+
+  .lc-branch {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    width: 100%;
+    height: clamp(140px, 24vw, 260px);
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .4));
+  }
+  .lc-branch svg { width: 100%; height: 100%; display: block; }
+  .lc-branch .sway { animation: lc-branch-sway 8s ease-in-out infinite; transform-origin: 50% 0%; }
+  .lc-branch .sway:nth-child(even) { animation-duration: 9.5s; animation-delay: -3s; }
+  @keyframes lc-branch-sway {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    50% { transform: rotate(.7deg) translateY(2px); }
+  }
+
+  .lc-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .55;
+    animation: lc-drift 22s ease-in-out infinite;
+  }
+  .lc-blob.b1 { width: 380px; height: 380px; top: -80px; right: 6%; background: radial-gradient(circle, #ff9450, transparent 65%); animation-duration: 26s; }
+  .lc-blob.b2 { width: 300px; height: 300px; bottom: -60px; left: 4%; background: radial-gradient(circle, #d6512b, transparent 65%); animation-duration: 30s; animation-delay: -6s; }
+  .lc-blob.b3 { width: 220px; height: 220px; top: 40%; left: 40%; background: radial-gradient(circle, #ffcf8a, transparent 65%); opacity: .3; animation-duration: 34s; animation-delay: -14s; }
+  @keyframes lc-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(3%, -4%) scale(1.06); }
+  }
+
+  /* falling maple leaves, tumbling as they drop */
+  .lc-pollen { position: absolute; inset: 0; pointer-events: none; }
+  .lc-pollen span {
+    position: absolute;
+    top: -14px;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 165, 90, .9);
+    clip-path: polygon(50% 0%, 65% 30%, 100% 35%, 72% 55%, 82% 90%, 50% 68%, 18% 90%, 28% 55%, 0% 35%, 35% 30%);
+    box-shadow: 0 0 6px rgba(255, 165, 90, .4);
+    animation: lc-fall linear infinite;
+  }
+  .lc-pollen span:nth-child(3n) { background: rgba(214, 81, 43, .9); box-shadow: 0 0 6px rgba(214, 81, 43, .4); }
+  .lc-pollen span:nth-child(3n+1) { background: rgba(255, 207, 138, .9); box-shadow: 0 0 6px rgba(255, 207, 138, .4); }
+  @keyframes lc-fall {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: .9; }
+    90%  { opacity: .6; }
+    100% { transform: translateY(112vh) translateX(var(--drift, 40px)) rotate(300deg); opacity: 0; }
+  }
+
+  .lc-dock {
+    position: relative;
+    z-index: 3;
+    margin: 22px auto 0;
+    display: inline-flex;
+    align-self: center;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(42, 22, 12, .5);
+    border: 1px solid rgba(255, 255, 255, .14);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .08);
+  }
+  .lc-dock button {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    border: none;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    color: #f2cba0;
+    cursor: pointer;
+    transition: background .16s ease, color .16s ease;
+  }
+  .lc-dock button.active { background: #fbeee0; color: #3a2010; }
+  .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .08); }
+  .lc-dock svg { width: 16px; height: 16px; }
+
+  .lc-body {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 6vw 8vw 10vw;
+  }
+  .lc-eyebrow {
+    font-family: var(--font);
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-size: .72rem;
+    font-weight: 600;
+    color: #ffb877;
+    margin-bottom: 1rem;
+  }
+  .lc-hero h1 {
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.1rem;
+    color: #fbeee0;
+    max-width: 14ch;
+  }
+  .lc-hero p.lead {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: rgba(251, 238, 224, .78);
+    max-width: 44ch;
+    margin: 0 0 2rem;
+  }
+  .lc-cta {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: 1rem 1.7rem;
+    border-radius: 999px;
+    background: rgba(251, 238, 224, .1);
+    border: 1px solid rgba(251, 238, 224, .38);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .12);
+    color: #fbeee0;
+    font-family: var(--font);
+    font-size: .95rem;
+    font-weight: 500;
+    transition: background .22s ease, border-color .22s ease, transform .2s ease, box-shadow .25s ease;
+  }
+  .lc-cta::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%);
+    opacity: .3; transition: opacity .22s ease;
+  }
+  .lc-cta:hover::after { opacity: .5; }
+  .lc-cta:hover {
+    background: rgba(251, 238, 224, .2);
+    border-color: rgba(255, 205, 160, .55);
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 34px -14px rgba(0, 0, 0, .5),
+      0 0 24px 2px rgba(255, 140, 60, .3),
+      inset 0 1px 0 rgba(255, 255, 255, .2);
+  }
+  .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
+  .lc-cta:hover svg { transform: translateX(3px); }
+
+  .lc-stats {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: clamp(1.6rem, 5vw, 4rem);
+    flex-wrap: wrap;
+    padding: 0 8vw 3.4vw;
+    font-family: var(--font);
+  }
+  .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #fbeee0; }
+  .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(251, 238, 224, .55); }
+
+  .lc-side {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-family: var(--font);
+    font-size: .72rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(251, 238, 224, .45);
+    z-index: 2;
+  }
+
+  .lc-pro {
+    position: absolute;
+    top: 16px; left: 16px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .3rem .65rem;
+    border-radius: 999px;
+    background: rgba(251, 238, 224, .12);
+    border: 1px solid rgba(251, 238, 224, .3);
+    backdrop-filter: blur(8px);
+    font-family: var(--font);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    color: #ffcf8a;
+  }
+
+  @media (max-width: 720px) {
+    .lc-side { display: none; }
+    .lc-body { padding: 26vw 7vw 16vw; align-items: flex-end; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium</p>
+      <h1>Maple Autumn — Nature Hero</h1>
+      <p>Part of the Living Canopy family: a bare-branch silhouette against an amber sky, with maple leaves tumbling and rotating as they fall — same CSS-only engine as the free Living Green hero, re-toned for autumn.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="lc-hero" id="lcHero">
+        <span class="lc-pro">★ PREMIUM</span>
+        <div class="lc-glow"></div>
+        <div class="lc-hotspot"></div>
+        <div class="lc-branch" aria-hidden="true">
+          <svg viewBox="0 0 1200 240" preserveAspectRatio="none">
+            <path d="M-40,10 C 160,-20 220,90 380,70 C 540,50 560,140 740,110 C 900,82 940,10 1240,30" fill="none" stroke="#3a2214" stroke-width="7" stroke-linecap="round"/>
+            <path d="M300,60 C 320,20 300,-10 260,-30" fill="none" stroke="#3a2214" stroke-width="4" stroke-linecap="round"/>
+            <path d="M660,105 C 690,140 730,150 780,140" fill="none" stroke="#3a2214" stroke-width="4" stroke-linecap="round"/>
+            <path d="M950,25 C 980,-10 1010,-16 1050,-4" fill="none" stroke="#3a2214" stroke-width="4" stroke-linecap="round"/>
+
+            <g class="sway" style="transform-origin:150px 0">
+              <path d="M140 15 l6 -14 5 10 10 -8 -2 13 12 2 -10 8 6 12 -13 -4 -3 13 -6 -11 -11 6 5 -12 -13 -3 11 -6Z" fill="#ff9450" transform="translate(0 5) scale(.72)"/>
+              <ellipse cx="180" cy="46" rx="16" ry="7" fill="#3a2214" transform="rotate(24 180 46)" opacity=".55"/>
+            </g>
+            <g class="sway" style="transform-origin:280px 0">
+              <path d="M270 -8 l6 -14 5 10 10 -8 -2 13 12 2 -10 8 6 12 -13 -4 -3 13 -6 -11 -11 6 5 -12 -13 -3 11 -6Z" fill="#d6512b" transform="translate(0 5) scale(.62)"/>
+            </g>
+            <g class="sway" style="transform-origin:460px 0">
+              <ellipse cx="435" cy="72" rx="16" ry="7" fill="#3a2214" transform="rotate(-16 435 72)" opacity=".55"/>
+              <path d="M462 55 l6 -14 5 10 10 -8 -2 13 12 2 -10 8 6 12 -13 -4 -3 13 -6 -11 -11 6 5 -12 -13 -3 11 -6Z" fill="#ffcf8a" transform="translate(0 5) scale(.68)"/>
+            </g>
+            <g class="sway" style="transform-origin:700px 0">
+              <path d="M700 90 l6 -14 5 10 10 -8 -2 13 12 2 -10 8 6 12 -13 -4 -3 13 -6 -11 -11 6 5 -12 -13 -3 11 -6Z" fill="#d6512b" transform="translate(0 5) scale(.62)"/>
+            </g>
+            <g class="sway" style="transform-origin:900px 0">
+              <ellipse cx="920" cy="40" rx="16" ry="7" fill="#3a2214" transform="rotate(30 920 40)" opacity=".55"/>
+              <path d="M888 12 l6 -14 5 10 10 -8 -2 13 12 2 -10 8 6 12 -13 -4 -3 13 -6 -11 -11 6 5 -12 -13 -3 11 -6Z" fill="#ff9450" transform="translate(0 5) scale(.72)"/>
+            </g>
+            <g class="sway" style="transform-origin:1080px 0">
+              <path d="M1070 32 l6 -14 5 10 10 -8 -2 13 12 2 -10 8 6 12 -13 -4 -3 13 -6 -11 -11 6 5 -12 -13 -3 11 -6Z" fill="#ffcf8a" transform="translate(0 5) scale(.62)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="lc-parallax" id="lcParallax">
+          <div class="lc-blob b1"></div>
+          <div class="lc-blob b2"></div>
+          <div class="lc-blob b3"></div>
+        </div>
+        <div class="lc-pollen" id="lcPollen"></div>
+        <div class="lc-grain"></div>
+
+        <nav class="lc-dock" aria-label="Scene controls">
+          <button class="active" aria-label="Autumn view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 4 6 5 6 10a6 6 0 0 1-12 0c0-5 4-6 6-10Z"/><path d="M12 21v-6"/></svg>
+          </button>
+          <button aria-label="Wind view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h11a2.5 2.5 0 1 0-2.4-3.2M3 12h15a2.5 2.5 0 1 1-2.4 3.2M3 16h9"/></svg>
+          </button>
+          <button aria-label="Collapse controls" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 15 6-6 6 6"/></svg>
+          </button>
+        </nav>
+
+        <div class="lc-body">
+          <div>
+            <p class="lc-eyebrow">Field notes · fall watch</p>
+            <h1>Step into the<br>amber fall.</h1>
+            <p class="lead">Leaf by leaf, the canopy turns — we track the color, the drop, and what it tells us about the year the forest just had.</p>
+            <a class="lc-cta" href="#" data-demo>
+              Explore the work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="lc-stats">
+          <div><span>96k</span><small>LEAVES TRACKED</small></div>
+          <div><span>27</span><small>MAPLE STANDS</small></div>
+          <div><span>11</span><small>ACTIVE SITES</small></div>
+        </div>
+
+        <div class="lc-side">Scroll to discover</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Same engine, new tone</h3>
+          <p>Same markup as the free Living Green hero — only the palette, particle shape and branch ornament change.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Tumbling leaves</h3>
+          <p>Each leaf is a CSS clip-path polygon that falls and rotates on its own randomized timer — no images.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Part of a family</h3>
+          <p>Pairs with <a href="nature-hero.html" style="color:var(--accent)">Living Green</a> (free) and <a href="nature-hero-sakura.html" style="color:var(--accent)">Sakura Sunset</a> (premium) for a seasonal set.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  (function () {
+    var field = document.getElementById('lcPollen');
+    if (!field) return;
+    var count = window.innerWidth < 720 ? 14 : 24;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('span');
+      var left = Math.random() * 100;
+      var duration = 9 + Math.random() * 10;
+      var delay = Math.random() * -20;
+      var drift = (Math.random() * 100 - 50) + 'px';
+      var size = (8 + Math.random() * 5).toFixed(1) + 'px';
+      p.style.left = left + '%';
+      p.style.width = size;
+      p.style.height = size;
+      p.style.setProperty('--drift', drift);
+      p.style.animationDuration = duration + 's';
+      p.style.animationDelay = delay + 's';
+      field.appendChild(p);
+    }
+  })();
+
+  (function () {
+    var hero = document.getElementById('lcHero');
+    var layer = document.getElementById('lcParallax');
+    if (!hero || !layer || window.matchMedia('(pointer: coarse)').matches) return;
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      layer.style.transform = 'translate(' + (x * -18) + 'px,' + (y * -14) + 'px)';
+    });
+    hero.addEventListener('mouseleave', function () {
+      layer.style.transform = 'translate(0, 0)';
+    });
+  })();
+</script>
+</body>
+</html>
