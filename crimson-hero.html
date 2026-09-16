@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crimson Line — Studio Hero Template · Kitbase</title>
+<meta name="description" content="A full-bleed video hero template built around a closed-set studio car capture — a Manrope headline with an italic accent word, a full-glass pill CTA and an ultra-transparent glass card that never hides the footage. Premium HTML template by Kitbase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Crimson Line hero — scoped, plain CSS, no build step ---------- */
+  .lc-hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #0b0a0a;
+    color: #f6f4f2;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-video {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 50% 42%;
+  }
+
+  /* the studio backdrop already reads clean and neutral — a light top/bottom
+     scrim keeps text legible without dulling the car's own red */
+  .lc-scrim {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(8,7,7,.62) 0%, rgba(8,7,7,.08) 26%, rgba(8,7,7,.1) 60%, rgba(8,7,7,.72) 100%),
+      radial-gradient(46% 40% at 78% 78%, rgba(230, 57, 70, .1), transparent 70%);
+  }
+
+  .lc-grain {
+    position: absolute; inset: 0; pointer-events: none; z-index: 4; opacity: .06; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .lc-dock {
+    position: relative; z-index: 3; margin: 22px auto 0; display: inline-flex; align-self: center; gap: 6px; padding: 6px;
+    border-radius: 999px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 10px 30px rgba(0,0,0,.4), inset 0 1px 0 rgba(255, 255, 255, .12);
+  }
+  .lc-dock button { width: 38px; height: 38px; border-radius: 999px; border: none; display: grid; place-items: center; background: transparent; color: #f0e9e8; cursor: pointer; transition: background .16s ease, color .16s ease; }
+  .lc-dock button.active { background: #e63946; color: #fff; }
+  .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .1); }
+  .lc-dock svg { width: 16px; height: 16px; }
+
+  .lc-body { position: relative; z-index: 2; flex: 1; display: flex; align-items: flex-end; padding: 4vw clamp(28px, 6vw, 100px) 7vw; }
+
+  .lc-eyebrow {
+    font-family: 'Manrope', var(--font);
+    display: inline-flex; align-items: center; gap: 8px;
+    text-transform: uppercase; letter-spacing: .16em; font-size: .74rem; font-weight: 700;
+    color: #ff6b74; margin: 0 0 1.2rem;
+  }
+  .lc-eyebrow::before { content: ""; width: 22px; height: 1px; background: #ff6b74; }
+
+  .lc-headline {
+    font-family: 'Manrope', var(--font);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-size: clamp(2.2rem, 5.2vw, 4.1rem);
+    line-height: 1.05;
+    color: #f9f7f6;
+    text-shadow: 0 4px 26px rgba(0, 0, 0, .5);
+    max-width: 16ch;
+    margin: 0 0 1.2rem;
+  }
+  .lc-headline em { font-style: italic; font-weight: 700; color: #ff4d5a; }
+
+  .lc-lead {
+    font-family: 'Manrope', var(--font-body);
+    font-weight: 400;
+    font-size: clamp(.98rem, 1.5vw, 1.08rem);
+    line-height: 1.6;
+    color: rgba(246, 244, 242, .78);
+    max-width: 42ch;
+    margin: 0 0 2.2rem;
+  }
+
+  /* full-glass pill CTA — one material, no separate circular cap */
+  .lc-cta {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 58px; padding: 0 28px; border-radius: 999px;
+    background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .3);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    color: #f9f7f6; font-family: 'Manrope', var(--font); font-weight: 600; font-size: .98rem;
+    text-decoration: none;
+    box-shadow: 0 16px 34px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 -1px 10px rgba(255,255,255,.04);
+    transition: box-shadow .22s ease, transform .22s ease, background .22s ease;
+  }
+  .lc-cta:hover { background: rgba(255, 255, 255, .18); transform: translateY(-2px); box-shadow: 0 20px 44px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255, 255, 255, .45); }
+  .lc-cta:active { transform: translateY(0); }
+  .lc-cta svg { width: 16px; height: 16px; transition: transform .22s ease; }
+  .lc-cta:hover svg { transform: translateX(2px); }
+
+  .lc-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .lc-textlink {
+    font-family: 'Manrope', var(--font);
+    font-size: .92rem; font-weight: 600;
+    color: rgba(246, 244, 242, .74);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: color .2s ease;
+  }
+  .lc-textlink:hover { color: #f9f7f6; }
+  .lc-textlink svg { width: 14px; height: 14px; }
+
+  /* ultra-transparent glass card — deliberately the thinnest, most see-through
+     card in the family: the studio footage IS the product shot, so the card
+     reads as etched glass laid over it rather than a solid panel that hides
+     the car. High blur carries the "glass" read; the fill itself stays
+     almost invisible. */
+  .lc-card {
+    position: absolute; z-index: 3;
+    right: clamp(16px, 4vw, 56px); bottom: 8vh;
+    width: clamp(200px, 17vw, 240px);
+    padding: 1.1rem 1.2rem 1.3rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .22);
+    backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%);
+    box-shadow: 0 20px 48px -22px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .2);
+    font-family: 'Manrope', var(--font);
+  }
+  .lc-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .lc-card-label { font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(246, 244, 242, .68); }
+  .lc-card-badge { font-size: .62rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(230, 57, 70, .2); color: #ff8087; }
+  .lc-card-stats { display: flex; gap: 1.1rem; margin-bottom: 10px; }
+  .lc-card-stats div span { display: block; font-size: 1.15rem; font-weight: 800; color: #f9f7f6; }
+  .lc-card-stats div small { font-size: .62rem; letter-spacing: .04em; color: rgba(246, 244, 242, .6); }
+  .lc-card-desc { font-size: .74rem; line-height: 1.45; color: rgba(246, 244, 242, .68); margin: 0; }
+
+  .lc-pro { position: absolute; top: 16px; left: 16px; z-index: 3; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .24); backdrop-filter: blur(8px); font-family: 'Manrope', var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .1em; color: #ff8087; }
+
+  .lc-unmute {
+    position: absolute; top: 16px; right: 16px; z-index: 3;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .4rem .7rem .4rem .55rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .24);
+    background: rgba(255, 255, 255, .08); backdrop-filter: blur(8px);
+    color: #f6f4f2; font-family: 'Manrope', var(--font); font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+    cursor: pointer; transition: background .16s ease;
+  }
+  .lc-unmute:hover { background: rgba(255, 255, 255, .16); }
+  .lc-unmute svg { width: 14px; height: 14px; }
+
+  @media (max-width: 860px) {
+    .lc-card { position: static; margin: 1.4rem clamp(20px, 6vw, 48px) 0; width: auto; max-width: 280px; background: rgba(255, 255, 255, .07); }
+    .lc-body { padding: 30vw clamp(20px, 6vw, 48px) 0; flex-direction: column; align-items: flex-start; }
+    .lc-headline { font-size: clamp(1.7rem, 7.4vw, 2.6rem); margin-bottom: 1.1rem; }
+    .lc-lead { margin-bottom: 1.8rem; }
+  }
+  @media (max-width: 380px) {
+    .lc-headline { font-size: clamp(1.5rem, 7.6vw, 2rem); }
+    .lc-cta { padding: 0 22px; height: 52px; font-size: .92rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium</p>
+      <h1>Crimson Line — Studio Hero</h1>
+      <p>A sixth video hero, built around a closed-set studio capture: a Manrope headline with one italic accent word, a full-glass pill CTA and the family's most transparent card yet — deliberately thin so the car is never hidden behind it.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="lc-hero" id="crHero">
+        <span class="lc-pro">★ PREMIUM</span>
+        <button class="lc-unmute" id="crUnmute" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9v6h4l5 5V4L8 9H4Z"/><path d="M16 8.5a5 5 0 0 1 0 7" opacity=".5"/></svg>
+          <span id="crUnmuteLabel">Unmute</span>
+        </button>
+
+        <video class="lc-video" autoplay muted loop playsinline preload="metadata">
+          <source src="assets/video/red-lambo-studio-hero.mp4" type="video/mp4">
+        </video>
+        <div class="lc-scrim" aria-hidden="true"></div>
+        <div class="lc-grain"></div>
+
+        <nav class="lc-dock" aria-label="Scene controls">
+          <button class="active" aria-label="Overview" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="8" cy="12" r="1.4"/><path d="M13 12h5"/></svg>
+          </button>
+          <button aria-label="Specs" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20 20 4M9 4H4v5M15 20h5v-5"/></svg>
+          </button>
+          <button aria-label="Collapse controls" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 15 6-6 6 6"/></svg>
+          </button>
+        </nav>
+
+        <div class="lc-body">
+          <div>
+            <p class="lc-eyebrow">Studio Session · Closed Set</p>
+            <h1 class="lc-headline">Precision, finished in <em>red</em>.</h1>
+            <p class="lc-lead">A closed-set studio capture, turned slowly under controlled light — every panel gap and reflection considered.</p>
+            <div class="lc-actions">
+              <a class="lc-cta" href="#" data-demo>
+                Explore the build
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="lc-textlink" href="#">
+                View specs
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="lc-card">
+          <div class="lc-card-top">
+            <span class="lc-card-label">On Set</span>
+            <span class="lc-card-badge">Live</span>
+          </div>
+          <div class="lc-card-stats">
+            <div><span>6.5L</span><small>NATURALLY ASPIRATED</small></div>
+            <div><span>770</span><small>HP</small></div>
+          </div>
+          <p class="lc-card-desc">Shot in 4K on a closed set, loop-ready.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Same system, sixth scene</h3>
+          <p>The same Manrope headline, full-glass CTA and frosted card language as the rest of the family — proof it scales to a studio product shot, not just outdoor footage.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Glass, not a panel</h3>
+          <p>The card's fill sits at 5% opacity behind a heavy blur — enough structure to read as glass, not enough to hide the car underneath it.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Built for product shots</h3>
+          <p>Swap the clip for any closed-set capture — the scrim is light enough to stay out of the way of controlled studio lighting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('crUnmute');
+    var label = document.getElementById('crUnmuteLabel');
+    var video = document.querySelector('.lc-video');
+    if (!btn || !video) return;
+    btn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      var muted = video.muted;
+      btn.setAttribute('aria-pressed', String(!muted));
+      label.textContent = muted ? 'Unmute' : 'Mute';
+    });
+  })();
+</script>
+</body>
+</html>
