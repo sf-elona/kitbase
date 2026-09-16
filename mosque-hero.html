@@ -92,7 +92,7 @@
   .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .1); }
   .lc-dock svg { width: 16px; height: 16px; }
 
-  .lc-body { position: relative; z-index: 3; flex: 1; display: flex; align-items: center; padding: 6vw 8vw 16vw; }
+  .lc-body { position: relative; z-index: 3; flex: 1; display: flex; align-items: center; padding: 6vw clamp(28px, 6vw, 100px) 16vw; }
   .lc-eyebrow { font-family: var(--font); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 600; color: #ffd98a; margin-bottom: 1rem; }
   .lc-hero h1 { font-family: var(--font); font-weight: 300; font-size: clamp(2.3rem, 5.6vw, 4.3rem); line-height: 1.08; letter-spacing: -0.01em; margin: 0 0 1.1rem; color: #fff8ec; max-width: 15ch; text-shadow: 0 2px 24px rgba(60, 20, 10, .35); }
   .lc-hero p.lead { font-family: var(--font-body); font-weight: 300; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(255, 247, 234, .85); max-width: 46ch; margin: 0 0 2rem; text-shadow: 0 1px 14px rgba(60, 20, 10, .3); }
@@ -125,7 +125,7 @@
   .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
   .lc-cta:hover svg { transform: translateX(3px); }
 
-  .lc-stats { position: relative; z-index: 3; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 8vw 3.4vw; font-family: var(--font); }
+  .lc-stats { position: relative; z-index: 3; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 clamp(28px, 6vw, 100px) 3.4vw; font-family: var(--font); }
   .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #fff8ec; }
   .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(255, 247, 234, .68); }
 
@@ -133,7 +133,7 @@
 
   @media (max-width: 720px) {
     .lc-side { display: none; }
-    .lc-body { padding: 24vw 7vw 34vw; align-items: flex-start; }
+    .lc-body { padding: 24vw clamp(20px, 6vw, 48px) 34vw; align-items: flex-start; }
     .lc-dove { display: none; }
   }
 </style>

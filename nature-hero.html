@@ -170,7 +170,7 @@
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 6vw 8vw 10vw;
+    padding: 6vw clamp(28px, 6vw, 100px) 10vw;
   }
   .lc-eyebrow {
     font-family: var(--font);
@@ -242,7 +242,7 @@
     display: flex;
     gap: clamp(1.6rem, 5vw, 4rem);
     flex-wrap: wrap;
-    padding: 0 8vw 3.4vw;
+    padding: 0 clamp(28px, 6vw, 100px) 3.4vw;
     font-family: var(--font);
   }
   .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #f4f7ee; }
@@ -264,7 +264,7 @@
 
   @media (max-width: 720px) {
     .lc-side { display: none; }
-    .lc-body { padding: 26vw 7vw 16vw; align-items: flex-end; }
+    .lc-body { padding: 26vw clamp(20px, 6vw, 48px) 16vw; align-items: flex-end; }
   }
 </style>
 </head>

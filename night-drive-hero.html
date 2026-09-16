@@ -108,7 +108,7 @@
   .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .08); }
   .lc-dock svg { width: 16px; height: 16px; }
 
-  .lc-body { position: relative; z-index: 4; flex: 1; display: flex; align-items: center; padding: 6vw 8vw 10vw; }
+  .lc-body { position: relative; z-index: 4; flex: 1; display: flex; align-items: center; padding: 6vw clamp(28px, 6vw, 100px) 10vw; }
   .lc-eyebrow { font-family: var(--font); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 600; color: #ffb385; margin-bottom: 1rem; }
   .lc-hero h1 { font-family: var(--font); font-weight: 300; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 1.1rem; color: #f6f3ff; max-width: 14ch; }
   .lc-hero p.lead { font-family: var(--font-body); font-weight: 300; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(241, 238, 252, .78); max-width: 44ch; margin: 0 0 2rem; }
@@ -141,7 +141,7 @@
   .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
   .lc-cta:hover svg { transform: translateX(3px); }
 
-  .lc-stats { position: relative; z-index: 4; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 8vw 3.4vw; font-family: var(--font); }
+  .lc-stats { position: relative; z-index: 4; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 clamp(28px, 6vw, 100px) 3.4vw; font-family: var(--font); }
   .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #f6f3ff; }
   .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(241, 238, 252, .55); }
 
@@ -149,7 +149,7 @@
 
   .lc-pro { position: absolute; top: 16px; left: 16px; z-index: 5; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px; background: rgba(241, 238, 252, .12); border: 1px solid rgba(241, 238, 252, .3); backdrop-filter: blur(8px); font-family: var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .1em; color: #ffcfa8; }
 
-  @media (max-width: 720px) { .lc-side { display: none; } .lc-body { padding: 26vw 7vw 16vw; align-items: flex-end; } .lc-car, .lc-streak { animation-duration: 7s; } }
+  @media (max-width: 720px) { .lc-side { display: none; } .lc-body { padding: 26vw clamp(20px, 6vw, 48px) 16vw; align-items: flex-end; } .lc-car, .lc-streak { animation-duration: 7s; } }
 </style>
 </head>
 <body>

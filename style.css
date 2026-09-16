@@ -132,15 +132,19 @@ img, svg { max-width: 100%; display: block; }
 .site-header .wrap { pointer-events: auto; }
 .nav {
   display: flex; align-items: center; justify-content: space-between;
-  height: 60px;
-  padding: 0 8px 0 20px;
+  height: 62px;
+  padding: 0 10px 0 22px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
   border: 1px solid var(--border);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 14px 34px -16px rgba(20, 18, 15, .35);
-  transition: border-color .2s ease, box-shadow .2s ease;
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .55) inset,
+    0 0 0 1px rgba(255, 255, 255, .04) inset,
+    0 18px 40px -18px rgba(20, 18, 15, .4),
+    0 4px 10px -4px rgba(20, 18, 15, .15);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 :root[data-theme="dark"] .nav {
   box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 14px 34px -16px rgba(0, 0, 0, .55);
@@ -157,45 +161,47 @@ img, svg { max-width: 100%; display: block; }
   letter-spacing: -0.03em;
   display: flex;
   align-items: center;
-  gap: .55rem;
+  gap: .6rem;
   color: var(--text);
-  transition: opacity .15s ease;
+  transition: opacity .15s ease, transform .15s ease;
 }
-.brand:hover { opacity: .82; }
+.brand:hover { opacity: .85; }
+.brand:hover .dot { transform: rotate(-6deg) scale(1.04); }
 .brand .dot {
-  width: 22px; height: 22px;
-  border-radius: 7px;
+  width: 24px; height: 24px;
+  border-radius: 7.5px;
   background: linear-gradient(155deg, color-mix(in srgb, var(--accent) 92%, #fff), var(--accent));
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--accent) 50%, transparent), inset 0 1px 0 rgba(255, 255, 255, .35);
   display: grid;
   place-items: center;
   flex: none;
+  transition: transform .2s cubic-bezier(.2,.8,.2,1);
 }
 .brand .dot::after { content: ""; width: 8px; height: 8px; border-radius: 3px; background: var(--accent-ink); }
-.nav-links { display: flex; align-items: center; gap: .2rem; list-style: none; margin: 0; padding: 0; }
+.nav-links { display: flex; align-items: center; gap: .1rem; list-style: none; margin: 0; padding: 0; }
 .nav-links a {
   display: inline-flex; align-items: center;
-  font-family: var(--font); font-size: .9rem; font-weight: 500;
-  padding: .5rem .85rem;
+  font-family: var(--font); font-size: .89rem; font-weight: 500; letter-spacing: -0.005em;
+  padding: .52rem .9rem;
   border-radius: 999px;
   color: var(--text-soft);
   transition: color .16s ease, background .16s ease;
 }
 .nav-links a:hover { color: var(--text); background: color-mix(in srgb, var(--text) 6%, transparent); }
 .nav-links a[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); font-weight: 600; }
-.nav-right { display: flex; align-items: center; gap: .5rem; }
+.nav-right { display: flex; align-items: center; gap: .3rem; padding-left: .5rem; margin-left: .3rem; border-left: 1px solid var(--border); }
 .icon-btn {
-  background: transparent;
-  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+  border: 1px solid var(--border);
   color: var(--text-soft);
   width: 38px; height: 38px;
   border-radius: 999px;
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: color .16s ease, background .16s ease, border-color .16s ease;
+  transition: color .16s ease, background .16s ease, border-color .16s ease, transform .16s ease;
 }
-.icon-btn:hover { color: var(--text); background: color-mix(in srgb, var(--text) 6%, transparent); border-color: var(--border); }
+.icon-btn:hover { color: var(--text); background: color-mix(in srgb, var(--text) 7%, transparent); border-color: var(--border-strong); transform: translateY(-1px); }
 .icon-btn svg { width: 18px; height: 18px; }
 .nav-toggle { display: none; }
 
