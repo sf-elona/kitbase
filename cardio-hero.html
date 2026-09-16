@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Every Beat — Cardio Video Hero Template · Kitbase</title>
-<meta name="description" content="A full-bleed video hero template for health and biotech products — a floating nav dock, a hero headline, a subheader and a glowing CTA over a looping anatomical clip. Premium HTML template by Kitbase.">
+<meta name="description" content="A full-bleed video hero template for health and biotech products — a floating nav dock, a Manrope headline with an italic accent word, a full-glass pill CTA and a frosted stat card over a looping anatomical clip. Premium HTML template by Kitbase.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
   /* ---------- Every Beat hero — scoped, plain CSS, no build step ---------- */
@@ -66,43 +66,51 @@
     70%  { box-shadow: 0 0 0 8px rgba(255,107,107,0); }
     100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
   }
-  .lc-hero h1 { font-family: var(--font); font-weight: 300; font-size: clamp(2.3rem, 5.8vw, 4.6rem); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 1.1rem; color: #f5f6f8; max-width: 15ch; text-shadow: 0 4px 30px rgba(0,0,0,.55); }
-  .lc-hero h1 em { font-style: normal; color: #ff8080; }
-  .lc-hero p.lead { font-family: var(--font-body); font-weight: 300; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(238, 241, 245, .82); max-width: 44ch; margin: 0 0 2rem; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+  .lc-hero h1 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(2.3rem, 5.8vw, 4.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 1.1rem; color: #f5f6f8; max-width: 15ch; text-shadow: 0 4px 30px rgba(0,0,0,.55); }
+  .lc-hero h1 em { font-style: italic; font-weight: 700; color: #ff8080; }
+  .lc-hero p.lead { font-family: 'Manrope', var(--font-body); font-weight: 400; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(238, 241, 245, .82); max-width: 44ch; margin: 0 0 2rem; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
 
-  /* the CTA — same clean-at-rest, glow-on-hover system as the rest of the
-     Kitbase hero family, tinted toward the cardiac red for this theme */
+  /* full-glass pill CTA — one material, no separate circular cap */
   .lc-cta {
-    position: relative; overflow: hidden; isolation: isolate;
-    display: inline-flex; align-items: center; gap: .6rem;
-    padding: 1rem 1.7rem; border-radius: 999px;
-    background: rgba(238, 241, 245, .1); border: 1px solid rgba(238, 241, 245, .35);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .12);
-    color: #f5f6f8; font-family: var(--font); font-size: .95rem; font-weight: 500;
-    transition: background .22s ease, border-color .22s ease, transform .2s ease, box-shadow .25s ease;
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 58px; padding: 0 28px; border-radius: 999px;
+    background: rgba(238, 241, 245, .12); border: 1px solid rgba(238, 241, 245, .32);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    color: #f5f6f8; font-family: 'Manrope', var(--font); font-weight: 600; font-size: .98rem;
+    text-decoration: none;
+    box-shadow: 0 16px 34px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 -1px 10px rgba(255,255,255,.05);
+    transition: box-shadow .22s ease, transform .22s ease, background .22s ease;
   }
-  .lc-cta::after {
-    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%);
-    opacity: .3; transition: opacity .22s ease;
-  }
-  .lc-cta:hover::after { opacity: .5; }
-  .lc-cta:hover {
-    background: rgba(238, 241, 245, .18);
-    border-color: rgba(255, 150, 150, .5);
-    transform: translateY(-2px);
-    box-shadow:
-      0 16px 34px -14px rgba(0, 0, 0, .55),
-      0 0 24px 2px rgba(255, 90, 90, .32),
-      inset 0 1px 0 rgba(255, 255, 255, .2);
-  }
-  .lc-cta svg { width: 18px; height: 18px; transition: transform .18s ease; }
-  .lc-cta:hover svg { transform: translateX(3px); }
+  .lc-cta:hover { background: rgba(238, 241, 245, .2); transform: translateY(-2px); box-shadow: 0 20px 44px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255, 255, 255, .45); }
+  .lc-cta:active { transform: translateY(0); }
+  .lc-cta svg { width: 16px; height: 16px; transition: transform .22s ease; }
+  .lc-cta:hover svg { transform: translateX(2px); }
 
-  .lc-stats { position: relative; z-index: 2; display: flex; gap: clamp(1.6rem, 5vw, 4rem); flex-wrap: wrap; padding: 0 clamp(28px, 6vw, 100px) 3.4vw; font-family: var(--font); }
-  .lc-stats div span { display: block; font-size: 1.5rem; font-weight: 600; color: #f5f6f8; }
-  .lc-stats div small { font-size: .78rem; letter-spacing: .04em; color: rgba(238, 241, 245, .6); }
+  /* frosted stat card, replacing the old inline stats row */
+  .lc-card {
+    position: absolute; z-index: 3;
+    right: clamp(16px, 4vw, 64px); bottom: 9vh;
+    width: clamp(240px, 22vw, 300px);
+    padding: 1.5rem 1.5rem 1.7rem;
+    border-radius: 22px;
+    background: linear-gradient(160deg, rgba(238,241,245,.12), rgba(238,241,245,.04));
+    border: 1px solid rgba(238, 241, 245, .18);
+    backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
+    box-shadow: 0 24px 50px -18px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .22);
+    font-family: 'Manrope', var(--font);
+  }
+  .lc-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .lc-card-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(238, 241, 245, .6); }
+  .lc-card-badge { font-size: .68rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: rgba(255, 107, 107, .18); color: #ff9d9d; }
+  .lc-card-stats { display: flex; gap: 1.4rem; margin-bottom: 14px; }
+  .lc-card-stats div span { display: block; font-size: 1.4rem; font-weight: 800; color: #f5f6f8; }
+  .lc-card-stats div small { font-size: .68rem; letter-spacing: .04em; color: rgba(238, 241, 245, .58); }
+  .lc-card-desc { font-size: .82rem; line-height: 1.5; color: rgba(238, 241, 245, .72); margin: 0 0 14px; }
+  .lc-card-divider { height: 1px; background: rgba(255,255,255,.12); margin: 12px 0; }
+  .lc-card-list { display: flex; flex-direction: column; gap: 8px; }
+  .lc-card-item { display: flex; align-items: center; gap: 9px; font-size: .8rem; font-weight: 500; color: rgba(238, 241, 245, .78); }
+  .lc-card-item .ico { width: 16px; text-align: center; flex-shrink: 0; }
 
   .lc-side { position: absolute; right: 22px; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; font-family: var(--font); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(238, 241, 245, .5); z-index: 2; }
 
@@ -119,10 +127,12 @@
   .lc-unmute:hover { background: rgba(10, 12, 16, .7); }
   .lc-unmute svg { width: 14px; height: 14px; }
 
-  @media (max-width: 720px) {
+  @media (max-width: 860px) {
     .lc-side { display: none; }
-    .lc-body { padding: 26vw clamp(20px, 6vw, 48px) 30vw; align-items: flex-end; }
+    .lc-card { position: static; margin: 1.6rem clamp(20px, 6vw, 48px) 0; width: auto; }
+    .lc-body { padding: 30vw clamp(20px, 6vw, 48px) 0; flex-direction: column; align-items: flex-start; }
     .lc-video { object-position: 58% 42%; }
+    .lc-hero h1 { font-size: clamp(1.9rem, 7.4vw, 2.8rem); }
   }
 </style>
 </head>
@@ -151,7 +161,7 @@
     <div class="wrap">
       <p class="eyebrow">Templates · Premium</p>
       <h1>Every Beat — Cardio Video Hero</h1>
-      <p>A second video hero, built for health and biotech products: a rotating anatomical heart behind a scrim tuned for legible text, a floating nav dock, a pulse-accented eyebrow and the same glowing CTA as the rest of the family.</p>
+      <p>A second video hero, built for health and biotech products: a rotating anatomical heart behind a scrim tuned for legible text, a floating nav dock, a pulse-accented eyebrow, a Manrope headline with an italic accent word, a full-glass pill CTA and a frosted stat card.</p>
     </div>
   </section>
 
@@ -185,20 +195,32 @@
         <div class="lc-body">
           <div>
             <p class="lc-eyebrow"><span class="pulse-dot" aria-hidden="true"></span>Field notes · cardiac research</p>
-            <h1>Engineered for<br>every <em>heartbeat</em>.</h1>
+            <h1>Engineered for every <em>heartbeat</em>.</h1>
             <p class="lead">A video hero built for health and biotech products — precision, care and repetition, rendered as motion instead of a static diagram.</p>
             <a class="lc-cta" href="#" data-demo>
               Explore the work
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
           </div>
         </div>
 
-        <div class="lc-stats">
-          <div><span>60–100</span><small>RESTING BPM</small></div>
-          <div><span>4</span><small>CHAMBERS MAPPED</small></div>
-          <div><span>24/7</span><small>MONITORING</small></div>
-        </div>
+        <aside class="lc-card">
+          <div class="lc-card-top">
+            <span class="lc-card-label">Vitals</span>
+            <span class="lc-card-badge">Live</span>
+          </div>
+          <div class="lc-card-stats">
+            <div><span>60–100</span><small>RESTING BPM</small></div>
+            <div><span>4</span><small>CHAMBERS</small></div>
+          </div>
+          <p class="lc-card-desc">Continuous monitoring, rendered as motion instead of a static diagram.</p>
+          <div class="lc-card-divider"></div>
+          <div class="lc-card-list">
+            <div class="lc-card-item"><span class="ico">🫀</span> Anatomically modeled</div>
+            <div class="lc-card-item"><span class="ico">📡</span> 24/7 monitoring</div>
+            <div class="lc-card-item"><span class="ico">🔁</span> Seamless loop-ready</div>
+          </div>
+        </aside>
 
         <div class="lc-side">Scroll to discover</div>
       </div>
@@ -218,7 +240,7 @@
         </div>
         <div class="item">
           <h3><span class="ic" aria-hidden="true"></span>One button system</h3>
-          <p>The same glass CTA as the rest of the Kitbase hero family, just tinted toward cardiac red on hover instead of ember orange.</p>
+          <p>The same full-glass pill CTA as the rest of the Kitbase hero family, just tinted toward cardiac red instead of ember orange.</p>
         </div>
       </div>
     </div>
