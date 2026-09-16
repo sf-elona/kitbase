@@ -379,36 +379,48 @@ img, svg { max-width: 100%; display: block; }
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 44%, rgba(0, 0, 0, .6) 100%);
 }
-.thumb-video .thumb-label { position: absolute; left: .7rem; bottom: .7rem; }
-
+/* the icon badge — identical inset/size on every card, art or video, so
+   there is exactly one place it can ever sit: 12px from the top-right
+   corner, with enough clearance from the thumb's own border-radius that
+   the rounded corner mask never grazes it */
 .thumb-art .thumb-icon, .thumb-video .thumb-icon {
   position: absolute;
-  top: .7rem; right: .7rem;
-  z-index: 2;
-  width: 36px; height: 36px;
+  top: .75rem; right: .75rem;
+  z-index: 3;
+  width: 34px; height: 34px;
   display: grid;
   place-items: center;
   border-radius: 999px;
-  background: rgba(20, 18, 15, .32);
+  background: rgba(20, 18, 15, .38);
   border: 1px solid rgba(255, 255, 255, .28);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
   color: #fff;
   transition: transform .35s cubic-bezier(.2,.8,.2,1), background .3s ease;
 }
-.thumb-art .thumb-icon svg, .thumb-video .thumb-icon svg { width: 17px; height: 17px; }
+.thumb-art .thumb-icon svg, .thumb-video .thumb-icon svg { width: 16px; height: 16px; }
 .card-art:hover .thumb-icon { transform: translateY(-2px) scale(1.06); background: rgba(20, 18, 15, .5); }
 
-.thumb-art .thumb-label, .thumb-video .thumb-label {
+/* the label pill — .thumb-art positions it via its own flex/align-items,
+   .thumb-video positions it directly since it isn't a flex container;
+   both land at the same bottom-left inset. */
+.thumb-art .thumb-label {
   position: relative;
   z-index: 2;
+}
+.thumb-video .thumb-label {
+  position: absolute;
+  left: .75rem; bottom: .75rem;
+  z-index: 2;
+}
+.thumb-art .thumb-label, .thumb-video .thumb-label {
   display: inline-flex;
   align-items: center;
   gap: .45rem;
   padding: .32rem .6rem .32rem .5rem;
   border-radius: 999px;
-  background: rgba(10, 10, 8, .4);
+  background: rgba(10, 10, 8, .45);
   border: 1px solid rgba(255, 255, 255, .16);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -472,15 +484,30 @@ img, svg { max-width: 100%; display: block; }
 }
 
 /* ---------- CTA band ---------- */
+/* a card, not a colour-inverted block — the old var(--text)/var(--bg) swap
+   read as a dark card in light mode but a stark white-on-dark box the
+   moment the page switched to dark mode, which broke the page's own
+   rhythm of matching-material cards. Same surface as everything else,
+   with the accent-tinted border and a glow doing the "pay attention" work
+   instead of an inverted colour block. */
 .cta-band {
-  background: var(--text);
-  color: var(--bg);
+  position: relative;
+  background: linear-gradient(165deg, var(--surface), var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
   border-radius: var(--radius);
-  padding: clamp(1.9rem, 5vw, 3rem);
+  padding: clamp(2.1rem, 5vw, 3.2rem);
   text-align: center;
+  box-shadow: var(--shadow), 0 0 60px -30px color-mix(in srgb, var(--accent) 45%, transparent);
+  overflow: hidden;
 }
-.cta-band h2 { color: var(--bg); }
-.cta-band p { color: color-mix(in srgb, var(--bg) 72%, var(--text)); max-width: 44ch; margin-inline: auto; margin-bottom: 0; }
+.cta-band::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(60% 70% at 50% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+}
+.cta-band > * { position: relative; z-index: 1; }
+.cta-band h2 { color: var(--text); }
+.cta-band p { color: var(--text-soft); max-width: 44ch; margin-inline: auto; margin-bottom: 0; }
 .cta-band .btn-primary { margin-top: 1.1rem; }
 
 /* ---------- newsletter form ---------- */
