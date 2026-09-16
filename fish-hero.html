@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liquid Serenity — Fish Hero Template · Kitbase</title>
+<meta name="description" content="A full-bleed video hero template with an elegant serif headline, a two-part pill CTA and a frosted glass info card — built over a looping underwater clip. Premium HTML template by Kitbase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Liquid Serenity hero — scoped, plain CSS, no build step ---------- */
+  .lc-hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(180deg, #bcd9ee 0%, #a9cde6 40%, #8fb9da 75%, #7aa8cc 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-video {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 62% 50%;
+  }
+
+  /* light footage needs a light scrim: just enough shade on the left so the
+     serif headline stays legible without flattening the water's colour */
+  .lc-scrim {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      linear-gradient(100deg, rgba(20, 38, 58, .38) 0%, rgba(20, 38, 58, .12) 32%, transparent 55%),
+      linear-gradient(180deg, rgba(10, 22, 38, .18) 0%, transparent 22%, transparent 70%, rgba(10, 22, 38, .35) 100%);
+  }
+
+  .lc-grain {
+    position: absolute; inset: 0; pointer-events: none; z-index: 4; opacity: .05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* a light-glass floating dock, re-toned for this pastel scene instead of
+     the dark glass the rest of the hero family uses */
+  .lc-dock {
+    position: relative; z-index: 3; margin: 22px auto 0; display: inline-flex; align-self: center; gap: 6px; padding: 6px;
+    border-radius: 999px; background: rgba(255, 255, 255, .3); border: 1px solid rgba(255, 255, 255, .5);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 10px 30px rgba(20, 40, 70, .2), inset 0 1px 0 rgba(255, 255, 255, .6);
+  }
+  .lc-dock button { width: 38px; height: 38px; border-radius: 999px; border: none; display: grid; place-items: center; background: transparent; color: #f4f8fc; cursor: pointer; transition: background .16s ease, color .16s ease; }
+  .lc-dock button.active { background: #ffffff; color: #22415f; }
+  .lc-dock button:hover:not(.active) { background: rgba(255, 255, 255, .28); }
+  .lc-dock svg { width: 16px; height: 16px; }
+
+  .lc-body { position: relative; z-index: 2; flex: 1; display: flex; align-items: center; padding: 4vw clamp(28px, 6vw, 100px) 6vw; }
+  .lc-headline {
+    font-family: 'Cormorant Garamond', var(--font);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-size: clamp(1.7rem, 3.6vw, 3rem);
+    line-height: 1.28;
+    color: #fbfdff;
+    text-shadow: 0 4px 26px rgba(10, 25, 45, .35);
+    max-width: 18ch;
+    margin: 0 0 2.4rem;
+  }
+
+  /* the CTA — a white label pill with a tonal circular arrow button
+     overlapping its trailing edge, matching the reference composition */
+  .lc-cta-wrap { position: relative; display: inline-flex; align-items: center; }
+  .lc-cta-pill {
+    display: inline-flex; align-items: center;
+    height: 62px;
+    padding: 0 40px 0 30px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #16243a;
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 1.02rem;
+    box-shadow: 0 16px 34px -12px rgba(10, 25, 45, .45);
+    transition: box-shadow .22s ease, transform .22s ease;
+  }
+  .lc-cta-circle {
+    position: absolute; right: -6px; top: 50%; transform: translateY(-50%);
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(155deg, #cfe0f5, #9fb9e0);
+    color: #16243a;
+    display: grid; place-items: center;
+    box-shadow: 0 10px 22px -6px rgba(10, 25, 45, .4), inset 0 1px 0 rgba(255, 255, 255, .6);
+    transition: transform .22s cubic-bezier(.2,.8,.2,1), background .22s ease;
+  }
+  .lc-cta-circle svg { width: 18px; height: 18px; transition: transform .22s ease; }
+  .lc-cta-wrap:hover .lc-cta-pill { box-shadow: 0 20px 44px -14px rgba(10, 25, 45, .55); transform: translateY(-1px); }
+  .lc-cta-wrap:hover .lc-cta-circle { transform: translateY(-50%) scale(1.08); background: linear-gradient(155deg, #e3ecfa, #b6cdec); }
+  .lc-cta-wrap:hover .lc-cta-circle svg { transform: translateX(2px); }
+
+  /* the small grid-dot control beside the CTA, echoing the reference's
+     floating icon chip */
+  .lc-grid-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255, 255, 255, .22); border: 1px solid rgba(255, 255, 255, .45);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    display: grid; place-items: center; margin-bottom: 14px;
+    transition: background .18s ease;
+  }
+  .lc-grid-btn:hover { background: rgba(255, 255, 255, .34); }
+  .lc-grid-dots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5px; }
+  .lc-grid-dots span { width: 3px; height: 3px; border-radius: 50%; background: #fff; }
+
+  /* the frosted info card */
+  .lc-card {
+    position: absolute; z-index: 3;
+    right: clamp(16px, 4vw, 64px); bottom: 9vh;
+    width: clamp(240px, 22vw, 320px);
+    padding: 1.7rem 1.6rem 1.9rem;
+    border-radius: 28px;
+    background: linear-gradient(160deg, rgba(255,255,255,.28), rgba(255,255,255,.08));
+    border: 1px solid rgba(255, 255, 255, .45);
+    backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 24px 50px -18px rgba(10, 25, 45, .45), inset 0 1px 0 rgba(255, 255, 255, .5);
+  }
+  .lc-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 2.4rem; }
+  .lc-card-icon { width: 30px; height: 30px; color: #fff; opacity: .9; animation: lc-spin 18s linear infinite; }
+  .lc-card-icon svg { width: 100%; height: 100%; }
+  @keyframes lc-spin { to { transform: rotate(360deg); } }
+  .lc-card-corner {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(255, 255, 255, .22); border: 1px solid rgba(255, 255, 255, .4);
+    display: grid; place-items: center;
+  }
+  .lc-card h3 {
+    font-family: 'Cormorant Garamond', var(--font);
+    font-weight: 500; text-transform: uppercase; letter-spacing: .04em;
+    font-size: 1.7rem; line-height: 1.15; color: #fff; margin: 0 0 .9rem;
+  }
+  .lc-card p { font-family: var(--font-body); font-size: .88rem; line-height: 1.55; color: rgba(255, 255, 255, .82); margin: 0; }
+
+  .lc-pro { position: absolute; top: 16px; left: 16px; z-index: 3; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px; background: rgba(255, 255, 255, .3); border: 1px solid rgba(255, 255, 255, .5); backdrop-filter: blur(8px); font-family: var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .1em; color: #16243a; }
+
+  .lc-unmute {
+    position: absolute; top: 16px; right: 16px; z-index: 3;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .4rem .7rem .4rem .55rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .25); backdrop-filter: blur(8px);
+    color: #16243a; font-family: var(--font); font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+    cursor: pointer; transition: background .16s ease;
+  }
+  .lc-unmute:hover { background: rgba(255, 255, 255, .4); }
+  .lc-unmute svg { width: 14px; height: 14px; }
+
+  @media (max-width: 860px) {
+    .lc-card { position: static; margin: 1.6rem clamp(20px, 6vw, 48px) 0; width: auto; }
+    .lc-body { padding: 30vw clamp(20px, 6vw, 48px) 0; flex-direction: column; align-items: flex-start; }
+    .lc-video { object-position: 72% 50%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium</p>
+      <h1>Liquid Serenity — Fish Hero</h1>
+      <p>A third video hero, built around a calm underwater clip: an elegant serif headline, a two-part pill-and-circle CTA, a frosted glass info card and a light-glass nav dock — re-toned for a pastel, airy palette instead of the family's usual dark scrim.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="lc-hero" id="lcHero">
+        <span class="lc-pro">★ PREMIUM</span>
+        <button class="lc-unmute" id="lcUnmute" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9v6h4l5 5V4L8 9H4Z"/><path d="M16 8.5a5 5 0 0 1 0 7" opacity=".5"/></svg>
+          <span id="lcUnmuteLabel">Unmute</span>
+        </button>
+
+        <video class="lc-video" autoplay muted loop playsinline preload="metadata">
+          <source src="assets/video/orange-fish-hero.mp4" type="video/mp4">
+        </video>
+        <div class="lc-scrim" aria-hidden="true"></div>
+        <div class="lc-grain"></div>
+
+        <nav class="lc-dock" aria-label="Scene controls">
+          <button class="active" aria-label="Overview" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="10" cy="12" rx="7" ry="4.2"/><path d="M17 12 21 8v8Z"/><circle cx="8" cy="10.6" r=".8" fill="currentColor" stroke="none"/></svg>
+          </button>
+          <button aria-label="Current" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8c2 2 4 2 6 0s4-2 6 0 4 2 6 0M2 14c2 2 4 2 6 0s4-2 6 0 4 2 6 0"/></svg>
+          </button>
+          <button aria-label="Collapse controls" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 15 6-6 6 6"/></svg>
+          </button>
+        </nav>
+
+        <div class="lc-body">
+          <div>
+            <h1 class="lc-headline">Drift through<br>deep waters,<br>suspended in silence.</h1>
+            <button class="lc-grid-btn" type="button" aria-label="Open menu">
+              <span class="lc-grid-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+            </button>
+            <div class="lc-cta-wrap">
+              <a class="lc-cta-pill" href="#" data-demo>Explore</a>
+              <span class="lc-cta-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="lc-card">
+          <div class="lc-card-top">
+            <span class="lc-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.1">
+                <g>
+                  <path d="M20 4v10M20 26v10M4 20h10M26 20h10"/>
+                  <path d="M9 9l7 7M24 24l7 7M31 9l-7 7M16 24l-7 7"/>
+                </g>
+              </svg>
+            </span>
+            <span class="lc-card-corner" aria-hidden="true">
+              <span class="lc-grid-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+            </span>
+          </div>
+          <h3>Beneath the&nbsp;waves</h3>
+          <p>Iridescent fins drift through the current — a quiet study in colour and motion, just beneath the surface.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A different mood</h3>
+          <p>Same video-hero engine as Full Throttle and Every Beat, but re-toned light and airy — proof the system isn't locked to dark scenes.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A two-part CTA</h3>
+          <p>A white label pill with a tonal circular arrow overlapping its edge — one button, two materials, built from two elements.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A frosted info card</h3>
+          <p>A glass panel with its own icon, heading and copy — a second focal point that doesn't compete with the headline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('lcUnmute');
+    var label = document.getElementById('lcUnmuteLabel');
+    var video = document.querySelector('.lc-video');
+    if (!btn || !video) return;
+    btn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      var muted = video.muted;
+      btn.setAttribute('aria-pressed', String(!muted));
+      label.textContent = muted ? 'Unmute' : 'Mute';
+    });
+  })();
+</script>
+</body>
+</html>
