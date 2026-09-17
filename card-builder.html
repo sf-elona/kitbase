@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card Builder — Kitbase (internal tool)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .cb-banner {
+    background: linear-gradient(135deg, var(--accent-soft), transparent);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+  }
+  .cb-banner .wrap { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--text-soft); }
+  .cb-banner strong { color: var(--text); }
+
+  .cb-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem; align-items: start; min-width: 0; }
+  .cb-layout > * { min-width: 0; }
+  @media (max-width: 900px) { .cb-layout { grid-template-columns: 1fr; } }
+
+  .cb-form { display: flex; flex-direction: column; gap: 1.1rem; position: sticky; top: 90px; min-width: 0; }
+  @media (max-width: 900px) { .cb-form { position: static; } }
+  .cb-field label { display: block; font-family: var(--font); font-weight: 600; font-size: .85rem; margin-bottom: 6px; }
+  .cb-field .hint { font-size: .76rem; color: var(--text-faint); margin-top: 4px; }
+  .cb-field input[type=text], .cb-field input[type=url], .cb-field textarea, .cb-field select {
+    width: 100%; padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong);
+    background: var(--surface); color: var(--text); font-family: var(--font-body); font-size: .92rem;
+  }
+  .cb-field textarea { resize: vertical; min-height: 64px; }
+  .cb-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cb-color-row { display: flex; align-items: center; gap: 10px; }
+  .cb-color-row input[type=color] { width: 44px; height: 38px; border-radius: 8px; border: 1px solid var(--border-strong); padding: 2px; background: var(--surface); }
+  .cb-radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cb-radio-group label { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border-strong); font-size: .82rem; font-weight: 600; cursor: pointer; margin-bottom: 0; }
+  .cb-radio-group input { margin: 0; }
+  .cb-radio-group label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+
+  .cb-preview-wrap { position: sticky; top: 90px; min-width: 0; }
+  @media (max-width: 900px) { .cb-preview-wrap { position: static; } }
+  .cb-preview-label { font-family: var(--font); font-weight: 700; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); margin-bottom: 12px; }
+  .cb-preview-stage { max-width: 340px; }
+
+  .cb-code-wrap { margin-top: 1.6rem; }
+  .cb-code-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .cb-code-head h3 { margin: 0; font-size: 1rem; }
+  .cb-copy-btn { padding: 8px 16px; border-radius: 999px; border: none; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: .82rem; cursor: pointer; font-family: var(--font); }
+  .cb-copy-btn:active { transform: scale(.97); }
+  .cb-copy-btn.copied { background: #2f9e6a; color: #fff; }
+  pre.cb-code {
+    background: #14120f; color: #e8e4da; padding: 16px; border-radius: var(--radius-sm);
+    overflow-x: auto; font-size: .78rem; line-height: 1.55; font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    max-height: 340px; overflow-y: auto;
+  }
+  :root:not([data-theme="light"]) pre.cb-code { background: #0a0a0a; }
+
+  .cb-steps { counter-reset: step; list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .cb-steps li { counter-increment: step; display: flex; gap: 14px; }
+  .cb-steps li::before {
+    content: counter(step); flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent); font-family: var(--font); font-weight: 700; font-size: .85rem;
+    display: grid; place-items: center;
+  }
+  .cb-steps li div h4 { margin: 0 0 4px; font-size: .95rem; }
+  .cb-steps li div p { margin: 0; font-size: .86rem; }
+</style>
+</head>
+<body>
+
+<div class="cb-banner"><div class="wrap"><strong>Internal tool</strong> — this page isn't linked from the public site. Bookmark it. It only generates code for you to paste; nothing here touches the live site by itself.</div></div>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="templates.html">Templates</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Internal tool</p>
+      <h1>Template card builder</h1>
+      <p>Fill in the fields, watch the live preview match a real card on <a href="templates.html">templates.html</a>, then copy the generated code and paste it into that file's <code>&lt;div class="grid"&gt;</code>, right before the closing <code>&lt;/div&gt;</code>.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="cb-layout">
+        <form class="cb-form" id="cbForm" onsubmit="return false">
+          <div class="cb-field">
+            <label for="fTitle">Card title</label>
+            <input type="text" id="fTitle" value="Midnight Orchard — Nature Hero">
+            <div class="hint">Shown as the bold heading, e.g. "Name — Type".</div>
+          </div>
+
+          <div class="cb-field">
+            <label for="fLabel">Thumbnail label</label>
+            <input type="text" id="fLabel" value="Midnight Orchard">
+            <div class="hint">Short pill text over the thumbnail — usually just the product's own name.</div>
+          </div>
+
+          <div class="cb-field">
+            <label for="fDesc">Description</label>
+            <textarea id="fDesc">A close look at an orchard at night: soft moonlight, drifting fireflies and a full-glass pill CTA.</textarea>
+          </div>
+
+          <div class="cb-row2">
+            <div class="cb-field">
+              <label for="fTag">Tag</label>
+              <select id="fTag">
+                <option>HTML · Free</option>
+                <option selected>HTML · Premium</option>
+                <option>Figma · Free</option>
+                <option>Figma · Premium</option>
+                <option>Figma + HTML · Premium</option>
+              </select>
+            </div>
+            <div class="cb-field">
+              <label for="fPrice">Price</label>
+              <input type="text" id="fPrice" value="$18">
+              <div class="hint">"Free" or a "$" amount.</div>
+            </div>
+          </div>
+
+          <div class="cb-field">
+            <label for="fUnit">Row left label</label>
+            <input type="text" id="fUnit" value="1 section">
+            <div class="hint">e.g. "1 section", "1 page", or "Premium" for Figma-only kits.</div>
+          </div>
+
+          <div class="cb-field">
+            <label>Thumbnail type</label>
+            <div class="cb-radio-group">
+              <label><input type="radio" name="thumbType" value="video" checked> Video clip</label>
+              <label><input type="radio" name="thumbType" value="frame"> Live page (iframe)</label>
+              <label><input type="radio" name="thumbType" value="art"> Gradient + icon</label>
+            </div>
+          </div>
+
+          <div class="cb-field" id="fSrcWrap">
+            <label for="fSrc">Video path (assets/video/…mp4)</label>
+            <input type="text" id="fSrc" value="assets/video/midnight-orchard-hero.mp4">
+          </div>
+
+          <div class="cb-field">
+            <label for="fHref">Card links to (page URL)</label>
+            <input type="text" id="fHref" value="midnight-orchard-hero.html">
+            <div class="hint">Leave blank for an unbuilt / coming-soon card (no link).</div>
+          </div>
+
+          <div class="cb-field">
+            <label for="fBuy">Buy link (Lemon Squeezy checkout URL) — optional</label>
+            <input type="url" id="fBuy" placeholder="https://yourstore.lemonsqueezy.com/checkout/buy/…">
+            <div class="hint">Only for paid items. Generates an extra snippet below for a "Buy now" button on the product's own page.</div>
+          </div>
+
+          <div class="cb-color-row">
+            <input type="color" id="fGlow" value="#ff9a4d">
+            <div class="cb-field" style="flex:1"><label for="fGlow2">Glow / accent color</label></div>
+          </div>
+        </form>
+
+        <div class="cb-preview-wrap">
+          <div class="cb-preview-label">Live preview</div>
+          <div class="cb-preview-stage">
+            <div class="grid" style="grid-template-columns:1fr" id="cbPreview"></div>
+          </div>
+
+          <div class="cb-code-wrap">
+            <div class="cb-code-head">
+              <h3>Templates grid code</h3>
+              <button class="cb-copy-btn" id="cbCopyGrid" type="button">Copy code</button>
+            </div>
+            <pre class="cb-code" id="cbCodeGrid"></pre>
+          </div>
+
+          <div class="cb-code-wrap" id="cbBuyWrap" style="display:none">
+            <div class="cb-code-head">
+              <h3>"Buy now" button snippet</h3>
+              <button class="cb-copy-btn" id="cbCopyBuy" type="button">Copy code</button>
+            </div>
+            <p style="font-size:.82rem;color:var(--text-soft);margin:0 0 8px">Paste this in place of the free "Explore" link on that template's own page. The class is <code>lc-cta</code> — if that page uses a different prefix (check its existing button, e.g. <code>pf-cta</code>, <code>sl-cta</code>, <code>ag-cta</code>, <code>fa-cta</code>, <code>cs-cta</code>), swap the class name to match so it inherits that page's button style.</p>
+            <pre class="cb-code" id="cbCodeBuy"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:.5rem">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Workflow</p><h2>How to actually ship a new template</h2></div>
+      <ol class="cb-steps">
+        <li><div><h4>1. Design the page</h4><p>Write the new template's own HTML file (copy the closest existing one, e.g. <code>bloom-hero.html</code>, as a starting point) or ask Claude to build it. Save it in this same folder.</p></div></li>
+        <li><div><h4>2. Fill this form</h4><p>Match the title, description, price and thumbnail to what you just built. Watch the preview on the right until it looks right.</p></div></li>
+        <li><div><h4>3. Copy the grid code</h4><p>Click "Copy code" above the first code block.</p></div></li>
+        <li><div><h4>4. Paste it into templates.html</h4><p>Open <code>templates.html</code>, find <code>&lt;div class="grid"&gt;</code>, and paste the new <code>&lt;article&gt;</code> block anywhere inside it — order doesn't matter, newest first is common.</p></div></li>
+        <li><div><h4>5. If it's a paid item, add the Buy button</h4><p>Once you have a Lemon Squeezy checkout link for the product, paste it into the "Buy link" field, copy the second snippet, and paste it into the template's own page.</p></div></li>
+        <li><div><h4>6. Save and publish</h4><p>If you're working with Claude Code, just say "commit and push this" — that's it. Working directly on GitHub? Edit the files at <a href="https://github.com/sf-elona/kitbase" target="_blank" rel="noopener">github.com/sf-elona/kitbase</a> in the browser (pencil icon on each file) and commit — GitHub Pages redeploys automatically in about a minute.</p></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-bottom">
+    <span>Kitbase internal tool — not part of the public site nav.</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const fields = ['fTitle','fLabel','fDesc','fTag','fPrice','fUnit','fSrc','fHref','fBuy','fGlow'];
+  const thumbRadios = document.querySelectorAll('input[name="thumbType"]');
+
+  function escAttr(s) { return String(s).replace(/"/g, '&quot;'); }
+  function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function currentThumbType() {
+    return document.querySelector('input[name="thumbType"]:checked').value;
+  }
+
+  function thumbBlock(indent, forPreview) {
+    const type = currentThumbType();
+    const src = $('fSrc').value.trim();
+    const label = $('fLabel').value.trim();
+    const iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="m17 10 4-2.5v9L17 14"/></svg>';
+    if (type === 'video') {
+      return `${indent}<div class="thumb-video">\n${indent}  <video autoplay muted loop playsinline preload="metadata"><source src="${escAttr(src)}" type="video/mp4"></video>\n${indent}  <span class="thumb-icon">${iconSvg}</span>\n${indent}  <span class="thumb-label">${escHtml(label)}</span>\n${indent}</div>`;
+    }
+    if (type === 'frame') {
+      return `${indent}<div class="thumb-frame">\n${indent}  <iframe src="${escAttr(src)}" loading="lazy" tabindex="-1" scrolling="no" title="${escAttr(label)} preview"></iframe>\n${indent}  <span class="thumb-icon">${iconSvg}</span>\n${indent}  <span class="thumb-label">${escHtml(label)}</span>\n${indent}</div>`;
+    }
+    return `${indent}<div class="thumb-art">\n${indent}  <span class="thumb-icon">${iconSvg}</span>\n${indent}  <span class="thumb-label">${escHtml(label)}</span>\n${indent}</div>`;
+  }
+
+  function buildGridCode() {
+    const title = $('fTitle').value.trim();
+    const desc = $('fDesc').value.trim();
+    const tag = $('fTag').value;
+    const price = $('fPrice').value.trim();
+    const unit = $('fUnit').value.trim();
+    const href = $('fHref').value.trim();
+    const glow = $('fGlow').value;
+    const type = currentThumbType();
+    const artStyle = type === 'art'
+      ? `--art-bg:linear-gradient(135deg,${glow}55,#100f0c);--art-glow-1:${glow}55;--art-glow-2:${glow}44;--glow:${glow}`
+      : `--glow:${glow}`;
+
+    const inner = thumbBlock('    ', false);
+    const bodyLines = [
+      `  <span class="tag">${escHtml(tag)}</span>`,
+      `  <h3>${escHtml(title)}</h3>`,
+      `  <p>${escHtml(desc)}</p>`,
+      `  <div class="row"><span>${escHtml(unit)}</span><span>${escHtml(price)}</span></div>`
+    ].join('\n');
+
+    if (href) {
+      return `<article class="card card-art" style="${artStyle}">\n  <a href="${escAttr(href)}" style="text-decoration:none;color:inherit;display:contents">\n${inner}\n${bodyLines}\n  </a>\n</article>`;
+    }
+    return `<article class="card card-art" style="${artStyle}">\n${inner}\n${bodyLines}\n</article>`;
+  }
+
+  function buildBuyCode() {
+    const buy = $('fBuy').value.trim();
+    if (!buy) return '';
+    return `<a class="lc-cta" href="${escAttr(buy)}" target="_blank" rel="noopener">\n  Buy now\n  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>\n</a>`;
+  }
+
+  function renderPreview() {
+    const title = $('fTitle').value.trim();
+    const desc = $('fDesc').value.trim();
+    const tag = $('fTag').value;
+    const price = $('fPrice').value.trim();
+    const unit = $('fUnit').value.trim();
+    const glow = $('fGlow').value;
+    const type = currentThumbType();
+    const styleStr = type === 'art'
+      ? `--art-bg:linear-gradient(135deg,${glow}55,#100f0c);--art-glow-1:${glow}55;--art-glow-2:${glow}44;--glow:${glow}`
+      : `--glow:${glow}`;
+
+    $('cbPreview').innerHTML = `<article class="card card-art" style="${styleStr}">
+      ${thumbBlock('', true)}
+      <span class="tag">${escHtml(tag)}</span>
+      <h3>${escHtml(title)}</h3>
+      <p>${escHtml(desc)}</p>
+      <div class="row"><span>${escHtml(unit)}</span><span>${escHtml(price)}</span></div>
+    </article>`;
+  }
+
+  function renderAll() {
+    renderPreview();
+    $('cbCodeGrid').textContent = buildGridCode();
+    const buyCode = buildBuyCode();
+    $('cbBuyWrap').style.display = buyCode ? 'block' : 'none';
+    $('cbCodeBuy').textContent = buyCode;
+
+    const srcLabel = document.querySelector('label[for="fSrc"]');
+    const type = currentThumbType();
+    if (type === 'video') { srcLabel.textContent = 'Video path (assets/video/…mp4)'; $('fSrcWrap').style.display = ''; }
+    else if (type === 'frame') { srcLabel.textContent = 'Page path this iframe should load'; $('fSrcWrap').style.display = ''; }
+    else { $('fSrcWrap').style.display = 'none'; }
+  }
+
+  fields.forEach((id) => $(id).addEventListener('input', renderAll));
+  thumbRadios.forEach((r) => r.addEventListener('change', renderAll));
+
+  function copy(btnId, codeId) {
+    const btn = $(btnId);
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText($(codeId).textContent);
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy code'; btn.classList.remove('copied'); }, 1600);
+      } catch (e) {
+        const range = document.createRange();
+        range.selectNode($(codeId));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+      }
+    });
+  }
+  copy('cbCopyGrid', 'cbCodeGrid');
+  copy('cbCopyBuy', 'cbCodeBuy');
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
