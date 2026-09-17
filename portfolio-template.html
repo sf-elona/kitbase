@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designer Portfolio — One Page Template · Kitbase</title>
+<meta name="description" content="A free one-page portfolio template: hero, selected work grid, about and contact. Responsive, dark, no build step.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Designer Portfolio — scoped, plain CSS, no build step ---------- */
+  .pf {
+    font-family: 'Manrope', var(--font-body);
+    background: #100d0a;
+    color: #f4efe7;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .pf-inner { padding: clamp(28px, 5vw, 64px); }
+
+  .pf-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: clamp(48px, 9vw, 96px);
+  }
+  .pf-brand { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 9px; }
+  .pf-brand .dot { width: 9px; height: 9px; border-radius: 50%; background: #ff5a1f; box-shadow: 0 0 12px 2px rgba(255,90,31,.6); }
+  .pf-links { display: flex; gap: 28px; font-size: .88rem; font-weight: 600; color: rgba(244,239,231,.6); }
+  .pf-links a { color: inherit; text-decoration: none; transition: color .2s ease; }
+  .pf-links a:hover { color: #f4efe7; }
+  @media (max-width: 640px) { .pf-links { display: none; } }
+
+  .pf-hero { margin-bottom: clamp(56px, 10vw, 108px); }
+  .pf-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: #ffb37a; margin-bottom: 20px;
+  }
+  .pf-eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #ff5a1f; }
+  .pf-hero h1 {
+    font-family: 'Manrope', var(--font); font-weight: 800; letter-spacing: -0.02em;
+    font-size: clamp(2rem, 5.4vw, 4rem); line-height: 1.06; margin: 0 0 18px; max-width: 14ch; color: #fff;
+  }
+  .pf-hero h1 em { font-style: italic; font-weight: 700; color: #ff9a5c; }
+  .pf-hero p { font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; color: rgba(244,239,231,.72); max-width: 52ch; margin: 0 0 30px; }
+  .pf-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .pf-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 54px; padding: 0 26px; border-radius: 999px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.28);
+    backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
+    color: #fff; font-weight: 600; font-size: .95rem; text-decoration: none;
+    box-shadow: 0 14px 30px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.3);
+    transition: transform .2s ease, background .2s ease;
+  }
+  .pf-cta:hover { background: rgba(255,255,255,.16); transform: translateY(-2px); }
+  .pf-social { display: flex; gap: 14px; }
+  .pf-social a {
+    width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); color: rgba(244,239,231,.7);
+    transition: background .2s ease, color .2s ease;
+  }
+  .pf-social a:hover { background: rgba(255,255,255,.14); color: #fff; }
+  .pf-social svg { width: 16px; height: 16px; }
+
+  .pf-section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 26px; flex-wrap: wrap; gap: 10px; }
+  .pf-section-head h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0; letter-spacing: -0.01em; }
+  .pf-section-head span { font-size: .85rem; color: rgba(244,239,231,.5); font-weight: 600; }
+
+  .pf-work { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: clamp(56px, 10vw, 100px); }
+  .pf-card {
+    position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4/5;
+    background: linear-gradient(160deg, var(--c1), var(--c2));
+    padding: 18px; display: flex; flex-direction: column; justify-content: flex-end;
+    isolation: isolate; text-decoration: none; color: inherit;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .pf-card:hover { transform: translateY(-6px); }
+  .pf-card::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(60% 50% at 80% 0%, rgba(255,255,255,.22), transparent 70%);
+  }
+  .pf-card-tag { position: relative; z-index: 1; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 8px; }
+  .pf-card h3 { position: relative; z-index: 1; font-family: 'Manrope', var(--font); font-weight: 700; font-size: 1.15rem; margin: 0; color: #fff; }
+  @media (max-width: 780px) { .pf-work { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .pf-work { grid-template-columns: 1fr; } }
+
+  .pf-about { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); margin-bottom: clamp(56px, 10vw, 100px); align-items: start; }
+  .pf-about p { font-size: 1rem; line-height: 1.7; color: rgba(244,239,231,.72); margin: 0 0 14px; }
+  .pf-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .pf-skills span { padding: 6px 13px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); font-size: .78rem; font-weight: 600; color: rgba(244,239,231,.8); }
+  @media (max-width: 720px) { .pf-about { grid-template-columns: 1fr; } }
+
+  .pf-contact {
+    border-radius: 20px; padding: clamp(32px, 6vw, 56px); text-align: center;
+    background: linear-gradient(150deg, rgba(255,90,31,.16), rgba(255,90,31,.03));
+    border: 1px solid rgba(255,154,92,.25);
+  }
+  .pf-contact h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.5rem, 3.4vw, 2.3rem); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .pf-contact p { color: rgba(244,239,231,.68); margin: 0 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Free</p>
+      <h1>Designer Portfolio — One Page</h1>
+      <p>A self-contained one-page portfolio: a warm, amber-toned hero, a three-across selected-work grid, a short about section with a skills list, and a closing contact card. No build step — copy the file and swap the copy.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="pf">
+        <div class="pf-inner">
+          <nav class="pf-nav">
+            <div class="pf-brand"><span class="dot"></span>Alex Rivera</div>
+            <div class="pf-links">
+              <a href="#work">Work</a>
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+            </div>
+          </nav>
+
+          <div class="pf-hero">
+            <p class="pf-eyebrow">Product Designer · Available for work</p>
+            <h1>Interfaces that feel <em>obvious</em> in hindsight.</h1>
+            <p>I design digital products for startups and small teams — turning fuzzy problems into interfaces people pick up without a manual. Based in Dhaka, working with clients everywhere.</p>
+            <div class="pf-actions">
+              <a class="pf-cta" href="#work">
+                See selected work
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <div class="pf-social">
+                <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-3a2 2 0 0 1 4 0v3M12 13v3"/></svg></a>
+                <a href="#" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M4 10c4 1.5 9 1.5 15.5 0M4.5 16c3-4 7-6 12-6.5M9 3.5c3 3.5 4.5 8 4.5 17"/></svg></a>
+                <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+              </div>
+            </div>
+          </div>
+
+          <div id="work">
+            <div class="pf-section-head">
+              <h2>Selected work</h2>
+              <span>2023 — 2026</span>
+            </div>
+            <div class="pf-work">
+              <a class="pf-card" style="--c1:#3a2e26;--c2:#0e0c0a" href="#">
+                <span class="pf-card-tag">Fintech · App</span>
+                <h3>Orbit Wallet</h3>
+              </a>
+              <a class="pf-card" style="--c1:#2a2e42;--c2:#0c0d16" href="#">
+                <span class="pf-card-tag">SaaS · Web</span>
+                <h3>Fieldbook CRM</h3>
+              </a>
+              <a class="pf-card" style="--c1:#1e3a3a;--c2:#081414" href="#">
+                <span class="pf-card-tag">Healthcare · App</span>
+                <h3>Nurture Health</h3>
+              </a>
+            </div>
+          </div>
+
+          <div class="pf-about" id="about">
+            <div>
+              <div class="pf-section-head" style="margin-bottom:14px"><h2>About</h2></div>
+              <p>Six years designing for early-stage startups — three of them in-house, three freelance. I care most about the parts of a product that quietly make it easier to trust: onboarding, empty states, error messages, the moments nobody screenshots.</p>
+              <p>Recently: a fintech onboarding flow that cut signup drop-off by 34%, and a CRM redesign that shipped as a coded prototype, not just a Figma file.</p>
+            </div>
+            <div>
+              <div class="pf-section-head" style="margin-bottom:14px"><h2>Tools &amp; focus</h2></div>
+              <div class="pf-skills">
+                <span>Product design</span>
+                <span>Design systems</span>
+                <span>Figma</span>
+                <span>Prototyping</span>
+                <span>User research</span>
+                <span>HTML &amp; CSS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-contact" id="contact">
+            <h2>Have a project in mind?</h2>
+            <p>I take on two or three new engagements a quarter — reach out and let's see if the timing works.</p>
+            <a class="pf-cta" href="#" style="display:inline-flex">
+              Say hello
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>One file, no build step</h3>
+          <p>Plain HTML and scoped CSS — copy the file, swap the copy and images, and it's yours.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Real content, not lorem</h3>
+          <p>Every section ships with realistic placeholder copy, so you're editing sentences, not guessing structure.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Responsive by default</h3>
+          <p>The work grid and about columns collapse cleanly on tablet and phone widths.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

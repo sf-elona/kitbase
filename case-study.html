@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UX Case Study Layout Template · Kitbase</title>
+<meta name="description" content="A free UX case study template: structured sections for problem, process, screens and outcome. Great for GitHub Pages.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- UX Case Study — scoped, plain CSS, no build step ---------- */
+  .cs {
+    font-family: 'Manrope', var(--font-body);
+    background: #100b07;
+    color: #f4ede4;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .cs-inner { padding: clamp(28px, 5vw, 64px); }
+
+  .cs-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(40px, 7vw, 72px); }
+  .cs-brand { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 9px; }
+  .cs-brand .dot { width: 9px; height: 9px; border-radius: 50%; background: #ffb066; box-shadow: 0 0 12px 2px rgba(255,176,102,.6); }
+  .cs-back { font-size: .84rem; font-weight: 600; color: rgba(244,237,228,.6); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .cs-back:hover { color: #f4ede4; }
+
+  .cs-banner { margin-bottom: clamp(48px, 9vw, 92px); }
+  .cs-tags { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .cs-tags span { padding: 5px 12px; border-radius: 999px; background: rgba(255,176,102,.14); border: 1px solid rgba(255,176,102,.3); font-size: .74rem; font-weight: 700; color: #ffcda0; text-transform: uppercase; letter-spacing: .05em; }
+  .cs-banner h1 { font-family: 'Manrope', var(--font); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(2.1rem, 5.2vw, 3.8rem); line-height: 1.06; margin: 0 0 20px; max-width: 16ch; color: #fff; }
+  .cs-banner h1 em { font-style: italic; font-weight: 700; color: #ffb066; }
+  .cs-meta { display: flex; gap: clamp(24px, 4vw, 56px); flex-wrap: wrap; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); }
+  .cs-meta div span { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(244,237,228,.5); margin-bottom: 6px; }
+  .cs-meta div strong { font-family: 'Manrope', var(--font); font-weight: 700; font-size: .96rem; color: #f4ede4; }
+
+  .cs-block { margin-bottom: clamp(52px, 9vw, 92px); display: grid; grid-template-columns: 200px 1fr; gap: clamp(24px, 4vw, 56px); }
+  .cs-block-label { display: flex; align-items: center; gap: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #ffb066; }
+  .cs-block-label .num { width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(255,176,102,.4); display: grid; place-items: center; font-family: 'Manrope', var(--font); font-weight: 700; color: #ffb066; flex-shrink: 0; }
+  .cs-block h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0 0 16px; letter-spacing: -0.01em; }
+  .cs-block p { font-size: 1rem; line-height: 1.7; color: rgba(244,237,228,.7); margin: 0 0 14px; max-width: 62ch; }
+  @media (max-width: 720px) { .cs-block { grid-template-columns: 1fr; gap: 14px; } }
+
+  .cs-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; }
+  .cs-step { padding: 18px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); }
+  .cs-step span { display: block; font-family: 'Manrope', var(--font); font-weight: 800; font-size: .82rem; color: #ffb066; margin-bottom: 8px; }
+  .cs-step h4 { font-family: 'Manrope', var(--font); font-weight: 700; font-size: .92rem; margin: 0 0 6px; }
+  .cs-step p { font-size: .8rem; color: rgba(244,237,228,.6); margin: 0; line-height: 1.5; }
+  @media (max-width: 900px) { .cs-steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .cs-steps { grid-template-columns: 1fr; } }
+
+  .cs-screens { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+  .cs-screen { aspect-ratio: 3/4; border-radius: 14px; background: linear-gradient(160deg, var(--c1), var(--c2)); position: relative; overflow: hidden; padding: 14px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .cs-screen::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 50% at 80% 10%, rgba(255,255,255,.18), transparent 70%); }
+  .cs-screen span { position: relative; font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.85); }
+  @media (max-width: 780px) { .cs-screens { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .cs-screens { grid-template-columns: 1fr; } }
+
+  .cs-outcome { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 20px; }
+  .cs-metric { padding: 22px; border-radius: 14px; background: linear-gradient(150deg, rgba(255,176,102,.12), rgba(255,176,102,.02)); border: 1px solid rgba(255,176,102,.24); }
+  .cs-metric .num { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 2rem; color: #ffb066; letter-spacing: -0.01em; }
+  .cs-metric p { font-size: .84rem; color: rgba(244,237,228,.65); margin: 6px 0 0; }
+  @media (max-width: 720px) { .cs-outcome { grid-template-columns: 1fr; } }
+
+  .cs-closer { text-align: center; border-radius: 20px; padding: clamp(32px, 6vw, 56px); background: linear-gradient(150deg, rgba(255,176,102,.14), rgba(255,176,102,.02)); border: 1px solid rgba(255,176,102,.26); }
+  .cs-closer h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0 0 12px; }
+  .cs-closer p { color: rgba(244,237,228,.65); margin: 0 0 22px; max-width: 52ch; margin-left: auto; margin-right: auto; }
+  .cs-cta { display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 26px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.26); color: #fff; font-weight: 600; font-size: .92rem; text-decoration: none; backdrop-filter: blur(12px); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Free</p>
+      <h1>UX Case Study Layout</h1>
+      <p>A structured case-study page: a title banner with role and timeline, a numbered problem/process/screens/outcome sequence, and a closing CTA. Plain HTML and CSS — clone it straight to a GitHub Pages repo.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="cs">
+        <div class="cs-inner">
+          <nav class="cs-nav">
+            <div class="cs-brand"><span class="dot"></span>Case Study</div>
+            <a class="cs-back" href="#">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              All projects
+            </a>
+          </nav>
+
+          <div class="cs-banner">
+            <div class="cs-tags"><span>Fintech</span><span>0 → 1</span><span>Mobile</span></div>
+            <h1>Redesigning onboarding for <em>Orbit</em> Wallet</h1>
+            <div class="cs-meta">
+              <div><span>Role</span><strong>Lead Product Designer</strong></div>
+              <div><span>Timeline</span><strong>10 weeks, 2025</strong></div>
+              <div><span>Team</span><strong>1 PM, 2 engineers, 1 designer</strong></div>
+              <div><span>Result</span><strong>34% fewer drop-offs</strong></div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label"><span class="num">01</span>Problem</div>
+            <div>
+              <h2>Sign-up worked. Almost nobody finished it.</h2>
+              <p>Orbit's sign-up flow collected everything a fintech app is legally required to ask for — in one 11-field form. Support tickets and session recordings agreed: most people gave up before reaching the last screen, and the ones who didn't often abandoned mid-verification days later.</p>
+              <p>The brief was narrow on purpose: don't redesign the whole app, fix the fifteen minutes between "download" and "first transfer."</p>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label"><span class="num">02</span>Process</div>
+            <div>
+              <h2>Four weeks of research before a single screen</h2>
+              <p>We split the existing flow into its real steps, watched where people actually stalled, then rebuilt around those moments instead of the form's own field order.</p>
+              <div class="cs-steps">
+                <div class="cs-step"><span>Week 1–2</span><h4>Session review</h4><p>60 recorded onboarding attempts, coded by drop-off point.</p></div>
+                <div class="cs-step"><span>Week 3</span><h4>Flow mapping</h4><p>Redrew the flow as progressive steps instead of one long form.</p></div>
+                <div class="cs-step"><span>Week 4–6</span><h4>Prototyping</h4><p>Three rounds of testable prototypes with 8 users each.</p></div>
+                <div class="cs-step"><span>Week 7–10</span><h4>Build &amp; ship</h4><p>Shipped behind a flag to 20% of new users, then everyone.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label"><span class="num">03</span>Screens</div>
+            <div>
+              <h2>One field per screen, verification moved earlier</h2>
+              <p>The eleven fields became five short steps, each with a single clear task. Identity verification — previously the last, most-abandoned step — moved to the middle, right after the moment people had already committed emotionally by naming their first savings goal.</p>
+              <div class="cs-screens">
+                <div class="cs-screen" style="--c1:#3d2a20;--c2:#120c08"><span>Step 1 — Goal</span></div>
+                <div class="cs-screen" style="--c1:#2a2e42;--c2:#0c0d16"><span>Step 2 — Verify</span></div>
+                <div class="cs-screen" style="--c1:#1e3a3a;--c2:#081414"><span>Step 3 — Fund</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label"><span class="num">04</span>Outcome</div>
+            <div>
+              <h2>Fewer steps abandoned, faster to a first transfer</h2>
+              <p>Rolled out gradually over three weeks, measured against the same cohort size as the original flow.</p>
+              <div class="cs-outcome">
+                <div class="cs-metric"><div class="num">-34%</div><p>Onboarding drop-off, sign-up to first transfer</p></div>
+                <div class="cs-metric"><div class="num">2.1×</div><p>Faster median time to first transfer</p></div>
+                <div class="cs-metric"><div class="num">+18pt</div><p>Post-onboarding satisfaction score</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-closer">
+            <h2>Want the full breakdown?</h2>
+            <p>The complete write-up covers the research synthesis, the two flows we rejected, and the edge cases verification still had to handle.</p>
+            <a class="cs-cta" href="#">
+              Read the full case study
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Numbered, not chaptered</h3>
+          <p>Problem, process, screens and outcome share one label style — easy to scan, easy to reorder.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Metrics that stand out</h3>
+          <p>The outcome section is a dedicated metric grid, not a paragraph with numbers buried in it.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>GitHub Pages ready</h3>
+          <p>One HTML file, no build step — push it to a repo and point Pages at it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SaaS Landing — Minimal Template · Kitbase</title>
+<meta name="description" content="A free minimal SaaS landing page template: hero, features, pricing, FAQ and footer. Swap the copy and colors and go.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- SaaS Landing — scoped, plain CSS, no build step ---------- */
+  .sl {
+    font-family: 'Manrope', var(--font-body);
+    background: #0b0c14;
+    color: #eef0f9;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .sl-inner { padding: clamp(28px, 5vw, 64px); }
+
+  .sl-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(44px, 8vw, 84px); }
+  .sl-brand { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 9px; }
+  .sl-brand .dot { width: 9px; height: 9px; border-radius: 50%; background: #8c9dff; box-shadow: 0 0 12px 2px rgba(140,157,255,.6); }
+  .sl-links { display: flex; gap: 26px; font-size: .86rem; font-weight: 600; color: rgba(238,240,249,.6); }
+  .sl-links a { color: inherit; text-decoration: none; }
+  .sl-links a:hover { color: #eef0f9; }
+  @media (max-width: 640px) { .sl-links { display: none; } }
+  .sl-nav-cta {
+    padding: 10px 20px; border-radius: 999px; background: #8c9dff; color: #0b0c14;
+    font-weight: 700; font-size: .85rem; text-decoration: none;
+  }
+
+  .sl-hero { text-align: center; max-width: 720px; margin: 0 auto clamp(56px, 10vw, 108px); }
+  .sl-badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 10px; border-radius: 999px;
+    background: rgba(140,157,255,.12); border: 1px solid rgba(140,157,255,.3);
+    font-size: .78rem; font-weight: 700; color: #b7c2ff; margin-bottom: 22px;
+  }
+  .sl-badge span.pip { width: 6px; height: 6px; border-radius: 50%; background: #8c9dff; }
+  .sl-hero h1 { font-family: 'Manrope', var(--font); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(2.1rem, 5.6vw, 3.6rem); line-height: 1.08; margin: 0 0 18px; color: #fff; }
+  .sl-hero h1 em { font-style: italic; font-weight: 700; color: #8c9dff; }
+  .sl-hero p { font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; color: rgba(238,240,249,.68); margin: 0 auto 30px; max-width: 46ch; }
+  .sl-hero-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 34px; }
+  .sl-cta {
+    height: 54px; padding: 0 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px;
+    background: #8c9dff; color: #0b0c14; font-weight: 700; font-size: .96rem; text-decoration: none;
+    box-shadow: 0 16px 34px -14px rgba(140,157,255,.5); transition: transform .2s ease;
+  }
+  .sl-cta:hover { transform: translateY(-2px); }
+  .sl-cta-ghost {
+    height: 54px; padding: 0 26px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.18); color: #eef0f9;
+    font-weight: 600; font-size: .96rem; text-decoration: none; backdrop-filter: blur(10px);
+  }
+  .sl-proof { font-size: .78rem; color: rgba(238,240,249,.45); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+
+  .sl-section-head { text-align: center; max-width: 520px; margin: 0 auto 36px; }
+  .sl-section-head .eyebrow { font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8c9dff; margin-bottom: 10px; display: block; }
+  .sl-section-head h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.5rem, 3vw, 2.1rem); margin: 0 0 10px; letter-spacing: -0.01em; }
+  .sl-section-head p { color: rgba(238,240,249,.6); margin: 0; }
+
+  .sl-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: clamp(56px, 10vw, 100px); }
+  .sl-feature { padding: 24px; border-radius: 16px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); }
+  .sl-feature-icon { width: 40px; height: 40px; border-radius: 11px; background: rgba(140,157,255,.16); display: grid; place-items: center; color: #b7c2ff; margin-bottom: 16px; }
+  .sl-feature-icon svg { width: 20px; height: 20px; }
+  .sl-feature h3 { font-family: 'Manrope', var(--font); font-weight: 700; font-size: 1.02rem; margin: 0 0 8px; }
+  .sl-feature p { font-size: .88rem; line-height: 1.55; color: rgba(238,240,249,.6); margin: 0; }
+  @media (max-width: 780px) { .sl-features { grid-template-columns: 1fr; } }
+
+  .sl-pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: clamp(56px, 10vw, 100px); }
+  .sl-plan { padding: 28px 24px; border-radius: 18px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); display: flex; flex-direction: column; }
+  .sl-plan.is-featured { background: linear-gradient(160deg, rgba(140,157,255,.16), rgba(140,157,255,.02)); border-color: rgba(140,157,255,.4); position: relative; }
+  .sl-plan-badge { position: absolute; top: -12px; left: 24px; background: #8c9dff; color: #0b0c14; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
+  .sl-plan h3 { font-family: 'Manrope', var(--font); font-weight: 700; font-size: 1.05rem; margin: 0 0 6px; }
+  .sl-plan .price { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 2.1rem; margin: 6px 0 4px; }
+  .sl-plan .price small { font-size: .9rem; font-weight: 600; color: rgba(238,240,249,.5); }
+  .sl-plan .desc { font-size: .84rem; color: rgba(238,240,249,.55); margin-bottom: 20px; }
+  .sl-plan ul { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .sl-plan li { display: flex; align-items: center; gap: 9px; font-size: .86rem; color: rgba(238,240,249,.78); }
+  .sl-plan li svg { width: 15px; height: 15px; color: #8c9dff; flex-shrink: 0; }
+  .sl-plan .btn-plan { margin-top: auto; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: .88rem; background: rgba(255,255,255,.08); color: #eef0f9; border: 1px solid rgba(255,255,255,.16); }
+  .sl-plan.is-featured .btn-plan { background: #8c9dff; color: #0b0c14; border: none; }
+  @media (max-width: 780px) { .sl-pricing { grid-template-columns: 1fr; } }
+
+  .sl-faq { max-width: 680px; margin: 0 auto clamp(56px, 10vw, 100px); display: flex; flex-direction: column; gap: 10px; }
+  .sl-faq details { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 16px 20px; }
+  .sl-faq summary { cursor: pointer; font-weight: 700; font-size: .94rem; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  .sl-faq summary::-webkit-details-marker { display: none; }
+  .sl-faq summary::after { content: "+"; font-size: 1.2rem; color: #8c9dff; transition: transform .2s ease; }
+  .sl-faq details[open] summary::after { transform: rotate(45deg); }
+  .sl-faq p { margin: 12px 0 0; font-size: .88rem; color: rgba(238,240,249,.6); line-height: 1.55; }
+
+  .sl-footer-cta { text-align: center; border-radius: 20px; padding: clamp(32px, 6vw, 56px); background: linear-gradient(150deg, rgba(140,157,255,.18), rgba(140,157,255,.02)); border: 1px solid rgba(140,157,255,.28); }
+  .sl-footer-cta h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.5rem, 3.4vw, 2.2rem); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .sl-footer-cta p { color: rgba(238,240,249,.62); margin: 0 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Free</p>
+      <h1>SaaS Landing — Minimal</h1>
+      <p>A self-contained landing page: hero, a three-feature row, a three-tier pricing table and a short FAQ built from plain <code>&lt;details&gt;</code> elements — no JavaScript accordion required. Swap the copy and the indigo accent and go.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="sl">
+        <div class="sl-inner">
+          <nav class="sl-nav">
+            <div class="sl-brand"><span class="dot"></span>Fieldbook</div>
+            <div class="sl-links">
+              <a href="#features">Features</a>
+              <a href="#pricing">Pricing</a>
+              <a href="#faq">FAQ</a>
+            </div>
+            <a class="sl-nav-cta" href="#">Start free</a>
+          </nav>
+
+          <div class="sl-hero">
+            <span class="sl-badge"><span class="pip"></span>Now with team workspaces</span>
+            <h1>The CRM that gets out of your <em>way</em>.</h1>
+            <p>Fieldbook tracks deals, follow-ups and revenue in one clean view — built for small teams who'd rather sell than fill out forms.</p>
+            <div class="sl-hero-actions">
+              <a class="sl-cta" href="#">Start free trial</a>
+              <a class="sl-cta-ghost" href="#">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="m17 10 4-2.5v9L17 14"/></svg>
+                Watch demo
+              </a>
+            </div>
+            <p class="sl-proof">Trusted by 400+ small sales teams</p>
+          </div>
+
+          <div id="features">
+            <div class="sl-section-head">
+              <span class="eyebrow">Features</span>
+              <h2>Everything a small team needs</h2>
+              <p>No modules to enable, no seats to configure. It works the way your team already does.</p>
+            </div>
+            <div class="sl-features">
+              <div class="sl-feature">
+                <div class="sl-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+                <h3>Pipeline that just works</h3>
+                <p>Drag deals across stages, see totals update live, no configuration screens.</p>
+              </div>
+              <div class="sl-feature">
+                <div class="sl-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg></div>
+                <h3>One shared inbox</h3>
+                <p>Every email and note lands on the deal it belongs to — nothing lost in someone's inbox.</p>
+              </div>
+              <div class="sl-feature">
+                <div class="sl-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20V10M18 20V4M6 20v-6"/></svg></div>
+                <h3>Reports without a build</h3>
+                <p>Revenue, win rate and rep activity, ready the moment you open the tab.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="pricing">
+            <div class="sl-section-head">
+              <span class="eyebrow">Pricing</span>
+              <h2>Simple, per-seat pricing</h2>
+              <p>Every plan includes unlimited deals and contacts. Cancel anytime.</p>
+            </div>
+            <div class="sl-pricing">
+              <div class="sl-plan">
+                <h3>Starter</h3>
+                <div class="price">$0<small>/mo</small></div>
+                <div class="desc">For solo founders getting organized.</div>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Up to 50 contacts</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>1 pipeline</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Email support</li>
+                </ul>
+                <a class="btn-plan" href="#">Start free</a>
+              </div>
+              <div class="sl-plan is-featured">
+                <span class="sl-plan-badge">Most popular</span>
+                <h3>Team</h3>
+                <div class="price">$24<small>/seat/mo</small></div>
+                <div class="desc">For small teams closing deals together.</div>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Unlimited contacts</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Unlimited pipelines</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Shared inbox</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Priority support</li>
+                </ul>
+                <a class="btn-plan" href="#">Start free trial</a>
+              </div>
+              <div class="sl-plan">
+                <h3>Scale</h3>
+                <div class="price">$48<small>/seat/mo</small></div>
+                <div class="desc">For growing teams that need reporting.</div>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Everything in Team</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Custom reports</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>SSO</li>
+                </ul>
+                <a class="btn-plan" href="#">Talk to sales</a>
+              </div>
+            </div>
+          </div>
+
+          <div id="faq">
+            <div class="sl-section-head">
+              <span class="eyebrow">FAQ</span>
+              <h2>Common questions</h2>
+            </div>
+            <div class="sl-faq">
+              <details open>
+                <summary>Is there a free plan?</summary>
+                <p>Yes — Starter is free for up to 50 contacts and one pipeline, no credit card required.</p>
+              </details>
+              <details>
+                <summary>Can I import from another CRM?</summary>
+                <p>Import contacts and deals from a CSV in under a minute, or connect Google Contacts directly.</p>
+              </details>
+              <details>
+                <summary>Do you offer annual billing?</summary>
+                <p>Yes, annual billing on Team and Scale saves two months compared to paying monthly.</p>
+              </details>
+              <details>
+                <summary>Can I cancel anytime?</summary>
+                <p>There's no contract — cancel from your billing settings and you won't be charged again.</p>
+              </details>
+            </div>
+          </div>
+
+          <div class="sl-footer-cta">
+            <h2>Try Fieldbook free for 14 days</h2>
+            <p>No credit card needed. Set up your first pipeline in under five minutes.</p>
+            <a class="sl-cta" href="#" style="display:inline-flex">Start free trial</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>No JS accordion needed</h3>
+          <p>The FAQ uses native <code>&lt;details&gt;</code> elements — accessible, keyboard-friendly, zero script.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>One accent to restyle</h3>
+          <p>Every highlight ties back to a single indigo accent — change it once, the whole page follows.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Pricing that reflows</h3>
+          <p>Three tiers stack to one column below 780px, with the featured plan staying visually first.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
