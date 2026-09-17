@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fintech App UI Pack · Kitbase</title>
+<meta name="description" content="A premium Figma fintech app kit, shown live: onboarding, home, cards, transfers and insights screens, staged as real phone mockups.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Fintech App UI Pack — scoped, plain CSS, no build step ---------- */
+  .fa { font-family: 'Manrope', var(--font-body); background: #070c16; color: #eaf1fb; border-radius: var(--radius); overflow: hidden; }
+  .fa-inner { padding: clamp(28px, 5vw, 64px); }
+
+  .fa-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(40px, 8vw, 80px); }
+  .fa-brand { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 9px; }
+  .fa-brand .dot { width: 9px; height: 9px; border-radius: 50%; background: #6fb3ff; box-shadow: 0 0 12px 2px rgba(111,179,255,.6); }
+  .fa-links { display: flex; gap: 26px; font-size: .86rem; font-weight: 600; color: rgba(234,241,251,.6); }
+  .fa-links a { color: inherit; text-decoration: none; }
+  @media (max-width: 640px) { .fa-links { display: none; } }
+  .fa-nav-cta { padding: 10px 20px; border-radius: 999px; background: #6fb3ff; color: #061020; font-size: .82rem; font-weight: 700; text-decoration: none; }
+
+  .fa-hero { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 56px); align-items: center; margin-bottom: clamp(64px, 10vw, 116px); }
+  .fa-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #9dc7ff; margin-bottom: 20px; }
+  .fa-eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #6fb3ff; }
+  .fa-hero h1 { font-family: 'Manrope', var(--font); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.08; margin: 0 0 18px; color: #fff; }
+  .fa-hero h1 em { font-style: italic; font-weight: 700; color: #6fb3ff; }
+  .fa-hero p { font-size: 1rem; line-height: 1.65; color: rgba(234,241,251,.68); max-width: 42ch; margin: 0 0 28px; }
+  .fa-stats-row { display: flex; gap: clamp(20px, 4vw, 40px); margin-top: 30px; }
+  .fa-stats-row div span { display: block; font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.3rem; color: #fff; }
+  .fa-stats-row div small { font-size: .72rem; color: rgba(234,241,251,.5); font-weight: 600; letter-spacing: .03em; }
+
+  /* phone stack — three real-looking device frames, staggered */
+  .fa-stage { position: relative; height: clamp(360px, 46vw, 480px); }
+  .fa-phone { position: absolute; width: clamp(150px, 17vw, 196px); aspect-ratio: 9/19.5; border-radius: 30px; background: #0c1524; border: 5px solid #182233; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); overflow: hidden; }
+  .fa-phone::before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 40%; height: 16px; border-radius: 999px; background: #182233; z-index: 5; }
+  .fa-phone .scr { position: absolute; inset: 0; padding: 26px 12px 12px; display: flex; flex-direction: column; }
+
+  .fa-p1 { left: 4%; top: 8%; z-index: 3; }
+  .fa-p2 { left: 32%; top: 0; z-index: 4; }
+  .fa-p3 { left: 58%; top: 10%; z-index: 2; transform: rotate(6deg); }
+  @media (max-width: 860px) { .fa-p3 { display: none; } }
+
+  .fa-p2 .scr { background: linear-gradient(165deg,#132038,#091220); }
+  .fa-p1 .scr, .fa-p3 .scr { background: linear-gradient(165deg,#0f1a2c,#080f1c); }
+
+  .fa-balance-card { border-radius: 16px; padding: 16px; background: linear-gradient(135deg,#6fb3ff,#3a6fd6); margin-bottom: 14px; }
+  .fa-balance-card .top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+  .fa-balance-card .chip { width: 22px; height: 16px; border-radius: 4px; background: rgba(255,255,255,.5); }
+  .fa-balance-card .wave { font-size: .8rem; color: rgba(255,255,255,.85); }
+  .fa-balance-card .amt { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.15rem; color: #fff; margin-bottom: 4px; }
+  .fa-balance-card .num { font-size: .62rem; color: rgba(255,255,255,.75); letter-spacing: .1em; }
+
+  .fa-quick { display: flex; justify-content: space-between; margin-bottom: 16px; }
+  .fa-quick div { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .fa-quick .ic { width: 30px; height: 30px; border-radius: 10px; background: rgba(111,179,255,.16); display: grid; place-items: center; font-size: .8rem; }
+  .fa-quick span { font-size: .52rem; color: rgba(234,241,251,.6); font-weight: 600; }
+
+  .fa-txn { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .fa-txn .ic { width: 24px; height: 24px; border-radius: 7px; background: rgba(255,255,255,.08); display: grid; place-items: center; font-size: .68rem; flex-shrink: 0; }
+  .fa-txn .meta { flex: 1; min-width: 0; }
+  .fa-txn .meta p { margin: 0; font-size: .62rem; font-weight: 700; color: #eaf1fb; }
+  .fa-txn .meta span { font-size: .54rem; color: rgba(234,241,251,.45); }
+  .fa-txn .amt { font-size: .6rem; font-weight: 700; }
+  .fa-txn .amt.pos { color: #7fe8b0; }
+  .fa-txn .amt.neg { color: #eaf1fb; }
+
+  .fa-p2-card { border-radius: 16px; padding: 16px; background: linear-gradient(135deg,#2c2050,#141026); height: 90px; position: relative; margin-bottom: 14px; }
+  .fa-p2-card .brand { font-size: .6rem; font-weight: 700; color: rgba(255,255,255,.7); }
+  .fa-p2-card .num { position: absolute; bottom: 14px; left: 16px; font-size: .58rem; letter-spacing: .12em; color: rgba(255,255,255,.85); }
+  .fa-p2-title { font-size: .68rem; font-weight: 700; color: #eaf1fb; margin: 4px 0 10px; }
+  .fa-p2-mini { display: flex; flex-direction: column; gap: 8px; }
+  .fa-p2-mini div { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 9px; background: rgba(255,255,255,.05); font-size: .58rem; color: rgba(234,241,251,.7); }
+
+  .fa-p3 .scr { align-items: center; justify-content: center; text-align: center; }
+  .fa-p3-amt { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.5rem; color: #fff; margin-bottom: 6px; }
+  .fa-p3-label { font-size: .56rem; color: rgba(234,241,251,.5); margin-bottom: 16px; }
+  .fa-p3-avatars { display: flex; gap: 6px; }
+  .fa-p3-avatars span { width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg,#6fb3ff,#3a6fd6); border: 2px solid #0f1a2c; margin-left: -6px; }
+
+  .fa-features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: clamp(56px, 9vw, 100px); }
+  .fa-feature { padding: 22px; border-radius: 16px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); }
+  .fa-feature .ic { width: 36px; height: 36px; border-radius: 10px; background: rgba(111,179,255,.14); display: grid; place-items: center; color: #9dc7ff; margin-bottom: 14px; }
+  .fa-feature .ic svg { width: 17px; height: 17px; }
+  .fa-feature h3 { font-family: 'Manrope', var(--font); font-weight: 700; font-size: .92rem; margin: 0 0 6px; }
+  .fa-feature p { font-size: .8rem; color: rgba(234,241,251,.58); margin: 0; line-height: 1.5; }
+  @media (max-width: 900px) { .fa-features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .fa-features { grid-template-columns: 1fr; } }
+
+  .fa-footer-cta { text-align: center; border-radius: 20px; padding: clamp(32px, 6vw, 56px); background: linear-gradient(150deg, rgba(111,179,255,.16), rgba(111,179,255,.02)); border: 1px solid rgba(111,179,255,.26); }
+  .fa-footer-cta h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.5rem, 3.4vw, 2.2rem); margin: 0 0 12px; }
+  .fa-footer-cta p { color: rgba(234,241,251,.62); margin: 0 0 24px; }
+  .fa-cta { display: inline-flex; align-items: center; gap: 10px; height: 54px; padding: 0 28px; border-radius: 999px; background: #6fb3ff; color: #061020; font-weight: 700; font-size: .95rem; text-decoration: none; }
+
+  @media (max-width: 860px) { .fa-hero { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium · Figma</p>
+      <h1>Fintech App UI Pack</h1>
+      <p>32 screens — onboarding, home, cards, transfers, insights and support. This is the home, cards and transfer screen, staged live as real phone frames instead of a single flat icon.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="fa">
+        <div class="fa-inner">
+          <nav class="fa-nav">
+            <div class="fa-brand"><span class="dot"></span>Nimbus Pay</div>
+            <div class="fa-links">
+              <a href="#screens">Screens</a>
+              <a href="#features">Features</a>
+            </div>
+            <a class="fa-nav-cta" href="#">Get the kit</a>
+          </nav>
+
+          <div class="fa-hero">
+            <div>
+              <p class="fa-eyebrow">Fintech · Mobile UI kit</p>
+              <h1>Banking that feels <em>calm</em>, not corporate.</h1>
+              <p>32 fully-designed screens for a modern fintech app — onboarding, home, cards, transfers, insights and support — built on one consistent component set.</p>
+              <div class="fa-stats-row">
+                <div><span>32</span><small>Screens</small></div>
+                <div><span>90+</span><small>Components</small></div>
+                <div><span>2</span><small>Themes</small></div>
+              </div>
+            </div>
+
+            <div class="fa-stage">
+              <div class="fa-phone fa-p3">
+                <div class="scr">
+                  <div class="fa-p3-amt">$240.00</div>
+                  <div class="fa-p3-label">Sending to Marcus</div>
+                  <div class="fa-p3-avatars"><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <div class="fa-phone fa-p1">
+                <div class="scr">
+                  <div class="fa-balance-card">
+                    <div class="top"><div class="chip"></div><span class="wave">•)))</span></div>
+                    <div class="amt">$8,240.50</div>
+                    <div class="num">•••• •••• •••• 4821</div>
+                  </div>
+                  <div class="fa-quick">
+                    <div><span class="ic">↑</span><span>Send</span></div>
+                    <div><span class="ic">↓</span><span>Add</span></div>
+                    <div><span class="ic">⚡</span><span>Pay</span></div>
+                    <div><span class="ic">⋯</span><span>More</span></div>
+                  </div>
+                  <div class="fa-txn"><span class="ic">🛒</span><div class="meta"><p>Fresh Market</p><span>Today</span></div><span class="amt neg">-$42.10</span></div>
+                  <div class="fa-txn"><span class="ic">💼</span><div class="meta"><p>Salary</p><span>Yesterday</span></div><span class="amt pos">+$2,400</span></div>
+                  <div class="fa-txn"><span class="ic">🎬</span><div class="meta"><p>Cinema City</p><span>Sep 12</span></div><span class="amt neg">-$18.50</span></div>
+                </div>
+              </div>
+              <div class="fa-phone fa-p2">
+                <div class="scr">
+                  <div class="fa-p2-card"><div class="brand">NIMBUS</div><div class="num">4821 •• •• 7790</div></div>
+                  <div class="fa-p2-title">Your cards</div>
+                  <div class="fa-p2-mini">
+                    <div><span>Travel card</span><span>$1,204</span></div>
+                    <div><span>Savings vault</span><span>$6,830</span></div>
+                    <div><span>Shared card</span><span>$412</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="features">
+            <div class="fa-features">
+              <div class="fa-feature">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg></div>
+                <h3>Virtual &amp; physical cards</h3>
+                <p>Freeze, top up and manage multiple cards from one screen.</p>
+              </div>
+              <div class="fa-feature">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 1l4 4-4 4M7 23l-4-4 4-4M21 5H9a4 4 0 0 0-4 4v1M3 19h12a4 4 0 0 0 4-4v-1"/></svg></div>
+                <h3>Instant transfers</h3>
+                <p>Send to contacts or accounts in a few taps, with live status.</p>
+              </div>
+              <div class="fa-feature">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20V10M18 20V4M6 20v-6"/></svg></div>
+                <h3>Spending insights</h3>
+                <p>Category breakdowns and monthly trends, no spreadsheet needed.</p>
+              </div>
+              <div class="fa-feature">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6l-9-4Z"/></svg></div>
+                <h3>Bank-grade security</h3>
+                <p>Biometric lock, device management and instant card freeze screens included.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="fa-footer-cta">
+            <h2>32 screens, ready to customize</h2>
+            <p>Swap the brand color and logo, and Nimbus becomes your app's design foundation.</p>
+            <a class="fa-cta" href="#">Get the Figma kit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Real device frames</h3>
+          <p>Three staged phone mockups with working-looking content, not a single flat phone icon.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>90+ components</h3>
+          <p>Balance cards, quick actions, transaction rows and card carousels, all documented in Figma.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Light &amp; dark themes</h3>
+          <p>Every screen ships in both themes, token-driven so re-theming is a variable swap.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

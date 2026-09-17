@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Site — 6 Pages · Kitbase</title>
+<meta name="description" content="A premium agency site kit, shown live: a layered hero, client logos, a services grid, a work showcase and a testimonial. Figma file plus coded build.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- Studio Site — scoped, plain CSS, no build step ---------- */
+  .ag { font-family: 'Manrope', var(--font-body); background: #0f0a14; color: #f3edf6; border-radius: var(--radius); overflow: hidden; }
+  .ag-inner { padding: clamp(28px, 5vw, 64px); }
+
+  .ag-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(40px, 8vw, 80px); }
+  .ag-brand { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 9px; }
+  .ag-brand .dot { width: 9px; height: 9px; border-radius: 50%; background: #d98ce0; box-shadow: 0 0 12px 2px rgba(217,140,224,.6); }
+  .ag-links { display: flex; gap: 26px; font-size: .86rem; font-weight: 600; color: rgba(243,237,246,.6); }
+  .ag-links a { color: inherit; text-decoration: none; }
+  .ag-links a:hover { color: #f3edf6; }
+  @media (max-width: 640px) { .ag-links { display: none; } }
+  .ag-nav-cta { padding: 10px 20px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: .82rem; font-weight: 700; text-decoration: none; }
+
+  /* hero: headline + supporting copy on the left, a layered abstract art
+     panel on the right — never an empty hero, always something to look at */
+  .ag-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 5vw, 56px); align-items: center; margin-bottom: clamp(56px, 9vw, 100px); }
+  .ag-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #e2a8e8; margin-bottom: 20px; }
+  .ag-eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #d98ce0; }
+  .ag-hero h1 { font-family: 'Manrope', var(--font); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(2.1rem, 4.6vw, 3.6rem); line-height: 1.08; margin: 0 0 18px; color: #fff; }
+  .ag-hero h1 em { font-style: italic; font-weight: 700; color: #d98ce0; }
+  .ag-hero p { font-size: 1.02rem; line-height: 1.65; color: rgba(243,237,246,.68); max-width: 46ch; margin: 0 0 28px; }
+  .ag-hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .ag-cta { height: 54px; padding: 0 26px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; background: #d98ce0; color: #1a0e1e; font-weight: 700; font-size: .94rem; text-decoration: none; box-shadow: 0 16px 34px -14px rgba(217,140,224,.5); }
+  .ag-cta-ghost { height: 54px; padding: 0 24px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.18); color: #f3edf6; font-weight: 600; font-size: .94rem; text-decoration: none; }
+
+  .ag-art { position: relative; aspect-ratio: 1/1; border-radius: 24px; overflow: hidden; background: radial-gradient(60% 60% at 30% 20%, rgba(217,140,224,.35), transparent 60%), radial-gradient(55% 55% at 80% 75%, rgba(140,90,220,.32), transparent 65%), linear-gradient(150deg,#2a1830,#0d0812); border: 1px solid rgba(255,255,255,.1); }
+  .ag-art::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.14) 1px, transparent 1px); background-size: 22px 22px; opacity: .5; }
+  .ag-orb { position: absolute; border-radius: 50%; filter: blur(1px); }
+  .ag-card-float { position: absolute; padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); backdrop-filter: blur(14px); box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); }
+  .ag-card-float .n { font-family: 'Manrope', var(--font); font-weight: 800; font-size: 1.3rem; color: #fff; }
+  .ag-card-float .l { font-size: .68rem; color: rgba(243,237,246,.6); font-weight: 600; }
+  @media (max-width: 860px) { .ag-hero { grid-template-columns: 1fr; } .ag-art { max-width: 360px; margin: 0 auto; } }
+
+  .ag-logos { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.1); border-bottom: 1px solid rgba(255,255,255,.1); margin-bottom: clamp(56px, 9vw, 100px); }
+  .ag-logos span { font-family: 'Manrope', var(--font); font-weight: 700; font-size: .95rem; color: rgba(243,237,246,.4); letter-spacing: .02em; }
+
+  .ag-section-head { text-align: center; max-width: 560px; margin: 0 auto 36px; }
+  .ag-section-head .eyebrow { font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #e2a8e8; margin-bottom: 10px; display: block; }
+  .ag-section-head h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.5rem, 3vw, 2.1rem); margin: 0 0 10px; letter-spacing: -0.01em; }
+  .ag-section-head p { color: rgba(243,237,246,.6); margin: 0; }
+
+  .ag-services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: clamp(56px, 9vw, 100px); }
+  .ag-service { padding: 22px; border-radius: 16px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); }
+  .ag-service .ic { width: 38px; height: 38px; border-radius: 11px; background: rgba(217,140,224,.14); display: grid; place-items: center; color: #e2a8e8; margin-bottom: 14px; }
+  .ag-service .ic svg { width: 18px; height: 18px; }
+  .ag-service h3 { font-family: 'Manrope', var(--font); font-weight: 700; font-size: .96rem; margin: 0 0 8px; }
+  .ag-service p { font-size: .82rem; color: rgba(243,237,246,.58); margin: 0; line-height: 1.5; }
+  @media (max-width: 900px) { .ag-services { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .ag-services { grid-template-columns: 1fr; } }
+
+  .ag-work { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: clamp(56px, 9vw, 100px); }
+  .ag-project { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4/5; padding: 18px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(160deg, var(--c1), var(--c2)); isolation: isolate; text-decoration: none; color: inherit; transition: transform .3s ease; }
+  .ag-project:hover { transform: translateY(-6px); }
+  .ag-project::before { content: ""; position: absolute; inset: 0; z-index: 0; background: radial-gradient(60% 50% at 80% 0%, rgba(255,255,255,.22), transparent 70%); }
+  .ag-project span { position: relative; z-index: 1; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 6px; }
+  .ag-project h3 { position: relative; z-index: 1; font-family: 'Manrope', var(--font); font-weight: 700; font-size: 1.05rem; margin: 0; color: #fff; }
+  @media (max-width: 780px) { .ag-work { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .ag-work { grid-template-columns: 1fr; } }
+
+  .ag-quote { text-align: center; max-width: 680px; margin: 0 auto clamp(56px, 9vw, 100px); }
+  .ag-quote blockquote { font-family: 'Manrope', var(--font); font-weight: 700; font-size: clamp(1.2rem, 2.4vw, 1.6rem); line-height: 1.4; margin: 0 0 22px; color: #fff; }
+  .ag-quote .who { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .ag-quote .av { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#d98ce0,#8c5adc); }
+  .ag-quote .who div { text-align: left; }
+  .ag-quote .who p { margin: 0; font-size: .86rem; font-weight: 700; }
+  .ag-quote .who span { font-size: .76rem; color: rgba(243,237,246,.55); }
+
+  .ag-footer-cta { text-align: center; border-radius: 20px; padding: clamp(32px, 6vw, 56px); background: linear-gradient(150deg, rgba(217,140,224,.16), rgba(217,140,224,.02)); border: 1px solid rgba(217,140,224,.26); }
+  .ag-footer-cta h2 { font-family: 'Manrope', var(--font); font-weight: 800; font-size: clamp(1.5rem, 3.4vw, 2.2rem); margin: 0 0 12px; }
+  .ag-footer-cta p { color: rgba(243,237,246,.62); margin: 0 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+    <ul class="nav-links">
+      <li><a href="kits.html">Free Kits</a></li>
+      <li><a href="templates.html" aria-current="page">Templates</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle light or dark theme" type="button"></button>
+      <button class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" type="button"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">Templates · Premium · Figma + HTML</p>
+      <h1>Studio Site — 6 Pages</h1>
+      <p>Home, services, work, single project, about and contact — a full agency site. This is the home page, live: a layered hero, client logos, a services grid, a work showcase and a testimonial. Figma file plus a coded build.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap">
+      <div class="ag">
+        <div class="ag-inner">
+          <nav class="ag-nav">
+            <div class="ag-brand"><span class="dot"></span>Northloop Studio</div>
+            <div class="ag-links">
+              <a href="#work">Work</a>
+              <a href="#services">Services</a>
+              <a href="#about">About</a>
+            </div>
+            <a class="ag-nav-cta" href="#contact">Start a project</a>
+          </nav>
+
+          <div class="ag-hero">
+            <div>
+              <p class="ag-eyebrow">Brand &amp; product studio</p>
+              <h1>We build brands people <em>remember</em>.</h1>
+              <p>Northloop is a six-person studio designing identity, product and web for founders who'd rather stand out than blend in. Based remote, working worldwide.</p>
+              <div class="ag-hero-actions">
+                <a class="ag-cta" href="#contact">Start a project</a>
+                <a class="ag-cta-ghost" href="#work">View our work</a>
+              </div>
+            </div>
+            <div class="ag-art">
+              <div class="ag-orb" style="width:180px;height:180px;top:-30px;left:-30px;background:radial-gradient(circle,rgba(217,140,224,.6),transparent 70%)"></div>
+              <div class="ag-orb" style="width:140px;height:140px;bottom:20px;right:-20px;background:radial-gradient(circle,rgba(140,90,220,.55),transparent 70%)"></div>
+              <div class="ag-card-float" style="top:16%;left:10%"><div class="n">48</div><div class="l">Brands launched</div></div>
+              <div class="ag-card-float" style="bottom:14%;right:10%"><div class="n">6</div><div class="l">Person studio</div></div>
+              <div class="ag-card-float" style="top:46%;right:8%"><div class="n">4.9★</div><div class="l">Client rating</div></div>
+            </div>
+          </div>
+
+          <div class="ag-logos">
+            <span>ORBIT</span><span>FIELDBOOK</span><span>NURTURE</span><span>ECHO</span><span>PULSE&nbsp;LABS</span><span>GLOWPOT</span>
+          </div>
+
+          <div id="services">
+            <div class="ag-section-head">
+              <span class="eyebrow">Services</span>
+              <h2>What we do</h2>
+              <p>Four disciplines, one small team — no handoffs between agencies.</p>
+            </div>
+            <div class="ag-services">
+              <div class="ag-service">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                <h3>Brand identity</h3>
+                <p>Naming, logo systems and guidelines that hold up past the pitch deck.</p>
+              </div>
+              <div class="ag-service">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+                <h3>Product design</h3>
+                <p>Interfaces and design systems for web and native apps.</p>
+              </div>
+              <div class="ag-service">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg></div>
+                <h3>Web development</h3>
+                <p>Marketing sites and web apps, built and shipped in-house.</p>
+              </div>
+              <div class="ag-service">
+                <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div>
+                <h3>Motion &amp; content</h3>
+                <p>Launch films, product demos and social content that fits the brand.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="work">
+            <div class="ag-section-head">
+              <span class="eyebrow">Selected work</span>
+              <h2>Recent projects</h2>
+            </div>
+            <div class="ag-work">
+              <a class="ag-project" style="--c1:#3a2540;--c2:#100a16" href="#"><span>Fintech · Brand + App</span><h3>Orbit Wallet</h3></a>
+              <a class="ag-project" style="--c1:#2a2e42;--c2:#0c0d16" href="#"><span>SaaS · Web</span><h3>Fieldbook CRM</h3></a>
+              <a class="ag-project" style="--c1:#3d2a20;--c2:#120c08" href="#"><span>Health · Identity</span><h3>Nurture Health</h3></a>
+            </div>
+          </div>
+
+          <div class="ag-quote">
+            <blockquote>"Northloop didn't just redesign our app — they rebuilt how our whole team thinks about the product."</blockquote>
+            <div class="who">
+              <div class="av"></div>
+              <div><p>Dana Whitfield</p><span>Founder, Orbit Wallet</span></div>
+            </div>
+          </div>
+
+          <div class="ag-footer-cta" id="contact">
+            <h2>Got a brand or product to build?</h2>
+            <p>We take on three or four new studio engagements a quarter — tell us about yours.</p>
+            <a class="ag-cta" href="#" style="display:inline-flex">Start a project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="strip">
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Six pages, one system</h3>
+          <p>Home, services, work, single project, about and contact all share the same tokens and components.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>A hero with substance</h3>
+          <p>Layered art panel, floating stat cards and a client-logo strip — never an empty headline on a flat color.</p>
+        </div>
+        <div class="item">
+          <h3><span class="ic" aria-hidden="true"></span>Figma file + coded build</h3>
+          <p>Design in Figma, ship the matching HTML — the two stay in sync because they share one source.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center-btn"><a class="btn btn-ghost" href="templates.html">&larr; Back to templates</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="dot"></span>Kitbase</a>
+      <p style="margin-top:.8rem;font-size:.92rem;max-width:34ch">Free UI kits, templates and design notes — made by Shafiatul Ferdous, a UI/UX designer in Dhaka.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="kits.html">Free Kits</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="premium.html">Premium Pack</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="https://shafiatulferdous.framer.website/" target="_blank" rel="noopener">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/shafiatul-ferdous-a50910164/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.behance.net/elonamahmud" target="_blank" rel="noopener">Behance</a></li>
+        <li><a href="https://github.com/sf-elona" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Kitbase · Shafiatul Ferdous</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
