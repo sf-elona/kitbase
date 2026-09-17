@@ -340,6 +340,19 @@ img, svg { max-width: 100%; display: block; }
 }
 .card-art:hover .thumb-art::before { transform: scale(1.1) translate(-2%, 2%); opacity: .92; }
 
+/* schematic layout mockup for templates that have no live page to preview
+   yet — a small wireframe (nav bar, hero lines, content blocks) instead of
+   a bare icon, so the composition still reads at a glance. Sits above the
+   glow/grain layers, below the icon badge and label pill. */
+.thumb-mock {
+  position: absolute;
+  inset: 14% 9% 12%;
+  z-index: 1;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35));
+  transition: transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.card-art:hover .thumb-mock { transform: translateY(-3px); }
+
 /* subtle grain for texture, not a flat gradient */
 .thumb-art::after {
   content: "";
@@ -353,6 +366,36 @@ img, svg { max-width: 100%; display: block; }
 
 /* soft inner vignette to keep edges grounded */
 .thumb-art { box-shadow: inset 0 -18px 30px -14px rgba(0, 0, 0, .55), inset 0 14px 26px -18px rgba(0, 0, 0, .4); }
+
+/* ---------- live-page thumbnails — the actual template, rendered small,
+   not a gradient stand-in or a screenshot that can go stale. The iframe is
+   laid out at 4x the thumb's own box (400%/400%) and scaled back down
+   (scale .25), a responsive trick that keeps the preview exactly filling
+   the thumb regardless of the card's real rendered width. */
+.thumb-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  isolation: isolate;
+  background: #0a0a0c;
+  box-shadow: inset 0 -18px 30px -14px rgba(0, 0, 0, .55), inset 0 14px 26px -18px rgba(0, 0, 0, .35);
+}
+.thumb-frame iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 400%; height: 400%;
+  transform: scale(.25);
+  transform-origin: top left;
+  border: 0;
+  pointer-events: none;
+}
+.thumb-frame::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 44%, rgba(0, 0, 0, .6) 100%);
+}
+.card-art:hover .thumb-frame iframe { transform: scale(.255); }
 
 /* ---------- video thumbnails — the real clip, playing, not a gradient
    stand-in. Same badge/label/hover language as .thumb-art so the two card
@@ -383,7 +426,7 @@ img, svg { max-width: 100%; display: block; }
    there is exactly one place it can ever sit: 12px from the top-right
    corner, with enough clearance from the thumb's own border-radius that
    the rounded corner mask never grazes it */
-.thumb-art .thumb-icon, .thumb-video .thumb-icon {
+.thumb-art .thumb-icon, .thumb-video .thumb-icon, .thumb-frame .thumb-icon {
   position: absolute;
   top: .75rem; right: .75rem;
   z-index: 3;
@@ -399,7 +442,7 @@ img, svg { max-width: 100%; display: block; }
   color: #fff;
   transition: transform .35s cubic-bezier(.2,.8,.2,1), background .3s ease;
 }
-.thumb-art .thumb-icon svg, .thumb-video .thumb-icon svg { width: 16px; height: 16px; }
+.thumb-art .thumb-icon svg, .thumb-video .thumb-icon svg, .thumb-frame .thumb-icon svg { width: 16px; height: 16px; }
 .card-art:hover .thumb-icon { transform: translateY(-2px) scale(1.06); background: rgba(20, 18, 15, .5); }
 
 /* the label pill — .thumb-art positions it via its own flex/align-items,
@@ -409,12 +452,12 @@ img, svg { max-width: 100%; display: block; }
   position: relative;
   z-index: 2;
 }
-.thumb-video .thumb-label {
+.thumb-video .thumb-label, .thumb-frame .thumb-label {
   position: absolute;
   left: .75rem; bottom: .75rem;
   z-index: 2;
 }
-.thumb-art .thumb-label, .thumb-video .thumb-label {
+.thumb-art .thumb-label, .thumb-video .thumb-label, .thumb-frame .thumb-label {
   display: inline-flex;
   align-items: center;
   gap: .45rem;
@@ -431,7 +474,7 @@ img, svg { max-width: 100%; display: block; }
   text-transform: uppercase;
   color: #fff;
 }
-.thumb-art .thumb-label::before, .thumb-video .thumb-label::before {
+.thumb-art .thumb-label::before, .thumb-video .thumb-label::before, .thumb-frame .thumb-label::before {
   content: "";
   width: 6px; height: 6px;
   border-radius: 50%;
